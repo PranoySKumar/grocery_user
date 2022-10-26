@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grocery_user/Screens/login/login_intro_section/login_intro_section.dart';
 import 'package:grocery_user/Utils/asset_repo.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -22,58 +23,16 @@ class LoginScreen extends StatelessWidget {
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(child: SvgPicture.asset(AssetRepo.logoSvg)),
               const SizedBox(
-                height: 80,
+                height: 20,
               ),
-              Text(
-                "Welcome to FoodDelivery App",
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+              SvgPicture.asset(
+                AssetRepo.logoSvg,
+                alignment: Alignment.center,
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                "Enjoy delivery from a variety of sellers from Vizhinjam",
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white),
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  minimumSize: Size(double.infinity, 20),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 60),
-                ),
-                child: const Text(
-                  "Continue with Phone Number",
-                ),
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    minimumSize: Size(double.infinity, 20),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 60),
-                  ),
-                  child: Text(
-                    "Continue as Guest",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelSmall
-                        ?.copyWith(color: Colors.black, letterSpacing: 0, fontSize: 14),
-                  ))
+              const LoginIntroSection()
             ],
           ),
         ),
