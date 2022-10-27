@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class LoginButton extends StatelessWidget {
+class FullLengthButton extends StatelessWidget {
   final String text;
   final Color backgroundColor;
   final Color textColor;
   final VoidCallback onPressed;
-  const LoginButton(
+  const FullLengthButton(
       {super.key,
       required this.text,
       required this.backgroundColor,
@@ -25,7 +25,7 @@ class LoginButton extends StatelessWidget {
           text,
           style: Theme.of(context)
               .textTheme
-              .labelSmall
+              .labelMedium
               ?.copyWith(color: textColor, letterSpacing: 0, fontSize: 14),
         ));
   }

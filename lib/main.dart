@@ -1,19 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:grocery_user/Screens/home/home_screen.dart';
-import 'package:grocery_user/Screens/login/login_screen.dart';
 import 'package:grocery_user/Theme/light_theme.dart';
+import 'package:grocery_user/Utils/router.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: lightTheme,
-      home: const LoginScreen(),
+      initialRoute: RouteHelper.welcomeScreen,
+      getPages: RouteHelper.getAppRoutes(),
     );
   }
 }
