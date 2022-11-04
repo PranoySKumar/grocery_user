@@ -78,7 +78,9 @@ class LoginIntroSection extends StatelessWidget {
           text: "Continue as Guest",
           backgroundColor: Colors.white,
           textColor: Colors.black,
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(RouteHelper.userNameFormScreen);
+          },
         )
       ],
     );
