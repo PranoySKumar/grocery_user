@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: lightTheme,
-      initialRoute: RouteHelper.welcomeScreen,
+      initialRoute: RouteHelper.introScreen,
       getPages: RouteHelper.getAppRoutes(),
     );
   }

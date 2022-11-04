@@ -18,7 +18,7 @@ class RoundButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        minimumSize: Size(0, 0),
+        minimumSize: const Size(0, 0),
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(10),
         backgroundColor: backgroundColor ?? Colors.white,

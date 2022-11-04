@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Screens/login/widgets/full_length_button_widget.dart';
+import 'package:grocery_user/Screens/login/widgets/header_widget.dart';
 
 import 'package:grocery_user/Screens/login/widgets/round_button_widget.dart';
+import 'package:grocery_user/Utils/router.dart';
 
 import 'widgets/borderless_textfield_widget.dart';
 
@@ -18,27 +20,9 @@ class OtpVerificationScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 30,
-            ),
-            RoundButton(
-              icon: Icons.arrow_back,
-              onPressed: () => Get.back(),
-            ),
-            const SizedBox(height: 48),
-            Text(
-              "Enter OTP sent to your number",
-              style: _theme.textTheme.titleLarge,
-            ),
-            const SizedBox(height: 48),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              "Waiting to auto detect confirmation code",
-              style:
-                  Theme.of(context).textTheme.labelLarge?.copyWith(color: _theme.primaryColorLight),
-            ),
+            const Header(
+                title: "Enter OTP sent to your number",
+                subtitle: "Waiting to auto detect confirmation code"),
             Text(
               "...",
               style: Theme.of(context)
@@ -55,10 +39,15 @@ class OtpVerificationScreen extends StatelessWidget {
               height: 16,
             ),
             FullLengthButton(
-                text: "Next",
-                backgroundColor: _theme.primaryColor,
-                textColor: Colors.white,
-                onPressed: () {})
+              text: "Next",
+              backgroundColor: _theme.primaryColor,
+              textColor: Colors.white,
+              onPressed: () {
+                Get.toNamed(
+                  RouteHelper.userNameFormScreen,
+                );
+              },
+            )
           ],
         ),
       ),
