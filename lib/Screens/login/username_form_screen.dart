@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:grocery_user/Screens/common/icon_text_field.dart';
 import 'package:grocery_user/Screens/login/widgets/header_widget.dart';
+import 'package:grocery_user/Utils/route_helper.dart';
 
 class UserNameFormScreen extends StatelessWidget {
   const UserNameFormScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.all(16),
@@ -20,7 +23,10 @@ class UserNameFormScreen extends StatelessWidget {
             SizedBox(
               height: 24,
             ),
-            _FormView()
+            _FormView(),
+            SizedBox(
+              height: 15,
+            ),
           ],
         ),
       ),

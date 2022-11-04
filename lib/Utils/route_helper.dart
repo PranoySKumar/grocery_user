@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:grocery_user/Screens/login/location_screen.dart';
 
 import 'package:grocery_user/Screens/login/login_form_screen.dart';
 import 'package:grocery_user/Screens/login/otp_verification_screen.dart';
@@ -11,7 +12,8 @@ class RouteHelper {
   static const introScreen = "/intro";
   static const enterPhoneNumberScreen = "/login";
   static const verifyOtpScreen = "/login/verify-otp";
-  static const userNameFormScreen = "/login/username";
+  static const userNameFormScreen = "/user/username";
+  static const locationScreen = "/user/location";
 
   static getAppRoutes() => [
         GetPage(
@@ -32,6 +34,11 @@ class RouteHelper {
         GetPage(
           name: userNameFormScreen,
           page: () => const UserNameFormScreen(),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: locationScreen,
+          page: () => const LocationScreen(),
           transition: Transition.rightToLeftWithFade,
         ),
       ];

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:grocery_user/Theme/light_theme.dart';
-import 'package:grocery_user/Utils/router.dart';
+import 'package:grocery_user/Utils/route_helper.dart';
 
 void main(List<String> args) {
   runApp(const MyApp());
