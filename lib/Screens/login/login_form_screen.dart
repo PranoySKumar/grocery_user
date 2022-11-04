@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Screens/login/widgets/borderless_textfield_widget.dart';
-import 'package:grocery_user/Screens/login/widgets/round_button_widget.dart';
+import 'package:grocery_user/Screens/login/widgets/header_widget.dart';
 
 import '../../Utils/router.dart';
 import 'widgets/full_length_button_widget.dart';
@@ -16,33 +16,14 @@ class LoginFormScreen extends StatelessWidget {
         margin: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            RoundButton(
-              icon: Icons.arrow_back,
-              onPressed: () => Get.back(),
-            ),
-            const SizedBox(height: 48),
-            Text(
-              "Enter your mobile number",
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              "We will send you a confirmation code",
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge
-                  ?.copyWith(color: Theme.of(context).primaryColorLight),
-            ),
-            const SizedBox(
+          children: const [
+            Header(
+                title: "Enter your mobile number",
+                subtitle: "We will send you a confirmation code"),
+            SizedBox(
               height: 24,
             ),
-            const EnterMobileNumberFormView(),
+            _FormView(),
           ],
         ),
       ),
@@ -50,14 +31,15 @@ class LoginFormScreen extends StatelessWidget {
   }
 }
 
-class EnterMobileNumberFormView extends StatefulWidget {
-  const EnterMobileNumberFormView({super.key});
+//Form for entering mobile number.
+class _FormView extends StatefulWidget {
+  const _FormView({super.key});
 
   @override
-  State<EnterMobileNumberFormView> createState() => _EnterMobileNumberFormViewState();
+  State<_FormView> createState() => _FormViewState();
 }
 
-class _EnterMobileNumberFormViewState extends State<EnterMobileNumberFormView> {
+class _FormViewState extends State<_FormView> {
   final _phoneNumberTextController = TextEditingController();
   @override
   void dispose() {

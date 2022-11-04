@@ -6,8 +6,8 @@ import 'package:grocery_user/Utils/asset_repo.dart';
 import '../../Utils/router.dart';
 import 'widgets/full_length_button_widget.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+class IntroScreen extends StatelessWidget {
+  const IntroScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
