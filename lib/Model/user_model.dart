@@ -21,7 +21,7 @@ class User {
     this.profileImageUrl,
   });
 
-  User.fromJSON(Map<String, dynamic> json) {
+  factory User.fromJSON(Map<String, dynamic> json) {
     var jsonAddress = json["address"] as Map<String, dynamic>;
     var jsonLocation = json["location"] as Map<String, dynamic>;
 
@@ -35,11 +35,12 @@ class User {
         locality: jsonAddress["locality"],
         addressType: jsonAddress["addressType"]);
 
-    id = json["id"];
-    userName = json["userName"];
-    this.location = location;
-    this.address = address;
-    pincode = json["pincode"];
-    profileImageUrl = json["profileImageurl"];
+    return User(
+        id: json["id"],
+        userName: json["userName"],
+        location: location,
+        address: address,
+        pincode: json["pincode"],
+        profileImageUrl: json["profileImageurl"]);
   }
 }
