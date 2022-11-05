@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
-import 'Address.model.dart';
-import 'Location.model.dart';
+import 'address_model.dart';
+import 'location_model.dart';
 
 class User {
   late String id;
