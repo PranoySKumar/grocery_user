@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Controllers/login_controller.dart';
 import 'package:grocery_user/Screens/login/widgets/full_length_button_widget.dart';
 import 'package:grocery_user/Screens/login/widgets/header_widget.dart';
 
@@ -50,10 +51,21 @@ class _OtpTextFieldForm extends StatefulWidget {
 
 class _OtpTextFieldFormState extends State<_OtpTextFieldForm> {
   final _otpController = TextEditingController();
+  late final LoginController _loginController;
+
+  @override
+  void initState() {
+    _loginController = Get.put(LoginController());
+    super.initState();
+  }
 
   //form submit handler
   _onSubmitHandler(String? val) {
-    Get.toNamed(RouteHelper.locationScreen);
+    if (val == null || val.isEmpty) {
+      return;
+    }
+    _loginController.verifyOtp(val);
+    Get.offNamed(RouteHelper.locationScreen);
   }
 
   @override
@@ -75,7 +87,7 @@ class _OtpTextFieldFormState extends State<_OtpTextFieldForm> {
           height: 16,
         ),
         FullLengthButton(
-          text: "Next",
+          text: "Verify",
           backgroundColor: theme.primaryColor,
           textColor: Colors.white,
           onPressed: () => _onSubmitHandler(_otpController.text),

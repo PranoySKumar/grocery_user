@@ -2,7 +2,7 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:grocery_user/Screens/login/location_screen.dart';
 
-import 'package:grocery_user/Screens/login/login_form_screen.dart';
+import 'package:grocery_user/Screens/login/enter_phone_number_screen.dart';
 import 'package:grocery_user/Screens/login/otp_verification_screen.dart';
 import 'package:grocery_user/Screens/login/intro_screen.dart';
 import 'package:grocery_user/Screens/login/username_form_screen.dart';
