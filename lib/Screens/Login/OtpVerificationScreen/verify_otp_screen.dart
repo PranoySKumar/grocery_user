@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/login/widgets/full_length_button_widget.dart';
-import 'package:grocery_user/Screens/login/widgets/header_widget.dart';
+import 'package:grocery_user/Screens/Login/OtpVerificationScreen/verify_otp_controller.dart';
+import 'package:grocery_user/Screens/common/full_length_button_widget.dart';
+import 'package:grocery_user/Screens/common/header_widget.dart';
 
-import 'package:grocery_user/Screens/login/widgets/round_button_widget.dart';
-import 'package:grocery_user/Utils/route_helper.dart';
-
-import 'widgets/borderless_textfield_widget.dart';
+import '../../common/borderless_textfield_widget.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
   const OtpVerificationScreen({super.key});
@@ -14,6 +12,7 @@ class OtpVerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.all(16),
@@ -33,7 +32,7 @@ class OtpVerificationScreen extends StatelessWidget {
             const SizedBox(
               height: 3,
             ),
-            Container(alignment: Alignment.center, child: const _OtpTextFieldForm()),
+            Container(alignment: Alignment.center, child: _OtpTextFieldForm()),
           ],
         ),
       ),
@@ -41,24 +40,13 @@ class OtpVerificationScreen extends StatelessWidget {
   }
 }
 
-class _OtpTextFieldForm extends StatefulWidget {
-  const _OtpTextFieldForm({super.key});
+class _OtpTextFieldForm extends StatelessWidget {
+  final _controller = Get.find<VerifyOtpController>();
 
-  @override
-  State<_OtpTextFieldForm> createState() => _OtpTextFieldFormState();
-}
-
-class _OtpTextFieldFormState extends State<_OtpTextFieldForm> {
-  final _otpController = TextEditingController();
-
-  //form submit handler
-  _onSubmitHandler(String? val) {
-    Get.toNamed(RouteHelper.locationScreen);
-  }
-
+  _OtpTextFieldForm({super.key});
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    var theme = Theme.of(context);
     return Column(
       children: [
         SizedBox(
@@ -66,19 +54,19 @@ class _OtpTextFieldFormState extends State<_OtpTextFieldForm> {
           child: BorderlessTextField(
               autoFocus: true,
               hint: "0-0-0-0",
-              controller: _otpController,
+              controller: _controller.textEditingController,
               onChanged: (value) {},
-              onSubmit: _onSubmitHandler),
+              onSubmit: _controller.onSubmitHandler),
         ),
         const _ResendOptView(),
         const SizedBox(
           height: 16,
         ),
         FullLengthButton(
-          text: "Next",
+          text: "Verify",
           backgroundColor: theme.primaryColor,
           textColor: Colors.white,
-          onPressed: () => _onSubmitHandler(_otpController.text),
+          onPressed: () => _controller.onSubmitHandler(_controller.textEditingController.text),
         )
       ],
     );
