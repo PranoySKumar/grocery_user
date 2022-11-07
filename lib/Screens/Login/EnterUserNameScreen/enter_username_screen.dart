@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:grocery_user/Screens/common/icon_text_field.dart';
-import 'package:grocery_user/Screens/login/widgets/header_widget.dart';
+import 'package:grocery_user/Screens/common/header_widget.dart';
 
-class UserNameFormScreen extends StatelessWidget {
-  const UserNameFormScreen({super.key});
+class EnterUserNameScreen extends StatelessWidget {
+  const EnterUserNameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

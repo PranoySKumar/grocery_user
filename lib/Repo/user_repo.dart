@@ -20,11 +20,12 @@ class UserRepo {
   }
 
   static Future<Map<String, dynamic>> verifyPhoneNumber(String phoneNumber) async {
-    var response = await http.post(Uri.parse(Api.verifyPhoneNumberUrl(phoneNumber)));
+    var response = await http.get(Uri.parse(Api.verifyPhoneNumberUrl(phoneNumber)));
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body) as Map<String, dynamic>;
       return data;
     } else {
+      print(response.body);
       throw Exception("something went wrong during phonenumber verification");
     }
   }

@@ -5,7 +5,7 @@ class Api {
   static final Map<String, String> defaultHeaders = {
     "Authorization": "Bearer ${GetStorage().read("token")}"
   };
-  static const String baseUrl = "http://localhost:4000/user";
+  static const String baseUrl = "http://192.168.197.76:4000/user";
 
   static String verifyPhoneNumberUrl(String phoneNumber) => "$baseUrl/auth/verify/$phoneNumber";
   static String verifyOtpUrl(String phoneNumber, code) =>

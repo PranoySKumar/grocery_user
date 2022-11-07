@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Utils/asset_repo.dart';
 
-import '../../Utils/route_helper.dart';
-import 'widgets/full_length_button_widget.dart';
+import '../../../Utils/route_helper.dart';
+import '../../common/full_length_button_widget.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});

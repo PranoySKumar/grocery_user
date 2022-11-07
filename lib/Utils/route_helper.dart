@@ -1,11 +1,13 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
-import 'package:grocery_user/Screens/login/location_screen.dart';
 
-import 'package:grocery_user/Screens/login/enter_phone_number_screen.dart';
-import 'package:grocery_user/Screens/login/otp_verification_screen.dart';
-import 'package:grocery_user/Screens/login/intro_screen.dart';
-import 'package:grocery_user/Screens/login/username_form_screen.dart';
+import '../Screens/Login/EnterLocationScreen/enter_location_screen.dart';
+import '../Screens/Login/EnterPhoneNumberScreen/verify_number_binding.dart';
+import '../Screens/Login/EnterPhoneNumberScreen/verify_number_screen.dart';
+import '../Screens/Login/EnterUserNameScreen/enter_username_screen.dart';
+import '../Screens/Login/IntroScreen/intro_screen.dart';
+import '../Screens/Login/OtpVerificationScreen/verify_otp_binding.dart';
+import '../Screens/Login/OtpVerificationScreen/verify_otp_screen.dart';
 
 class RouteHelper {
   static const homeScreen = "/";
@@ -22,23 +24,23 @@ class RouteHelper {
           transition: Transition.rightToLeftWithFade,
         ),
         GetPage(
-          name: enterPhoneNumberScreen,
-          page: () => const LoginFormScreen(),
-          transition: Transition.rightToLeftWithFade,
-        ),
+            name: enterPhoneNumberScreen,
+            page: () => const VerifyNumberScreen(),
+            transition: Transition.rightToLeftWithFade,
+            binding: VerifyNumberBinding()),
         GetPage(
-          name: verifyOtpScreen,
-          page: () => const OtpVerificationScreen(),
-          transition: Transition.rightToLeftWithFade,
-        ),
+            name: verifyOtpScreen,
+            page: () => const OtpVerificationScreen(),
+            transition: Transition.rightToLeftWithFade,
+            binding: VerifyOtpBinding()),
         GetPage(
           name: userNameFormScreen,
-          page: () => const UserNameFormScreen(),
+          page: () => const EnterUserNameScreen(),
           transition: Transition.rightToLeftWithFade,
         ),
         GetPage(
           name: locationScreen,
-          page: () => const LocationScreen(),
+          page: () => const EnterLocationScreen(),
           transition: Transition.rightToLeftWithFade,
         ),
       ];

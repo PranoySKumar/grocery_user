@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Utils/route_helper.dart';
-import '../common/icon_text_field.dart';
-import 'widgets/header_widget.dart';
+import '../../../Utils/route_helper.dart';
+import '../../common/icon_text_field.dart';
+import '../../common/header_widget.dart';
 
-class LocationScreen extends StatelessWidget {
-  const LocationScreen({super.key});
+class EnterLocationScreen extends StatelessWidget {
+  const EnterLocationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
