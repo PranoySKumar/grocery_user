@@ -1,13 +1,32 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 
 class EnterLocationController extends GetxController {
   late LocationData _locationData;
+  String _pinCode = "";
+
+  get pinCode => _pinCode;
+
+  final otpTextEditingController = TextEditingController();
+
+  @override
+  onClose() {
+    otpTextEditingController.dispose();
+    super.onClose();
+  }
+
+  onSubmitHandler(String? val) {
+    if (val == null || val.isEmpty) {
+      print("Please enter a valid pincode");
+      return;
+    }
+    _pinCode = val;
+  }
 
   //Get user location.
   getLocation() async {
     Location location = Location();
-
     bool serviceEnabled;
     PermissionStatus permissionGranted;
 
