@@ -21,4 +21,7 @@ class EnterUserNameController extends GetxController {
     _userName = val;
     print(val);
   }
+
+  //TODO: implement login user;
+  loginUser() async {}
 }

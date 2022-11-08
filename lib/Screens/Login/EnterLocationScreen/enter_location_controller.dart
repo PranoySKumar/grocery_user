@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Utils/route_helper.dart';
 import 'package:location/location.dart';
 
 class EnterLocationController extends GetxController {
@@ -22,6 +23,7 @@ class EnterLocationController extends GetxController {
       return;
     }
     _pinCode = val;
+    Get.toNamed(RouteHelper.userNameFormScreen);
   }
 
   //Get user location.
@@ -49,9 +51,6 @@ class EnterLocationController extends GetxController {
     }
 
     _locationData = await location.getLocation();
-    printInfo(info: _locationData.latitude.toString());
-    printInfo(info: _locationData.longitude.toString());
+    Get.toNamed(RouteHelper.userNameFormScreen);
   }
-
-  sendLocationDataAndLoginUser() {}
 }
