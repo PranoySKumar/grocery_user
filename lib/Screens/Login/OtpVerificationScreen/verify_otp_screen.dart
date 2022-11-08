@@ -43,7 +43,7 @@ class OtpVerificationScreen extends StatelessWidget {
 class _OtpTextFieldForm extends StatelessWidget {
   final _controller = Get.find<VerifyOtpController>();
 
-  _OtpTextFieldForm({super.key});
+  _OtpTextFieldForm();
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -74,7 +74,7 @@ class _OtpTextFieldForm extends StatelessWidget {
 }
 
 class _ResendOptView extends StatelessWidget {
-  const _ResendOptView({super.key});
+  const _ResendOptView();
 
   @override
   Widget build(BuildContext context) {
