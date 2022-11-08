@@ -1,5 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_binding.dart';
+import 'package:grocery_user/Screens/Login/EnterUserNameScreen/enter_username_binding.dart';
 
 import '../Screens/Login/EnterLocationScreen/enter_location_screen.dart';
 import '../Screens/Login/EnterPhoneNumberScreen/verify_number_binding.dart';
@@ -34,14 +36,14 @@ class RouteHelper {
             transition: Transition.rightToLeftWithFade,
             binding: VerifyOtpBinding()),
         GetPage(
-          name: userNameFormScreen,
-          page: () => const EnterUserNameScreen(),
-          transition: Transition.rightToLeftWithFade,
-        ),
+            name: userNameFormScreen,
+            page: () => const EnterUserNameScreen(),
+            transition: Transition.rightToLeftWithFade,
+            binding: EnterUserNameBinding()),
         GetPage(
-          name: locationScreen,
-          page: () => const EnterLocationScreen(),
-          transition: Transition.rightToLeftWithFade,
-        ),
+            name: locationScreen,
+            page: () => const EnterLocationScreen(),
+            transition: Transition.rightToLeftWithFade,
+            binding: EnterLocationBinding()),
       ];
 }

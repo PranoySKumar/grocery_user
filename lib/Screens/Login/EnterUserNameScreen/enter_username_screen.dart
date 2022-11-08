@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:grocery_user/Screens/Login/EnterUserNameScreen/enter_username_controller.dart';
 
 import 'package:grocery_user/Screens/common/icon_text_field.dart';
 import 'package:grocery_user/Screens/common/header_widget.dart';
@@ -8,51 +10,35 @@ class EnterUserNameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<EnterUserNameController>();
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Header(
+          children: [
+            const Header(
               title: "What do we call you?",
               subtitle: "Fresh food is waiting to be delivered",
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
-            _FormView(),
-            SizedBox(
+            IconTextField(
+                prefixIcon: const Icon(
+                  Icons.circle_outlined,
+                  color: Colors.black,
+                ),
+                keyboardType: TextInputType.name,
+                controller: controller.userNameTextEditingController,
+                hint: "Name",
+                onSubmitted: controller.onSubmitHandler),
+            const SizedBox(
               height: 15,
             ),
           ],
         ),
       ),
     );
-  }
-}
-
-class _FormView extends StatefulWidget {
-  const _FormView({super.key});
-
-  @override
-  State<_FormView> createState() => _FormViewState();
-}
-
-class _FormViewState extends State<_FormView> {
-  @override
-  Widget build(BuildContext context) {
-    var editTextController = TextEditingController();
-
-    return IconTextField(
-        prefixIcon: const Icon(
-          Icons.circle_outlined,
-          color: Colors.black,
-        ),
-        keyboardType: TextInputType.name,
-        controller: editTextController,
-        onChanged: (val) {},
-        hint: "Name",
-        onSubmitted: (val) {});
   }
 }

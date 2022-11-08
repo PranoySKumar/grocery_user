@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class IconTextField extends StatelessWidget {
   final TextEditingController controller;
-  final Function(String?) onChanged;
+  final Function(String?)? onChanged;
   final Function(String?) onSubmitted;
   final String hint;
   final bool? autoFocus;
@@ -12,7 +12,7 @@ class IconTextField extends StatelessWidget {
   const IconTextField({
     super.key,
     required this.controller,
-    required this.onChanged,
+    this.onChanged,
     required this.hint,
     required this.onSubmitted,
     this.autoFocus,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_controller.dart';
 
-import '../../../Utils/route_helper.dart';
 import '../../common/icon_text_field.dart';
 import '../../common/header_widget.dart';
 
@@ -10,6 +10,7 @@ class EnterLocationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<EnterLocationController>();
     var theme = Theme.of(context);
     return Scaffold(
       body: Container(
@@ -23,7 +24,16 @@ class EnterLocationScreen extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
-            const _FormView(),
+            IconTextField(
+                prefixIcon: const Icon(
+                  Icons.near_me,
+                  color: Colors.black,
+                ),
+                keyboardType: TextInputType.name,
+                controller: controller.otpTextEditingController,
+                onChanged: (val) {},
+                hint: "Enter Pincode",
+                onSubmitted: controller.onSubmitHandler),
             const SizedBox(
               height: 15,
             ),
@@ -32,40 +42,13 @@ class EnterLocationScreen extends StatelessWidget {
                 "Use current location",
                 style: theme.textTheme.labelMedium?.copyWith(color: const Color(0xff6482FF)),
               ),
-              onTap: () {},
+              onTap: () {
+                controller.getLocation();
+              },
             )
           ],
         ),
       ),
     );
-  }
-}
-
-class _FormView extends StatefulWidget {
-  const _FormView({super.key});
-
-  @override
-  State<_FormView> createState() => __FormViewState();
-}
-
-class __FormViewState extends State<_FormView> {
-  //form submit handler
-  _onSubmitHandler(String? val) {
-    Get.toNamed(RouteHelper.userNameFormScreen);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var editTextController = TextEditingController();
-    return IconTextField(
-        prefixIcon: const Icon(
-          Icons.near_me,
-          color: Colors.black,
-        ),
-        keyboardType: TextInputType.name,
-        controller: editTextController,
-        onChanged: (val) {},
-        hint: "Enter Pincode",
-        onSubmitted: _onSubmitHandler);
   }
 }
