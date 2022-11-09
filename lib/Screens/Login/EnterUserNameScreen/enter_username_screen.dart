@@ -11,6 +11,7 @@ class EnterUserNameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<EnterUserNameController>();
+
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.all(16),

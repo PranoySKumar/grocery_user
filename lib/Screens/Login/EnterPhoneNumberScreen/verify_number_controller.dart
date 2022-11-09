@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../../../Repo/user_repo.dart';
-import '../../../Utils/route_helper.dart';
+import '../../../Remote/Providers/user_provider.dart';
+import '../../../Routes/route_helper.dart';
 
 class VerifyNumberController extends GetxController {
   late String phoneNumber;
@@ -29,9 +29,7 @@ class VerifyNumberController extends GetxController {
   }
 
   void _verifyPhoneNumber(String phoneNumber) async {
-    var res = await UserRepo.verifyPhoneNumber(phoneNumber);
-    print("verify phonenumber controller");
-    print(res);
+    var res = await UserProvider().verifyPhoneNumber(phoneNumber);
   }
 
 //adds a "-" in the middle of the text

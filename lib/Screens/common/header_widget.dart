@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_user/Screens/common/back_button.dart';
 
 class Header extends StatelessWidget {
   final String title;
   final String subtitle;
+  final TextStyle? subtitleStyle;
 
-  const Header({super.key, required this.title, required this.subtitle});
+  const Header({super.key, required this.title, required this.subtitle, this.subtitleStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class Header extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        const BackButton(),
+        const RoundBackButton(),
         const SizedBox(height: 48),
         Text(
           title,
@@ -25,10 +27,11 @@ class Header extends StatelessWidget {
         ),
         Text(
           subtitle,
-          style: Theme.of(context)
-              .textTheme
-              .labelLarge
-              ?.copyWith(color: Theme.of(context).primaryColorLight),
+          style: subtitleStyle ??
+              Theme.of(context)
+                  .textTheme
+                  .labelLarge
+                  ?.copyWith(color: Theme.of(context).primaryColorLight),
         ),
       ],
     );

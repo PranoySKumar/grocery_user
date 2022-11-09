@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 
 import 'round_button_widget.dart';
 
-class BackButton extends StatelessWidget {
-  const BackButton({super.key});
+class RoundBackButton extends StatelessWidget {
+  const RoundBackButton({super.key});
 
   @override
   Widget build(BuildContext context) {

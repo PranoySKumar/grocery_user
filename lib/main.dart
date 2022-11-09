@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Theme/light_theme.dart';
-import 'package:grocery_user/Utils/route_helper.dart';
+import 'package:grocery_user/Routes/route_helper.dart';
 
 void main(List<String> args) async {
   await GetStorage.init();
@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: lightTheme,
-      initialRoute: RouteHelper.introScreen,
+      initialRoute:
+          GetStorage().hasData("token") ? RouteHelper.homeScreen : RouteHelper.introScreen,
       getPages: RouteHelper.getAppRoutes(),
     );
   }

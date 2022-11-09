@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Utils/route_helper.dart';
+import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:location/location.dart';
 
-class EnterLocationController extends GetxController {
-  late LocationData _locationData;
-  String _pinCode = "";
+import '../../../Model/LatLng/latlng_model.dart';
 
-  get pinCode => _pinCode;
+class EnterLocationController extends GetxController {
+  LocationData? _locationData;
+  String _pincode = "";
+
+  String get pincode => _pincode;
+  LatLng? get location => _locationData != null
+      ? LatLng(lat: _locationData!.latitude!, lng: _locationData!.longitude!)
+      : null;
 
   final otpTextEditingController = TextEditingController();
 
@@ -22,7 +27,7 @@ class EnterLocationController extends GetxController {
       print("Please enter a valid pincode");
       return;
     }
-    _pinCode = val;
+    _pincode = val;
     Get.toNamed(RouteHelper.userNameFormScreen);
   }
 

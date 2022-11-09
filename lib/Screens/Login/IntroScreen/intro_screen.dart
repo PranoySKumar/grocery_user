@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Utils/asset_repo.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:grocery_user/Routes/asset_routes.dart';
 
-import '../../../Utils/route_helper.dart';
+import '../../../Routes/route_helper.dart';
 import '../../common/full_length_button_widget.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -11,13 +12,16 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // if (GetStorage().hasData("token")) {
+    //   Get.offAllNamed(RouteHelper.homeScreen);
+    // }
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(AssetRepo.coverImage),
+              image: AssetImage(AssetRoute.coverImage),
               fit: BoxFit.fitHeight,
               alignment: Alignment.center),
         ),
@@ -32,7 +36,7 @@ class IntroScreen extends StatelessWidget {
                 height: 20,
               ),
               SvgPicture.asset(
-                AssetRepo.logoSvg,
+                AssetRoute.logoSvg,
                 alignment: Alignment.center,
               ),
               const LoginIntroSection()

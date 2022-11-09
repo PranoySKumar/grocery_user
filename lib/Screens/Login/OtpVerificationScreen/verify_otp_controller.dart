@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Remote/Providers/user_provider.dart';
+import 'package:grocery_user/Screens/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
 
-import '../../../Utils/route_helper.dart';
+import '../../../Routes/route_helper.dart';
 
 class VerifyOtpController extends GetxController {
   final textEditingController = TextEditingController();
@@ -12,13 +14,24 @@ class VerifyOtpController extends GetxController {
     super.onClose();
   }
 
-  onSubmitHandler(String? val) {
+  onSubmitHandler(String? val) async {
     if (val == null || val.isEmpty) {
       return;
     }
-    verifyOtp(val);
-    Get.offNamed(RouteHelper.locationScreen);
-  }
+    var phoneNumberController = Get.find<VerifyNumberController>();
 
-  verifyOtp(String val) {}
+    try {
+      var result = await UserProvider().verifyOtp(phoneNumberController.phoneNumber, val);
+      print(result);
+      Get.offNamed(RouteHelper.locationScreen);
+    } catch (e) {
+      Get.showSnackbar(GetSnackBar(
+        titleText: Text(
+          "Something went wrong",
+          style: Get.theme.textTheme.titleMedium,
+        ),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
 }

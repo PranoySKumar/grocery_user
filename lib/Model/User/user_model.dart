@@ -1,15 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../Address/address_model.dart';
-import '../Location/location_model.dart';
+import '../LatLng/latlng_model.dart';
 
 part 'user_model.g.dart';
 
 @JsonSerializable()
 class User {
-  String? id;
+  int? id;
   String? userName;
-  Location? location;
+  LatLng? location;
   Address? address;
 
   int? pincode;
