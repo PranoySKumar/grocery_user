@@ -1,16 +1,11 @@
-import 'package:get/get.dart';
+import 'package:get/get_connect/connect.dart';
 import 'package:get_storage/get_storage.dart';
 
-class Api {
-  static const String baseUrl = "http://192.168.43.39:4000/user";
-
-  static String get userLoginUrl => "$baseUrl/auth/login";
-  static String verifyPhoneNumberUrl(String phoneNumber) => "$baseUrl/auth/verify/$phoneNumber";
-  static String verifyOtpUrl(String phoneNumber, code) =>
-      "$baseUrl/auth/verify/$phoneNumber/otp/$code";
-}
-
 class ApiService extends GetConnect {
+  ApiService() {
+    baseUrl = "http://192.168.43.39:4000/user";
+  }
+
   //headers
   static final Map<String, String> defaultHeaders = {
     "Content-Type": "application/json",

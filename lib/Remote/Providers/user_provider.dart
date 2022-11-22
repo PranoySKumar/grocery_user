@@ -1,10 +1,12 @@
 import 'package:grocery_user/Model/LatLng/latlng_model.dart';
 
 import '../../Model/User/user_model.dart';
-import '../apis.dart';
+import '../api_service.dart';
 
-class UserProvider {
-  final ApiService _apiService = ApiService();
+class UserProvider extends ApiService {
+  String get _userLoginUrl => "$baseUrl/auth";
+  String _verifyPhoneNumberUrl(String phoneNumber) => "$baseUrl/auth/$phoneNumber";
+  String _verifyOtpUrl(String phoneNumber, code) => "$baseUrl/auth/$phoneNumber/otp/$code";
 
   Future<LoginResponse> login(
       {int? phoneNumber, String? userName, int? pincode, LatLng? location}) async {
@@ -17,8 +19,8 @@ class UserProvider {
         "phoneNumber": phoneNumber,
       };
 
-      var response = await _apiService.post(
-        Api.userLoginUrl,
+      var response = await post(
+        _userLoginUrl,
         requestBody,
       );
 
@@ -35,7 +37,7 @@ class UserProvider {
   }
 
   Future<Map<String, dynamic>> verifyPhoneNumber(String phoneNumber) async {
-    var response = await _apiService.get(Api.verifyPhoneNumberUrl(phoneNumber));
+    var response = await get(_verifyPhoneNumberUrl(phoneNumber));
     if (response.statusCode == 200) {
       return response.body as Map<String, dynamic>;
     } else {
@@ -44,8 +46,8 @@ class UserProvider {
   }
 
   Future<Map<String, dynamic>> verifyOtp(String phoneNumber, String code) async {
-    var response = await _apiService.get(
-      Api.verifyOtpUrl(phoneNumber, code),
+    var response = await get(
+      _verifyOtpUrl(phoneNumber, code),
     );
     if (response.statusCode == 200) {
       return response.body as Map<String, dynamic>;
