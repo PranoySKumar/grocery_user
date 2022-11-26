@@ -4,6 +4,7 @@ import 'package:grocery_user/Remote/Providers/user_provider.dart';
 import 'package:grocery_user/Screens/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
 
 import '../../../Routes/route_helper.dart';
+import '../../../Utils/snackbar.dart';
 
 class VerifyOtpController extends GetxController {
   final textEditingController = TextEditingController();
@@ -25,13 +26,8 @@ class VerifyOtpController extends GetxController {
       print(result);
       Get.offNamed(RouteHelper.locationScreen);
     } catch (e) {
-      Get.showSnackbar(GetSnackBar(
-        titleText: Text(
-          "Something went wrong",
-          style: Get.theme.textTheme.titleMedium,
-        ),
-        backgroundColor: Colors.red,
-      ));
+      SnackBarDisplay.show();
+      rethrow;
     }
   }
 }

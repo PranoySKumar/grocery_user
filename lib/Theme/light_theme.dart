@@ -7,14 +7,12 @@ ThemeData lightTheme = ThemeData(
     primaryColorLight: const Color(0xff555555),
     textTheme: TextTheme(
       titleLarge: interBold.copyWith(fontSize: 34),
+      titleMedium: interSemiBold.copyWith(fontSize: 15, height: 1.3),
       titleSmall: interRegular.copyWith(fontSize: 15),
       labelMedium: interSemiBold.copyWith(
         fontSize: 16,
         letterSpacing: 0,
       ),
-      labelSmall: interSemiBold.copyWith(
-        fontSize: 13,
-        letterSpacing: 0,
-      ),
+      labelSmall: interSemiBold.copyWith(fontSize: 14, letterSpacing: 0, height: 1.2),
     ),
     highlightColor: const Color(0xFF6482FF));

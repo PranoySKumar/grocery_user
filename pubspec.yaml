@@ -39,7 +39,7 @@ dependencies:
   flutter_svg: ^1.1.6
   get_storage: ^2.0.3
   json_annotation: ^4.7.0
-
+  sliver_tools: ^0.2.8
   location: ^4.4.0
 
 dev_dependencies:

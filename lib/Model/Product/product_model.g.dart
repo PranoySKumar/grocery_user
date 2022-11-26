@@ -7,7 +7,7 @@ part of 'product_model.dart';
 // **************************************************************************
 
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
-      id: json['_id'] as String?,
+      id: json['id'] as String?,
       name: json['name'] as String?,
       description: json['description'] as String?,
       price: (json['price'] as num?)?.toDouble(),
@@ -18,7 +18,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       category: json['category'] == null
           ? null
           : Category.fromJson(json['category'] as Map<String, dynamic>),
-      totalQuantityRemaining: (json['totalQuantityRemaining'] as num?)?.toDouble(),
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
@@ -27,19 +27,21 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'description': instance.description,
       'price': instance.price,
       'discount': instance.discount,
-      'totalQuantityRemaining': instance.totalQuantityRemaining,
       'quantity': instance.quantity,
+      'imageUrl': instance.imageUrl,
       'category': instance.category,
     };
 
 Quantity _$QuantityFromJson(Map<String, dynamic> json) => Quantity(
-      type: $enumDecode(_$QuantityTypeEnumMap, json['type']),
-      value: (json['value'] as num).toDouble(),
+      type: $enumDecodeNullable(_$QuantityTypeEnumMap, json['type']),
+      value: (json['value'] as num?)?.toDouble(),
+      totalQuantity: (json['totalQuantity'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$QuantityToJson(Quantity instance) => <String, dynamic>{
-      'type': _$QuantityTypeEnumMap[instance.type]!,
+      'type': _$QuantityTypeEnumMap[instance.type],
       'value': instance.value,
+      'totalQuantity': instance.totalQuantity,
     };
 
 const _$QuantityTypeEnumMap = {

@@ -11,30 +11,29 @@ class Product {
   String? description;
   double? price;
   double? discount;
-  double? totalQuantityRemaining;
   Quantity? quantity;
+  String? imageUrl;
   Category? category;
 
-  Product({
-    this.id,
-    this.name,
-    this.description,
-    this.price,
-    this.discount,
-    this.quantity,
-    this.category,
-    this.totalQuantityRemaining,
-  });
+  Product(
+      {this.id,
+      this.name,
+      this.description,
+      this.price,
+      this.discount,
+      this.quantity,
+      this.category,
+      this.imageUrl});
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
   Map<String, dynamic> get toJson => _$ProductToJson(this);
 }
 
 @JsonSerializable()
 class Quantity {
-  final QuantityType type;
-  final double value;
-
-  Quantity({required this.type, required this.value});
+  final QuantityType? type;
+  final double? value;
+  final double? totalQuantity;
+  Quantity({this.type, this.value, this.totalQuantity});
   factory Quantity.fromJson(Map<String, dynamic> json) => _$QuantityFromJson(json);
   Map<String, dynamic> get toJson => _$QuantityToJson(this);
 }

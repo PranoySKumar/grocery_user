@@ -7,7 +7,7 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class User {
-  int? id;
+  String? id;
   String? userName;
   LatLng? location;
   Address? address;

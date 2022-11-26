@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: lightTheme,
       initialRoute:
-          GetStorage().hasData("token") ? RouteHelper.homeScreen : RouteHelper.introScreen,
+          GetStorage().hasData("token") ? RouteHelper.dashboardScreen : RouteHelper.introScreen,
       getPages: RouteHelper.getAppRoutes(),
     );
   }

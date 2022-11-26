@@ -13,6 +13,6 @@ class WelcomeController extends GetxController {
 
   void skipHandler() {
     print(Get.arguments);
-    Get.offAllNamed(RouteHelper.homeScreen);
+    Get.offAllNamed(RouteHelper.dashboardScreen);
   }
 }

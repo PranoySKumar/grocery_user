@@ -5,6 +5,7 @@ import 'package:grocery_user/Remote/Providers/user_provider.dart';
 import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_controller.dart';
 import 'package:grocery_user/Screens/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
+import 'package:grocery_user/Utils/snackbar.dart';
 
 class EnterUserNameController extends GetxController {
   String _userName = "";
@@ -42,11 +43,8 @@ class EnterUserNameController extends GetxController {
       await GetStorage().write("token", result.token); //setting the token;
       Get.toNamed(RouteHelper.welcomeScreen, arguments: result);
     } catch (e) {
-      Get.snackbar(
-        "Error",
-        "$e",
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      print(e);
+      SnackBarDisplay.show();
     }
   }
 }

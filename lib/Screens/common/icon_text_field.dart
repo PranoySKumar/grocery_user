@@ -6,23 +6,35 @@ class IconTextField extends StatelessWidget {
   final Function(String?) onSubmitted;
   final String hint;
   final bool? autoFocus;
-  final Icon? prefixIcon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final TextInputType? keyboardType;
+  final double? borderSize;
+  final EdgeInsetsGeometry? contentPadding;
+  final TextStyle? textStyle;
+  final TextStyle? hintTextStyle;
+  final TextAlign? textAlign;
 
-  const IconTextField({
-    super.key,
-    required this.controller,
-    this.onChanged,
-    required this.hint,
-    required this.onSubmitted,
-    this.autoFocus,
-    this.prefixIcon,
-    this.keyboardType,
-  });
+  const IconTextField(
+      {super.key,
+      required this.controller,
+      this.onChanged,
+      required this.hint,
+      required this.onSubmitted,
+      this.suffixIcon,
+      this.autoFocus,
+      this.prefixIcon,
+      this.keyboardType,
+      this.textStyle,
+      this.borderSize,
+      this.contentPadding,
+      this.textAlign,
+      this.hintTextStyle});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+
     return TextField(
       onSubmitted: onSubmitted,
       controller: controller,
@@ -30,24 +42,29 @@ class IconTextField extends StatelessWidget {
       onChanged: onChanged,
       cursorColor: Colors.black,
       keyboardType: keyboardType,
-      style: Theme.of(context).textTheme.labelMedium,
+      textAlign: textAlign ?? TextAlign.start,
+      style: textStyle ?? Theme.of(context).textTheme.labelMedium,
       decoration: InputDecoration(
+        contentPadding: contentPadding,
         prefixIcon: prefixIcon,
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
+        suffixIcon: suffixIcon,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
             Radius.circular(4),
           ),
-          borderSide: BorderSide(width: 1, color: Color(0xffDDDDDD), style: BorderStyle.solid),
+          borderSide: BorderSide(
+              width: borderSize ?? 1, color: const Color(0xffDDDDDD), style: BorderStyle.solid),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
             Radius.circular(4),
           ),
-          borderSide: BorderSide(width: 1, color: Color(0xffDDDDDD), style: BorderStyle.solid),
+          borderSide:
+              BorderSide(width: borderSize ?? 1, color: Colors.black, style: BorderStyle.solid),
         ),
         counterText: "",
         hintText: hint,
-        hintStyle: theme.textTheme.labelMedium,
+        hintStyle: hintTextStyle ?? theme.textTheme.labelMedium,
       ),
     );
   }

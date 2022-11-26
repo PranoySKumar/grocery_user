@@ -4,9 +4,9 @@ import '../../Model/Product/product_model.dart';
 import '../api_service.dart';
 
 class UserProvider extends ApiService {
-  String get _popularProductsUrl => "$baseUrl/products";
+  String get _popularProductsUrl => "$baseUrl/products?discount=true&limit=6";
 
-  Future<List<Product>> getPopularProducts() async {
+  Future<List<Product>> getDiscountedProducts() async {
     try {
       List<Product> productList = [];
       var response = await get<Map<String, dynamic>>(_popularProductsUrl);
