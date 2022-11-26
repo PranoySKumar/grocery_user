@@ -15,4 +15,6 @@ ThemeData lightTheme = ThemeData(
       ),
       labelSmall: interSemiBold.copyWith(fontSize: 14, letterSpacing: 0, height: 1.2),
     ),
-    highlightColor: const Color(0xFF6482FF));
+    hintColor: const Color(0xff555555),
+    highlightColor: const Color(0xFF6482FF),
+    scaffoldBackgroundColor: Color(0xffEDEEF1));

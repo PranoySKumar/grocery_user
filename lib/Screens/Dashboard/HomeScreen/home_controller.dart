@@ -3,20 +3,22 @@ import 'package:get/get.dart';
 import 'package:grocery_user/Remote/Providers/user_provider.dart';
 
 class HomeScreenController extends GetxController {
-  var _searchBarEditingController = TextEditingController();
+  final searchBarEditingController = TextEditingController();
 
   var searchQuery = "".obs;
 
   @override
   void onReady() {
-    var arg = Get.arguments as LoginResponse;
-    print(arg.token);
+    var arg = Get.arguments;
+    if (arg != null) {
+      print(arg.token);
+    }
     super.onReady();
   }
 
   @override
   onClose() {
-    _searchBarEditingController.dispose();
+    searchBarEditingController.dispose();
     super.onClose();
   }
 

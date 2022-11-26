@@ -14,10 +14,10 @@ class HomeAppbarWidget extends StatelessWidget {
     return SliverAppBar(
       pinned: true,
       floating: true,
-      backgroundColor: Colors.white,
-      expandedHeight: 150,
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
+      expandedHeight: 140,
       flexibleSpace: Container(
-        margin: const EdgeInsets.only(top: 38, left: 17),
+        margin: const EdgeInsets.only(top: 38, left: 12),
         child: Column(
           children: [
             Row(
@@ -50,7 +50,7 @@ class HomeAppbarWidget extends StatelessWidget {
       ),
       actions: [
         Container(
-          margin: const EdgeInsets.only(right: 17),
+          margin: const EdgeInsets.only(right: 12),
           child: const Icon(
             Icons.account_circle_outlined,
             color: Colors.black,
@@ -69,24 +69,29 @@ class SearchBar extends StatelessWidget {
     var controller = Get.find<HomeScreenController>();
 
     return Container(
-      margin: const EdgeInsets.only(right: 20),
+      margin: const EdgeInsets.only(right: 12),
       child: IconTextField(
-        controller: TextEditingController(),
+        controller: controller.searchBarEditingController,
         hint: "Fish, Meat, Mutton etc",
         prefixIcon: const Icon(
           Icons.search_outlined,
           color: Colors.black,
         ),
         suffixIcon: Obx(() => controller.searchQuery.value.isNotEmpty
-            ? const Icon(
-                Icons.close,
-                color: Colors.black,
+            ? InkWell(
+                onTap: () =>
+                    controller.searchBarEditingController.value = TextEditingValue(text: ""),
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.black,
+                ),
               )
-            : SizedBox.shrink()),
+            : const SizedBox.shrink()),
+        onChanged: controller.onSearchOueryChangeListner,
         borderSize: 2,
-        textStyle: Get.theme.textTheme.labelSmall?.copyWith(fontSize: 15),
+        textStyle: Get.theme.textTheme.labelSmall?.copyWith(color: Color(0xff333232), fontSize: 15),
         hintTextStyle:
-            Get.theme.textTheme.labelSmall?.copyWith(color: Colors.grey.shade300, fontSize: 15),
+            Get.theme.textTheme.labelSmall?.copyWith(color: Get.theme.hintColor, fontSize: 15),
         onSubmitted: (value) {},
         contentPadding: const EdgeInsets.all(20),
       ),
