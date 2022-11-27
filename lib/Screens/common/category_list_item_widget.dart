@@ -11,7 +11,7 @@ class CategoryListItemWidget extends StatelessWidget {
     return Column(
       children: [
         CircleAvatar(
-          radius: 35,
+          radius: 30,
           backgroundColor: Get.theme.scaffoldBackgroundColor,
           backgroundImage: NetworkImage(imageUrl),
         ),
