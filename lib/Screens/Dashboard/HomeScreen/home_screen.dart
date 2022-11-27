@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/category_list_view.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/home_app_bar_view.dart';
-import 'package:grocery_user/Screens/common/products_list_widget.dart';
+import 'package:grocery_user/Screens/common/products_list_section_widget.dart';
 
 import '../../../Model/Category/category_model.dart';
 
@@ -30,9 +30,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 ProductsListSectionWidget(
-                  title: "On Sale Products!",
+                  title: "Products On Sale!",
                   itemWidth: 200,
                   products: homeScreenController.getProducts,
+                  onTapViewAllHandler: () {},
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(
@@ -41,8 +42,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ProductsListSectionWidget(
                   title: "Popular Products",
-                  itemWidth: 155,
+                  itemWidth: 165,
                   products: homeScreenController.getProducts,
+                  onTapViewAllHandler: homeScreenController.navigateToMostPopularProductsScreen,
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(

@@ -12,8 +12,14 @@ class ProductsListSectionWidget extends StatelessWidget {
   final String title;
   final double? itemWidth;
   final double? itemHeight;
+  final VoidCallback onTapViewAllHandler;
   const ProductsListSectionWidget(
-      {super.key, required this.products, required this.title, this.itemWidth, this.itemHeight});
+      {super.key,
+      required this.products,
+      required this.title,
+      this.itemWidth,
+      this.itemHeight,
+      required this.onTapViewAllHandler});
   // final List<Product> testProducts = [
   //   Product(
   //       description: "some description",
@@ -68,10 +74,15 @@ class ProductsListSectionWidget extends StatelessWidget {
                     style: Get.theme.textTheme.labelMedium
                         ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
                   ),
-                  Text(
-                    "View All",
-                    style: Get.theme.textTheme.labelSmall?.copyWith(
-                        fontSize: 13, fontWeight: FontWeight.w500, color: const Color(0xffA7B7C5)),
+                  InkWell(
+                    onTap: onTapViewAllHandler,
+                    child: Text(
+                      "View All",
+                      style: Get.theme.textTheme.labelSmall?.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xffA7B7C5)),
+                    ),
                   )
                 ]),
           ),

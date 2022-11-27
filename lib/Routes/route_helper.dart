@@ -8,6 +8,8 @@ import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_bi
 import 'package:grocery_user/Screens/Login/EnterUserNameScreen/enter_username_binding.dart';
 import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_binding.dart';
 import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_screen.dart';
+import 'package:grocery_user/Screens/Products/products_binding.dart';
+import 'package:grocery_user/Screens/Products/products_screen.dart';
 
 import '../Screens/Login/EnterLocationScreen/enter_location_screen.dart';
 import '../Screens/Login/EnterPhoneNumberScreen/verify_number_binding.dart';
@@ -26,6 +28,7 @@ class RouteHelper {
   static const welcomeScreen = "/welcome";
   static const dashboardScreen = "/dashboard";
   static const categoriesScreen = "/categories";
+  static const productsScreen = "/products";
 
   static getAppRoutes() => [
         GetPage(
@@ -68,6 +71,12 @@ class RouteHelper {
           name: categoriesScreen,
           page: () => const CategoriesScreen(),
           binding: CategoryBinding(),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: productsScreen,
+          page: () => const ProductsScreen(),
+          binding: ProductsBinding(),
           transition: Transition.rightToLeftWithFade,
         ),
       ];

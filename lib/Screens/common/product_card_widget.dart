@@ -48,15 +48,16 @@ class ProductCardWidget extends StatelessWidget {
                 Text(
                     "Net: ${product.quantity?.value?.toInt()}${product.quantity?.type == QuantityType.wgt ? "g" : "nos"}",
                     style: Get.theme.textTheme.labelSmall),
-                Text(
-                  "₹${product.price?.toInt()}",
-                  style: Get.textTheme.labelSmall?.copyWith(
-                    decorationThickness: 2,
-                    decorationColor: Colors.black,
-                    decoration: TextDecoration.lineThrough,
-                    color: Get.theme.primaryColorLight,
-                  ),
-                )
+                if (product.discount != null)
+                  Text(
+                    "₹${product.price?.toInt()}",
+                    style: Get.textTheme.labelSmall?.copyWith(
+                      decorationThickness: 2,
+                      decorationColor: Colors.black,
+                      decoration: TextDecoration.lineThrough,
+                      color: Get.theme.primaryColorLight,
+                    ),
+                  )
               ],
             ),
           ),
@@ -64,7 +65,7 @@ class ProductCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const _DeliveryTimeTag(timeToDeliver: "10AM - 12PM"),
-              DiscountedPriceTag(discount: product.discount!.toInt(), price: product.price!.toInt())
+              DiscountedPriceTag(discount: product.discount, price: product.price!.toInt())
             ],
           ),
           Container(
@@ -96,25 +97,26 @@ class ProductCardWidget extends StatelessWidget {
 }
 
 class DiscountedPriceTag extends StatelessWidget {
-  final int discount;
+  final double? discount;
   final int price;
-  const DiscountedPriceTag({super.key, required this.discount, required this.price});
+  const DiscountedPriceTag({super.key, this.discount, required this.price});
 
   @override
   Widget build(BuildContext context) {
-    var discountedPrice = price - (price * (discount / 100));
+    var finalPrice = discount != null ? price - (price * (discount! / 100)) : price;
     return Container(
       margin: const EdgeInsets.only(right: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          if (discount != null)
+            Text(
+              "SAVE $discount%",
+              style: Get.theme.textTheme.labelSmall
+                  ?.copyWith(fontSize: 10, color: Get.theme.highlightColor),
+            ),
           Text(
-            "SAVE $discount%",
-            style: Get.theme.textTheme.labelSmall
-                ?.copyWith(fontSize: 10, color: Get.theme.highlightColor),
-          ),
-          Text(
-            "₹${discountedPrice.ceil().toInt()}",
+            "₹${finalPrice.ceil().toInt()}",
             style: Get.theme.textTheme.titleMedium,
           )
         ],
