@@ -14,6 +14,7 @@ class IconTextField extends StatelessWidget {
   final TextStyle? textStyle;
   final TextStyle? hintTextStyle;
   final TextAlign? textAlign;
+  final FocusNode? focusNode;
 
   const IconTextField(
       {super.key,
@@ -29,13 +30,15 @@ class IconTextField extends StatelessWidget {
       this.borderSize,
       this.contentPadding,
       this.textAlign,
-      this.hintTextStyle});
+      this.hintTextStyle,
+      this.focusNode});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
     return TextField(
+      focusNode: focusNode,
       onSubmitted: onSubmitted,
       controller: controller,
       autofocus: autoFocus ?? false,

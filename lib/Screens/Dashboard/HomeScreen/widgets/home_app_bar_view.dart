@@ -67,35 +67,49 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<HomeScreenController>();
+    var homeScreenController = Get.find<HomeScreenController>();
+    FocusNode focusNode = FocusNode();
 
-    return Container(
-      margin: const EdgeInsets.only(right: 12),
-      child: IconTextField(
-        controller: controller.searchBarEditingController,
-        hint: "Fish, Meat, Mutton etc",
-        prefixIcon: const Icon(
-          Icons.search_outlined,
-          color: Colors.black,
+    return WillPopScope(
+      onWillPop: () async {
+        if (focusNode.hasFocus) {
+          focusNode.unfocus();
+          return false;
+        }
+
+        return true;
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 12),
+        child: IconTextField(
+          focusNode: focusNode,
+          controller: homeScreenController.searchBarEditingController,
+          hint: "Fish, Meat, Mutton etc",
+          prefixIcon: const Icon(
+            Icons.search_outlined,
+            color: Colors.black,
+          ),
+          suffixIcon: Obx(() => homeScreenController.searchQuery.value.isNotEmpty
+              ? InkWell(
+                  onTap: () {
+                    focusNode.unfocus();
+                    homeScreenController.setSearchQuery = "";
+                  },
+                  child: const Icon(
+                    Icons.close,
+                    color: Colors.black,
+                  ),
+                )
+              : const SizedBox.shrink()),
+          onChanged: homeScreenController.onSearchOueryChangeListner,
+          borderSize: 2,
+          textStyle: Get.theme.textTheme.labelSmall
+              ?.copyWith(color: const Color(0xff333232), fontSize: 15),
+          hintTextStyle:
+              Get.theme.textTheme.labelSmall?.copyWith(color: Get.theme.hintColor, fontSize: 15),
+          onSubmitted: (value) {},
+          contentPadding: const EdgeInsets.all(20),
         ),
-        suffixIcon: Obx(() => controller.searchQuery.value.isNotEmpty
-            ? InkWell(
-                onTap: () =>
-                    controller.searchBarEditingController.value = const TextEditingValue(text: ""),
-                child: const Icon(
-                  Icons.close,
-                  color: Colors.black,
-                ),
-              )
-            : const SizedBox.shrink()),
-        onChanged: controller.onSearchOueryChangeListner,
-        borderSize: 2,
-        textStyle:
-            Get.theme.textTheme.labelSmall?.copyWith(color: const Color(0xff333232), fontSize: 15),
-        hintTextStyle:
-            Get.theme.textTheme.labelSmall?.copyWith(color: Get.theme.hintColor, fontSize: 15),
-        onSubmitted: (value) {},
-        contentPadding: const EdgeInsets.all(20),
       ),
     );
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,13 +14,20 @@ import 'package:grocery_user/Utils/snackbar.dart';
 class HomeScreenController extends GetxController {
   final searchBarEditingController = TextEditingController(); // editing controller for search bar.
 
-  List<Product> _products = []; // list of products.
+  List<Product> _discountedProducts = [];
+  List<Product> _mostPopularProducts = [];
   final isLoading = true.obs; // is loading variable to show loading circle.
   final searchQuery = "".obs; // search string entered by the user.
   List<Category> _categories = []; // list of categories.
 
-  get getProducts => _products; // gets current product list;
+  get getDiscountedProducts => _discountedProducts; // gets current discounted product list;
+  get getMostPopularProducts => _mostPopularProducts; // gets current popular product list;
   get getCategories => _categories; // gets current categories list;
+
+  set setSearchQuery(String val) {
+    searchQuery.value = val;
+    searchBarEditingController.text = "";
+  }
 
   @override
   void onInit() async {
@@ -26,6 +35,7 @@ class HomeScreenController extends GetxController {
 
     isLoading.value = true;
     await _loadAllDiscountedProducts();
+    await _loadAllPopularProducts();
     await _loadAllCategories();
     isLoading.value = false;
 
@@ -45,7 +55,7 @@ class HomeScreenController extends GetxController {
     searchQuery.value = val ?? "";
   }
 
-  //loads product data from network into _product.
+  //loads categories data from network into _product.
   Future<void> _loadAllCategories() async {
     try {
       _categories = await CategoriesProvider().getAllCategories(limit: 8);
@@ -57,10 +67,22 @@ class HomeScreenController extends GetxController {
     }
   }
 
-  //loads category data from network into _categories.
+  //loads discounted products data from network into _categories.
   Future<void> _loadAllDiscountedProducts() async {
     try {
-      _products = await ProductsProvider().getDiscountedProducts(limit: 6);
+      _discountedProducts = await ProductsProvider().getDiscountedProducts(limit: 6);
+    } on HttpException catch (e) {
+      SnackBarDisplay.show(message: e.message);
+    } catch (e) {
+      print(e);
+      SnackBarDisplay.show();
+    }
+  }
+
+  //loads popular products data from network into _categories.
+  Future<void> _loadAllPopularProducts() async {
+    try {
+      _mostPopularProducts = await ProductsProvider().getMostPopularProducts(limit: 6);
     } on HttpException catch (e) {
       SnackBarDisplay.show(message: e.message);
     } catch (e) {

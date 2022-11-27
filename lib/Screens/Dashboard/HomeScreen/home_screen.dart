@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                 ProductsListSectionWidget(
                   title: "Products On Sale!",
                   itemWidth: 200,
-                  products: homeScreenController.getProducts,
+                  products: homeScreenController.getDiscountedProducts,
                   onTapViewAllHandler: homeScreenController.navigateToAllDiscountedProductsScreen,
                 ),
                 const SliverToBoxAdapter(
@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                 ProductsListSectionWidget(
                   title: "Popular Products",
                   itemWidth: 165,
-                  products: homeScreenController.getProducts,
+                  products: homeScreenController.getMostPopularProducts,
                   onTapViewAllHandler: homeScreenController.navigateToMostPopularProductsScreen,
                 ),
                 const SliverToBoxAdapter(
