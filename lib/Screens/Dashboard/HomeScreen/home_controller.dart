@@ -73,6 +73,10 @@ class HomeScreenController extends GetxController {
     Get.toNamed(RouteHelper.categoriesScreen);
   }
 
+  void navigateToAllDiscountedProductsScreen() {
+    Get.toNamed(RouteHelper.productsScreen, arguments: ProductScreenFilter.discounted);
+  }
+
   void navigateToMostPopularProductsScreen() {
     Get.toNamed(RouteHelper.productsScreen, arguments: ProductScreenFilter.mostPopular);
   }

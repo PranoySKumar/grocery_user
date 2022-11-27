@@ -18,6 +18,7 @@ class ProductsController extends GetxController {
 
     isLoading.value = true;
     if (Get.arguments == ProductScreenFilter.mostPopular) await _loadMostPopularProducts();
+    if (Get.arguments == ProductScreenFilter.discounted) await _loadAllDiscountedProducts();
     isLoading.value = false;
 
     super.onInit();
@@ -27,6 +28,19 @@ class ProductsController extends GetxController {
   Future<void> _loadMostPopularProducts() async {
     try {
       _products = await ProductsProvider().getMostPopularProducts();
+    } on HttpException catch (e) {
+      SnackBarDisplay.show(message: e.message);
+    } catch (e) {
+      print(e);
+      SnackBarDisplay.show();
+      rethrow;
+    }
+  }
+
+//loads all discounted products
+  Future<void> _loadAllDiscountedProducts() async {
+    try {
+      _products = await ProductsProvider().getDiscountedProducts();
     } on HttpException catch (e) {
       SnackBarDisplay.show(message: e.message);
     } catch (e) {

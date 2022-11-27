@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                   title: "Products On Sale!",
                   itemWidth: 200,
                   products: homeScreenController.getProducts,
-                  onTapViewAllHandler: () {},
+                  onTapViewAllHandler: homeScreenController.navigateToAllDiscountedProductsScreen,
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(
