@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
-import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/home_app_bar_widget.dart';
-import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/products_list_section_widget.dart';
+import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/category_list_view.dart';
+import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/home_app_bar_view.dart';
+import 'package:grocery_user/Screens/common/products_list_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var homeScreenController = Get.find<HomeScreenController>();
-    homeScreenController.loadAllDiscountedProducts();
+
     return Obx(
       (() => homeScreenController.isLoading.isTrue
           ? const Center(
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             ))
           : CustomScrollView(
               slivers: [
-                const HomeAppbarWidget(),
+                const HomeAppbarView(),
                 const _GreetingsWidget(),
                 const SliverToBoxAdapter(
                   child: SizedBox(
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ProductsListSectionWidget(
                   title: "Popular Products",
-                  itemWidth: 170,
+                  itemWidth: 155,
                   products: homeScreenController.getProducts,
                 ),
                 const SliverToBoxAdapter(
@@ -46,6 +47,7 @@ class HomeScreen extends StatelessWidget {
                     height: 25,
                   ),
                 ),
+                CategoryListView()
               ],
             )),
     );

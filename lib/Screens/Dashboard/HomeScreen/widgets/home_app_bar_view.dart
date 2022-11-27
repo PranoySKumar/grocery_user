@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Screens/common/icon_text_field.dart';
 
-class HomeAppbarWidget extends StatelessWidget {
+class HomeAppbarView extends StatelessWidget {
   final String? address;
-  const HomeAppbarWidget({super.key, this.address});
+  const HomeAppbarView({super.key, this.address});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      floating: true,
       elevation: 0,
-      collapsedHeight: 129,
+      collapsedHeight: 130,
       backgroundColor: Get.theme.scaffoldBackgroundColor,
-      expandedHeight: 129,
+      expandedHeight: 130,
       flexibleSpace: Container(
         margin: const EdgeInsets.only(top: 38, left: 12),
         child: Column(
@@ -63,6 +61,7 @@ class HomeAppbarWidget extends StatelessWidget {
   }
 }
 
+//search bar
 class SearchBar extends StatelessWidget {
   const SearchBar({super.key});
 

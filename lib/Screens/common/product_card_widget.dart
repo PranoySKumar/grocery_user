@@ -66,7 +66,7 @@ class ProductCardWidget extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: EdgeInsets.symmetric(horizontal: 15),
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
