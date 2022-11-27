@@ -5,6 +5,7 @@ import 'package:grocery_user/Model/Category/category_model.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/Providers/categories_provider.dart';
 import 'package:grocery_user/Remote/Providers/products_provider.dart';
+import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
 class HomeScreenController extends GetxController {
@@ -19,14 +20,14 @@ class HomeScreenController extends GetxController {
   get getCategories => _categories; // gets current categories list;
 
   @override
-  void onInit() {
+  void onInit() async {
     //Loading required data from the network.
-    (() async {
-      isLoading.value = true;
-      await _loadAllDiscountedProducts();
-      await _loadAllCategories();
-      isLoading.value = false;
-    })();
+
+    isLoading.value = true;
+    await _loadAllDiscountedProducts();
+    await _loadAllCategories();
+    isLoading.value = false;
+
     super.onInit();
   }
 
@@ -46,7 +47,7 @@ class HomeScreenController extends GetxController {
   //loads product data from network into _product.
   Future<void> _loadAllCategories() async {
     try {
-      _categories = await CategoriesProvider().getAllCategories(8);
+      _categories = await CategoriesProvider().getAllCategories(limit: 8);
     } on HttpException catch (e) {
       SnackBarDisplay.show(message: e.message);
     } catch (e) {
@@ -65,5 +66,9 @@ class HomeScreenController extends GetxController {
       print(e);
       SnackBarDisplay.show();
     }
+  }
+
+  void navigateToCategoriesScreen() {
+    Get.toNamed(RouteHelper.categoriesScreen);
   }
 }

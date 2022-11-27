@@ -5,8 +5,10 @@ import 'package:grocery_user/Screens/common/category_list_item_widget.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class CategoryListView extends StatelessWidget {
-  final List<Category> categoryList;
-  const CategoryListView({super.key, required this.categoryList});
+  final List<Category> categoriesList;
+  final VoidCallback onTapViewAllHandler;
+  const CategoryListView(
+      {super.key, required this.categoriesList, required this.onTapViewAllHandler});
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +17,27 @@ class CategoryListView extends StatelessWidget {
         SliverToBoxAdapter(
           child: Container(
             margin: const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 16),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                "Categories",
-                style: Get.theme.textTheme.labelMedium?.copyWith(
-                  fontSize: 15,
-                ),
-              ),
-              Text(
-                "View All",
-                style: Get.theme.textTheme.labelSmall?.copyWith(
-                    fontSize: 13, fontWeight: FontWeight.w500, color: const Color(0xffA7B7C5)),
-              )
-            ]),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Categories",
+                    style: Get.theme.textTheme.labelMedium?.copyWith(
+                      fontSize: 15,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: onTapViewAllHandler,
+                    child: Text(
+                      "View All",
+                      style: Get.theme.textTheme.labelSmall?.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xffA7B7C5)),
+                    ),
+                  )
+                ]),
           ),
         ),
         SliverGrid(
@@ -40,9 +50,9 @@ class CategoryListView extends StatelessWidget {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return CategoryListItemWidget(
-                  imageUrl: categoryList[index].imageUrl!, title: categoryList[index].name!);
+                  imageUrl: categoriesList[index].imageUrl!, title: categoriesList[index].name!);
             },
-            childCount: categoryList
+            childCount: categoriesList
                 .length, //!!!!!Make sure to change this from test cat to catlist in production.
           ),
         )

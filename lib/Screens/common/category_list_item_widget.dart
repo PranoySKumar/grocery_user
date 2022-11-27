@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +16,9 @@ class CategoryListItemWidget extends StatelessWidget {
           radius: 30,
           backgroundColor: Get.theme.scaffoldBackgroundColor,
           backgroundImage: NetworkImage(imageUrl),
+        ),
+        SizedBox(
+          height: 5,
         ),
         Text(
           title,

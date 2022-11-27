@@ -9,7 +9,7 @@ class CategoriesProvider extends ApiService {
 
 //gets a list of categories.
 //no: of items retrieved will depend on the limit provided.
-  Future<List<Category>> getAllCategories(int? limit) async {
+  Future<List<Category>> getAllCategories({int? limit}) async {
     final response = await get<Map<String, dynamic>>(_getAllCategoriesUrl(limit));
     if (response.statusCode == 200) {
       List<dynamic> categoriesData = response.body!["categories"];

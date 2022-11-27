@@ -48,12 +48,15 @@ class ProductCardWidget extends StatelessWidget {
                 Text(
                     "Net: ${product.quantity?.value?.toInt()}${product.quantity?.type == QuantityType.wgt ? "g" : "nos"}",
                     style: Get.theme.textTheme.labelSmall),
-                Text("₹${product.price?.toInt()}",
-                    style: Get.textTheme.labelSmall?.copyWith(
-                        decorationThickness: 2,
-                        decorationColor: Colors.black,
-                        decoration: TextDecoration.lineThrough,
-                        color: Get.theme.primaryColorLight))
+                Text(
+                  "₹${product.price?.toInt()}",
+                  style: Get.textTheme.labelSmall?.copyWith(
+                    decorationThickness: 2,
+                    decorationColor: Colors.black,
+                    decoration: TextDecoration.lineThrough,
+                    color: Get.theme.primaryColorLight,
+                  ),
+                )
               ],
             ),
           ),
@@ -66,7 +69,7 @@ class ProductCardWidget extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 15),
+            margin: const EdgeInsets.symmetric(horizontal: 15),
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -83,7 +86,7 @@ class ProductCardWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 3,
           )
         ],

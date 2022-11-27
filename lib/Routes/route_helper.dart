@@ -1,5 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:grocery_user/Screens/Categories/category_screen.dart';
+import 'package:grocery_user/Screens/Categories/category_screen_binding.dart';
 import 'package:grocery_user/Screens/Dashboard/dashboard_binding.dart';
 import 'package:grocery_user/Screens/Dashboard/dashboard_screen.dart';
 import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_binding.dart';
@@ -23,6 +25,7 @@ class RouteHelper {
   static const locationScreen = "/user/location";
   static const welcomeScreen = "/welcome";
   static const dashboardScreen = "/dashboard";
+  static const categoriesScreen = "/categories";
 
   static getAppRoutes() => [
         GetPage(
@@ -59,6 +62,12 @@ class RouteHelper {
           name: dashboardScreen,
           page: () => DashboardScreen(),
           binding: DashboardBinding(),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: categoriesScreen,
+          page: () => const CategoriesScreen(),
+          binding: CategoryBinding(),
           transition: Transition.rightToLeftWithFade,
         ),
       ];
