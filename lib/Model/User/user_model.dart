@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../Address/address_model.dart';
 import '../LatLng/latlng_model.dart';
 
 part 'user_model.g.dart';
@@ -10,7 +9,7 @@ class User {
   String? id;
   String? userName;
   LatLng? location;
-  Address? address;
+  List<String>? address;
 
   int? pincode;
   String? profileImageUrl;

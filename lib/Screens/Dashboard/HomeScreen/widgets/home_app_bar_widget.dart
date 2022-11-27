@@ -14,8 +14,10 @@ class HomeAppbarWidget extends StatelessWidget {
     return SliverAppBar(
       pinned: true,
       floating: true,
+      elevation: 0,
+      collapsedHeight: 129,
       backgroundColor: Get.theme.scaffoldBackgroundColor,
-      expandedHeight: 140,
+      expandedHeight: 129,
       flexibleSpace: Container(
         margin: const EdgeInsets.only(top: 38, left: 12),
         child: Column(
@@ -80,7 +82,7 @@ class SearchBar extends StatelessWidget {
         suffixIcon: Obx(() => controller.searchQuery.value.isNotEmpty
             ? InkWell(
                 onTap: () =>
-                    controller.searchBarEditingController.value = TextEditingValue(text: ""),
+                    controller.searchBarEditingController.value = const TextEditingValue(text: ""),
                 child: const Icon(
                   Icons.close,
                   color: Colors.black,
@@ -89,7 +91,8 @@ class SearchBar extends StatelessWidget {
             : const SizedBox.shrink()),
         onChanged: controller.onSearchOueryChangeListner,
         borderSize: 2,
-        textStyle: Get.theme.textTheme.labelSmall?.copyWith(color: Color(0xff333232), fontSize: 15),
+        textStyle:
+            Get.theme.textTheme.labelSmall?.copyWith(color: const Color(0xff333232), fontSize: 15),
         hintTextStyle:
             Get.theme.textTheme.labelSmall?.copyWith(color: Get.theme.hintColor, fontSize: 15),
         onSubmitted: (value) {},

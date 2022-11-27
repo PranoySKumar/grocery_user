@@ -12,9 +12,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       location: json['location'] == null
           ? null
           : LatLng.fromJson(json['location'] as Map<String, dynamic>),
-      address: json['address'] == null
-          ? null
-          : Address.fromJson(json['address'] as Map<String, dynamic>),
+      address: json['address'] == null ? null : json['address'] as List<String>?,
       pincode: json['pincode'] as int?,
       profileImageUrl: json['profileImageUrl'] as String?,
     );

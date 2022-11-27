@@ -5,35 +5,42 @@ import 'package:grocery_user/Model/Product/product_model.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final Product product;
-  const ProductCardWidget({super.key, required this.product});
+  final TextStyle? titleStyle;
+  final double? width;
+  final double? height;
+  const ProductCardWidget(
+      {super.key, required this.product, this.titleStyle, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(12))),
-      width: 220,
+      decoration: const BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(12))),
+      width: width ?? 250,
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            child: Image.network(
-              alignment: Alignment.topCenter,
-              product.imageUrl!,
-              fit: BoxFit.fitHeight,
-              width: double.infinity,
-              height: 160,
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Image.network(
+                alignment: Alignment.topCenter,
+                product.imageUrl!,
+                fit: BoxFit.fitWidth,
+                width: double.infinity,
+                height: 130,
+              ),
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 8),
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(
               product.name!,
-              style: Get.theme.textTheme.titleMedium,
+              style: titleStyle ?? Get.theme.textTheme.titleMedium,
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,13 +64,14 @@ class ProductCardWidget extends StatelessWidget {
               DiscountedPriceTag(discount: product.discount!.toInt(), price: product.price!.toInt())
             ],
           ),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-            ),
-            child: Container(
-              width: 160,
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+              ),
               child: Text(
                 "ADD +",
                 textAlign: TextAlign.center,
@@ -71,9 +79,12 @@ class ProductCardWidget extends StatelessWidget {
                     fontSize: 16,
                     height: 24 / 16,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xff24DD7D)),
+                    color: const Color(0xff24DD7D)),
               ),
             ),
+          ),
+          SizedBox(
+            height: 3,
           )
         ],
       ),
@@ -90,14 +101,14 @@ class DiscountedPriceTag extends StatelessWidget {
   Widget build(BuildContext context) {
     var discountedPrice = price - (price * (discount / 100));
     return Container(
-      margin: EdgeInsets.only(right: 6),
+      margin: const EdgeInsets.only(right: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             "SAVE $discount%",
             style: Get.theme.textTheme.labelSmall
-                ?.copyWith(fontSize: 13, color: Get.theme.highlightColor),
+                ?.copyWith(fontSize: 10, color: Get.theme.highlightColor),
           ),
           Text(
             "₹${discountedPrice.ceil().toInt()}",
@@ -116,7 +127,7 @@ class _DeliveryTimeTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 128,
+      width: 96,
       height: 38,
       decoration: const BoxDecoration(
           gradient:
@@ -136,23 +147,28 @@ class _DeliveryTimeTag extends StatelessWidget {
           Icon(
             Icons.local_shipping_outlined,
             color: Get.theme.highlightColor,
-            size: 32,
+            size: 24,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 72,
-                child: Text(
-                  "Today $timeToDeliver",
-                  textAlign: TextAlign.center,
-                  style: Get.theme.textTheme.labelSmall?.copyWith(
-                    fontSize: 12,
-                    color: Get.theme.highlightColor,
-                  ),
+              Text(
+                "Today",
+                textAlign: TextAlign.center,
+                style: Get.theme.textTheme.labelSmall?.copyWith(
+                  fontSize: 8,
+                  color: Get.theme.highlightColor,
                 ),
               ),
+              Text(
+                timeToDeliver,
+                textAlign: TextAlign.center,
+                style: Get.theme.textTheme.labelSmall?.copyWith(
+                  fontSize: 8,
+                  color: Get.theme.highlightColor,
+                ),
+              )
             ],
           )
         ],

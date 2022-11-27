@@ -9,6 +9,9 @@ ThemeData lightTheme = ThemeData(
       titleLarge: interBold.copyWith(fontSize: 34),
       titleMedium: interSemiBold.copyWith(fontSize: 15, height: 1.3),
       titleSmall: interRegular.copyWith(fontSize: 15),
+      labelLarge: interBold.copyWith(
+        fontSize: 34,
+      ),
       labelMedium: interSemiBold.copyWith(
         fontSize: 16,
         letterSpacing: 0,
