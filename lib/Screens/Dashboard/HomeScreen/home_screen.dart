@@ -5,6 +5,8 @@ import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/category_list_
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/home_app_bar_view.dart';
 import 'package:grocery_user/Screens/common/products_list_widget.dart';
 
+import '../../../Model/Category/category_model.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -47,7 +49,9 @@ class HomeScreen extends StatelessWidget {
                     height: 25,
                   ),
                 ),
-                CategoryListView()
+                CategoryListView(
+                  categoryList: homeScreenController.getCategories,
+                )
               ],
             )),
     );
@@ -71,3 +75,50 @@ class _GreetingsWidget extends StatelessWidget {
     );
   }
 }
+
+final List<Category> testCategory = [
+  Category(
+      id: "1",
+      imageUrl:
+          "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
+      name: "steak",
+      type: "meat"),
+  Category(
+      id: "1",
+      imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
+      name: "fish cut piece",
+      type: "meat"),
+  Category(
+      id: "1",
+      imageUrl:
+          "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
+      name: "steak",
+      type: "meat"),
+  Category(
+      id: "1",
+      imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
+      name: "fish cut piece",
+      type: "meat"),
+  Category(
+      id: "1",
+      imageUrl:
+          "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
+      name: "steak",
+      type: "meat"),
+  Category(
+      id: "1",
+      imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
+      name: "fish cut piece",
+      type: "meat"),
+  Category(
+      id: "1",
+      imageUrl:
+          "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
+      name: "steak",
+      type: "meat"),
+  Category(
+      id: "1",
+      imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
+      name: "fish cut piece",
+      type: "meat"),
+];

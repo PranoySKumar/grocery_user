@@ -1,21 +1,32 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Model/Category/category_model.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
+import 'package:grocery_user/Remote/Providers/categories_provider.dart';
 import 'package:grocery_user/Remote/Providers/products_provider.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
 class HomeScreenController extends GetxController {
-  final searchBarEditingController = TextEditingController();
+  final searchBarEditingController = TextEditingController(); // editing controller for search bar.
 
-  List<Product> _products = []; // list of products
+  List<Product> _products = []; // list of products.
   final isLoading = true.obs; // is loading variable to show loading circle.
   final searchQuery = "".obs; // search string entered by the user.
+  List<Category> _categories = []; // list of categories.
 
   get getProducts => _products; // gets current product list;
+  get getCategories => _categories; // gets current categories list;
 
   @override
   void onInit() {
-    _loadAllDiscountedProducts(); //starts loading the product as soon as the controller is initialized.
+    //Loading required data from the network.
+    (() async {
+      isLoading.value = true;
+      await _loadAllDiscountedProducts();
+      await _loadAllCategories();
+      isLoading.value = false;
+    })();
     super.onInit();
   }
 
@@ -32,13 +43,26 @@ class HomeScreenController extends GetxController {
     searchQuery.value = val ?? "";
   }
 
-//finds all the products from network and loads them into products.
-  _loadAllDiscountedProducts() async {
+  //loads product data from network into _product.
+  Future<void> _loadAllCategories() async {
     try {
-      var productsListData = await ProductsProvider().getDiscountedProducts();
-      _products = productsListData;
-      isLoading.value = false; // sets loading to false
+      _categories = await CategoriesProvider().getAllCategories(8);
+    } on HttpException catch (e) {
+      SnackBarDisplay.show(message: e.message);
     } catch (e) {
+      print(e);
+      SnackBarDisplay.show();
+    }
+  }
+
+  //loads category data from network into _categories.
+  Future<void> _loadAllDiscountedProducts() async {
+    try {
+      _products = await ProductsProvider().getDiscountedProducts();
+    } on HttpException catch (e) {
+      SnackBarDisplay.show(message: e.message);
+    } catch (e) {
+      print(e);
       SnackBarDisplay.show();
     }
   }

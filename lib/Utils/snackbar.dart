@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SnackBarDisplay {
-  static void show() {
+  static void show({String? message}) {
     Get.showSnackbar(GetSnackBar(
       messageText: Text(
-        "Something went wrong",
+        message ?? "Something went wrong",
         style: Get.theme.textTheme.titleMedium
             ?.copyWith(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
       ),

@@ -5,55 +5,9 @@ import 'package:grocery_user/Screens/common/category_list_item_widget.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class CategoryListView extends StatelessWidget {
-  final List<Category>? categoryList;
-  CategoryListView({super.key, this.categoryList});
+  final List<Category> categoryList;
+  const CategoryListView({super.key, required this.categoryList});
 
-  final List<Category> testCategory = [
-    Category(
-        id: "1",
-        imageUrl:
-            "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
-        name: "steak",
-        type: "meat"),
-    Category(
-        id: "1",
-        imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
-        name: "fish cut piece",
-        type: "meat"),
-    Category(
-        id: "1",
-        imageUrl:
-            "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
-        name: "steak",
-        type: "meat"),
-    Category(
-        id: "1",
-        imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
-        name: "fish cut piece",
-        type: "meat"),
-    Category(
-        id: "1",
-        imageUrl:
-            "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
-        name: "steak",
-        type: "meat"),
-    Category(
-        id: "1",
-        imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
-        name: "fish cut piece",
-        type: "meat"),
-    Category(
-        id: "1",
-        imageUrl:
-            "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
-        name: "steak",
-        type: "meat"),
-    Category(
-        id: "1",
-        imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
-        name: "fish cut piece",
-        type: "meat"),
-  ];
   @override
   Widget build(BuildContext context) {
     return MultiSliver(
@@ -63,7 +17,7 @@ class CategoryListView extends StatelessWidget {
             margin: const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 16),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text(
-                "Categorys",
+                "Categories",
                 style: Get.theme.textTheme.labelMedium?.copyWith(
                   fontSize: 15,
                 ),
@@ -86,9 +40,9 @@ class CategoryListView extends StatelessWidget {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return CategoryListItemWidget(
-                  imageUrl: testCategory[index].imageUrl!, title: testCategory[index].name!);
+                  imageUrl: categoryList[index].imageUrl!, title: categoryList[index].name!);
             },
-            childCount: testCategory
+            childCount: categoryList
                 .length, //!!!!!Make sure to change this from test cat to catlist in production.
           ),
         )
