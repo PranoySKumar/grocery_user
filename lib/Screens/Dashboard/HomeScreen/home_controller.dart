@@ -106,6 +106,11 @@ class HomeScreenController extends GetxController {
 
   void navigateToCategoryProductsScreen(String categoryId) {
     Get.toNamed(RouteHelper.productsScreen,
-        arguments: {"type": ProductScreenFilter.categoryProducts, "categoryId": categoryId});
+        arguments: {"type": ProductScreenFilter.category, "categoryId": categoryId});
+  }
+
+  void navigateToProductsSearchResultScreen(String searchTerm) {
+    Get.toNamed(RouteHelper.productsScreen,
+        arguments: {"type": ProductScreenFilter.search, "searchTerm": searchTerm});
   }
 }

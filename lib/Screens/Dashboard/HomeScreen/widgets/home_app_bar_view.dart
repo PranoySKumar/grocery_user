@@ -6,7 +6,11 @@ import 'package:grocery_user/Screens/common/icon_text_field.dart';
 
 class HomeAppbarView extends StatelessWidget {
   final String? address;
-  const HomeAppbarView({super.key, this.address});
+
+  const HomeAppbarView({
+    super.key,
+    this.address,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +74,12 @@ class SearchBar extends StatelessWidget {
     var homeScreenController = Get.find<HomeScreenController>();
     FocusNode focusNode = FocusNode();
 
+    void submitHandler(String? value) {
+      if (value != null && value.isNotEmpty) {
+        homeScreenController.navigateToProductsSearchResultScreen(value);
+      }
+    }
+
     return WillPopScope(
       onWillPop: () async {
         if (focusNode.hasFocus) {
@@ -107,7 +117,7 @@ class SearchBar extends StatelessWidget {
               ?.copyWith(color: const Color(0xff333232), fontSize: 15),
           hintTextStyle:
               Get.theme.textTheme.labelSmall?.copyWith(color: Get.theme.hintColor, fontSize: 15),
-          onSubmitted: (value) {},
+          onSubmitted: submitHandler,
           contentPadding: const EdgeInsets.all(20),
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/Providers/products_provider.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
-enum ProductScreenFilter { discounted, mostPopular, categoryProducts }
+enum ProductScreenFilter { search, discounted, mostPopular, category }
 
 class ProductsController extends GetxController {
   List<Product> _products = []; // list of products.
@@ -19,8 +19,11 @@ class ProductsController extends GetxController {
     isLoading.value = true;
     if (Get.arguments == ProductScreenFilter.mostPopular) await _loadMostPopularProducts();
     if (Get.arguments == ProductScreenFilter.discounted) await _loadAllDiscountedProducts();
-    if (Get.arguments["type"] == ProductScreenFilter.categoryProducts) {
+    if (Get.arguments["type"] == ProductScreenFilter.category) {
       await _loadAllCategoryProducts(Get.arguments["categoryId"]);
+    }
+    if (Get.arguments["type"] == ProductScreenFilter.search) {
+      await _loadProductsBySearch(Get.arguments["searchTerm"]);
     }
     isLoading.value = false;
 
@@ -59,6 +62,19 @@ class ProductsController extends GetxController {
       _products = await ProductsProvider().getCategoryProducts(categoryId);
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't fetch category products");
+    } catch (e) {
+      print(e);
+      SnackBarDisplay.show();
+      rethrow;
+    }
+  }
+
+  //loads all category products.
+  Future<void> _loadProductsBySearch(String searchTerm) async {
+    try {
+      _products = await ProductsProvider().getProductsBySearchTerm(searchTerm);
+    } on HttpException {
+      SnackBarDisplay.show(message: "couldn't search for products");
     } catch (e) {
       print(e);
       SnackBarDisplay.show();
