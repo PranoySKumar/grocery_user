@@ -25,9 +25,9 @@ class ProductCardWidget extends StatelessWidget {
               child: Image.network(
                 alignment: Alignment.topCenter,
                 product.imageUrl!,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.fill,
                 width: double.infinity,
-                height: 130,
+                height: 120,
               ),
             ),
           ),
@@ -36,6 +36,8 @@ class ProductCardWidget extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(
               product.name!,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
               style: titleStyle ?? Get.theme.textTheme.titleMedium,
             ),
           ),

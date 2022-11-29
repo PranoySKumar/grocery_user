@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:grocery_user/Screens/Products/products_controller.dart';
 import 'package:grocery_user/Screens/common/product_card_widget.dart';
 
+import '../../Model/Product/product_model.dart';
+
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});
 
@@ -32,36 +34,52 @@ class ProductsScreen extends StatelessWidget {
                     style: Get.theme.textTheme.titleMedium,
                   ),
                   backgroundColor: Get.theme.scaffoldBackgroundColor),
-              body: Column(
-                children: [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200.0,
-                          mainAxisSpacing: 16.0,
-                          crossAxisSpacing: 16.0,
-                          childAspectRatio: 2 / 3,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProductCardWidget(
-                            product: productsController.getProducts[index],
-                          );
-                        },
-                        itemCount: productsController.getProducts.length,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 3,
-                  ),
-                ],
-              ),
+              body: productsController
+                      .getProducts.isEmpty // If products are empty return out put a message.
+                  ? Center(
+                      child: Text(
+                      "No products available",
+                      style: Get.theme.textTheme.titleMedium,
+                    ))
+                  : _ProductList(productsController.getProducts),
             )),
+    );
+  }
+}
+
+class _ProductList extends StatelessWidget {
+  final List<Product> products;
+  const _ProductList(this.products);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 15,
+        ),
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200.0,
+                mainAxisSpacing: 16.0,
+                crossAxisSpacing: 16.0,
+                childAspectRatio: 2 / 3,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return ProductCardWidget(
+                  product: products[index],
+                );
+              },
+              itemCount: products.length,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 3,
+        ),
+      ],
     );
   }
 }

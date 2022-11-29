@@ -9,6 +9,7 @@ import 'package:grocery_user/Remote/Providers/categories_provider.dart';
 import 'package:grocery_user/Remote/Providers/products_provider.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Screens/Products/products_controller.dart';
+import 'package:grocery_user/Screens/Products/products_screen.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
 class HomeScreenController extends GetxController {
@@ -101,5 +102,10 @@ class HomeScreenController extends GetxController {
 
   void navigateToMostPopularProductsScreen() {
     Get.toNamed(RouteHelper.productsScreen, arguments: ProductScreenFilter.mostPopular);
+  }
+
+  void navigateToCategoryProductsScreen(String categoryId) {
+    Get.toNamed(RouteHelper.productsScreen,
+        arguments: {"type": ProductScreenFilter.categoryProducts, "categoryId": categoryId});
   }
 }

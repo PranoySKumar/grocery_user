@@ -7,9 +7,9 @@ class SnackBarDisplay {
       messageText: Text(
         message ?? "Something went wrong",
         style: Get.theme.textTheme.titleMedium
-            ?.copyWith(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            ?.copyWith(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
       ),
-      duration: Duration(milliseconds: 3000),
+      duration: const Duration(milliseconds: 3000),
       backgroundColor: Colors.red,
     ));
   }

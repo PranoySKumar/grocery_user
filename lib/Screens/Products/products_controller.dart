@@ -4,13 +4,13 @@ import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/Providers/products_provider.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
-enum ProductScreenFilter { discounted, mostPopular }
+enum ProductScreenFilter { discounted, mostPopular, categoryProducts }
 
 class ProductsController extends GetxController {
   List<Product> _products = []; // list of products.
   final isLoading = true.obs; // is loading variable to show loading circle.
 
-  get getProducts => _products; // gets current product list;
+  List<Product> get getProducts => _products; // gets current product list;
 
   @override
   void onInit() async {
@@ -19,6 +19,9 @@ class ProductsController extends GetxController {
     isLoading.value = true;
     if (Get.arguments == ProductScreenFilter.mostPopular) await _loadMostPopularProducts();
     if (Get.arguments == ProductScreenFilter.discounted) await _loadAllDiscountedProducts();
+    if (Get.arguments["type"] == ProductScreenFilter.categoryProducts) {
+      await _loadAllCategoryProducts(Get.arguments["categoryId"]);
+    }
     isLoading.value = false;
 
     super.onInit();
@@ -28,8 +31,8 @@ class ProductsController extends GetxController {
   Future<void> _loadMostPopularProducts() async {
     try {
       _products = await ProductsProvider().getMostPopularProducts();
-    } on HttpException catch (e) {
-      SnackBarDisplay.show(message: e.message);
+    } on HttpException {
+      SnackBarDisplay.show(message: "couldn't fetch most popular products.");
     } catch (e) {
       print(e);
       SnackBarDisplay.show();
@@ -41,8 +44,21 @@ class ProductsController extends GetxController {
   Future<void> _loadAllDiscountedProducts() async {
     try {
       _products = await ProductsProvider().getDiscountedProducts();
-    } on HttpException catch (e) {
-      SnackBarDisplay.show(message: e.message);
+    } on HttpException {
+      SnackBarDisplay.show(message: "couldn't fetch discounted products");
+    } catch (e) {
+      print(e);
+      SnackBarDisplay.show();
+      rethrow;
+    }
+  }
+
+//loads all category products.
+  Future<void> _loadAllCategoryProducts(String categoryId) async {
+    try {
+      _products = await ProductsProvider().getCategoryProducts(categoryId);
+    } on HttpException {
+      SnackBarDisplay.show(message: "couldn't fetch category products");
     } catch (e) {
       print(e);
       SnackBarDisplay.show();

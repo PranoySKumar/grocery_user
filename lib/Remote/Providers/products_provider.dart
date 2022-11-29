@@ -8,6 +8,7 @@ class ProductsProvider extends ApiService {
       "/products?discount=true&${limit != null ? "limit=$limit" : ""}";
   String _mostPopularProductsUrl({int? limit}) =>
       "/products?mostPopular=true&${limit != null ? "limit=$limit" : ""}";
+  String _categoryProductsUrl(String categoryId) => "/categories/$categoryId/products";
 
 //gets products based on the url;
   Future<List<Product>> _getProducts(String url) async {
@@ -30,5 +31,10 @@ class ProductsProvider extends ApiService {
 //gets most popular products.
   Future<List<Product>> getMostPopularProducts({int? limit}) {
     return _getProducts(_mostPopularProductsUrl(limit: limit));
+  }
+
+  //gets products of a specific categories.
+  Future<List<Product>> getCategoryProducts(String categoryId) {
+    return _getProducts(_categoryProductsUrl(categoryId));
   }
 }

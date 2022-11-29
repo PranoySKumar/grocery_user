@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
+import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/categories_list_strip.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/category_list_view.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/home_app_bar_view.dart';
 import 'package:grocery_user/Screens/common/products_list_section_widget.dart';
@@ -23,6 +24,19 @@ class HomeScreen extends StatelessWidget {
           : CustomScrollView(
               slivers: [
                 const HomeAppbarView(),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 8,
+                  ),
+                ),
+                CategoriesListStripe(
+                    onTapCategory: homeScreenController.navigateToCategoryProductsScreen,
+                    categoryList: homeScreenController.getCategories),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 12,
+                  ),
+                ),
                 const _GreetingsWidget(),
                 const SliverToBoxAdapter(
                   child: SizedBox(
@@ -32,6 +46,7 @@ class HomeScreen extends StatelessWidget {
                 ProductsListSectionWidget(
                   title: "Products On Sale!",
                   itemWidth: 200,
+                  itemHeight: 240,
                   products: homeScreenController.getDiscountedProducts,
                   onTapViewAllHandler: homeScreenController.navigateToAllDiscountedProductsScreen,
                 ),
@@ -71,7 +86,6 @@ class _GreetingsWidget extends StatelessWidget {
         margin: const EdgeInsets.only(
           left: 12,
           right: 12,
-          top: 12,
         ),
         child: Text("Hi Pranoy!", style: Get.theme.textTheme.labelLarge),
       ),
