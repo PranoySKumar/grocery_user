@@ -67,6 +67,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 CategoryListView(
+                  onTapCategoryHandler: homeScreenController.navigateToCategoryProductsScreen,
                   onTapViewAllHandler: homeScreenController.navigateToCategoriesScreen,
                   categoriesList: homeScreenController.getCategories,
                 )
