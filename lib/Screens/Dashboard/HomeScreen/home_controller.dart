@@ -1,5 +1,6 @@
 // ignore_for_file: unused_field
 
+import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,8 @@ class HomeScreenController extends GetxController {
   final searchQuery = "".obs; // search string entered by the user.
   List<Category> _categories = []; // list of categories.
 
-  get getDiscountedProducts => _discountedProducts; // gets current discounted product list;
+  List<Product> get getDiscountedProducts =>
+      _discountedProducts; // gets current discounted product list;
   get getMostPopularProducts => _mostPopularProducts; // gets current popular product list;
   get getCategories => _categories; // gets current categories list;
 
@@ -35,12 +37,18 @@ class HomeScreenController extends GetxController {
     //Loading required data from the network.
 
     isLoading.value = true;
-    await _loadAllDiscountedProducts();
-    await _loadAllPopularProducts();
-    await _loadAllCategories();
+    await loadData();
     isLoading.value = false;
 
     super.onInit();
+  }
+
+  Future<void> loadData({bool? doNotUpdate}) async {
+    await _loadAllDiscountedProducts();
+    await _loadAllPopularProducts();
+    await _loadAllCategories();
+
+    update();
   }
 
   @override

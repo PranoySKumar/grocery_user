@@ -21,57 +21,65 @@ class HomeScreen extends StatelessWidget {
               child: CircularProgressIndicator(
               color: Colors.black,
             ))
-          : CustomScrollView(
-              slivers: [
-                const HomeAppbarView(),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 8,
+          : RefreshIndicator(
+              onRefresh: homeScreenController.loadData,
+              color: Colors.black,
+              child: CustomScrollView(
+                slivers: [
+                  const HomeAppbarView(),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 8,
+                    ),
                   ),
-                ),
-                CategoriesListStripe(
-                    onTapCategory: homeScreenController.navigateToCategoryProductsScreen,
-                    categoryList: homeScreenController.getCategories),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 12,
+                  CategoriesListStripe(
+                      onTapCategory: homeScreenController.navigateToCategoryProductsScreen,
+                      categoryList: homeScreenController.getCategories),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 12,
+                    ),
                   ),
-                ),
-                const _GreetingsWidget(),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 10,
+                  const _GreetingsWidget(),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 10,
+                    ),
                   ),
-                ),
-                ProductsListSectionWidget(
-                  title: "Products On Sale!",
-                  itemWidth: 200,
-                  itemHeight: 240,
-                  products: homeScreenController.getDiscountedProducts,
-                  onTapViewAllHandler: homeScreenController.navigateToAllDiscountedProductsScreen,
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 25,
+                  GetBuilder<HomeScreenController>(
+                      builder: ((controller) => ProductsListSectionWidget(
+                            title: "Products On Sale!",
+                            itemWidth: 200,
+                            itemHeight: 240,
+                            products: controller.getDiscountedProducts,
+                            onTapViewAllHandler:
+                                homeScreenController.navigateToAllDiscountedProductsScreen,
+                          ))),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 25,
+                    ),
                   ),
-                ),
-                ProductsListSectionWidget(
-                  title: "Popular Products",
-                  itemWidth: 165,
-                  products: homeScreenController.getMostPopularProducts,
-                  onTapViewAllHandler: homeScreenController.navigateToMostPopularProductsScreen,
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 25,
+                  GetBuilder<HomeScreenController>(
+                      builder: ((controller) => ProductsListSectionWidget(
+                            title: "Popular Products",
+                            itemWidth: 165,
+                            products: controller.getMostPopularProducts,
+                            onTapViewAllHandler: controller.navigateToMostPopularProductsScreen,
+                          ))),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 25,
+                    ),
                   ),
-                ),
-                CategoryListView(
-                  onTapCategoryHandler: homeScreenController.navigateToCategoryProductsScreen,
-                  onTapViewAllHandler: homeScreenController.navigateToCategoriesScreen,
-                  categoriesList: homeScreenController.getCategories,
-                )
-              ],
+                  GetBuilder<HomeScreenController>(
+                      builder: ((controller) => CategoryListView(
+                            onTapCategoryHandler: controller.navigateToCategoryProductsScreen,
+                            onTapViewAllHandler: controller.navigateToCategoriesScreen,
+                            categoriesList: controller.getCategories,
+                          )))
+                ],
+              ),
             )),
     );
   }
