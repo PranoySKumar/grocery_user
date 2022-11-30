@@ -6,7 +6,7 @@ import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/category_list_
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/home_app_bar_view.dart';
 import 'package:grocery_user/Screens/common/products_list_section_widget.dart';
 
-import '../../../Model/Category/category_model.dart';
+import '../../../Model/User/user_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
               color: Colors.black,
               child: CustomScrollView(
                 slivers: [
-                  const HomeAppbarView(),
+                  const _AppBar(),
                   const SliverToBoxAdapter(
                     child: SizedBox(
                       height: 8,
@@ -102,49 +102,27 @@ class _GreetingsWidget extends StatelessWidget {
   }
 }
 
-final List<Category> testCategory = [
-  Category(
-      id: "1",
-      imageUrl:
-          "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
-      name: "steak",
-      type: "meat"),
-  Category(
-      id: "1",
-      imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
-      name: "fish cut piece",
-      type: "meat"),
-  Category(
-      id: "1",
-      imageUrl:
-          "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
-      name: "steak",
-      type: "meat"),
-  Category(
-      id: "1",
-      imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
-      name: "fish cut piece",
-      type: "meat"),
-  Category(
-      id: "1",
-      imageUrl:
-          "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
-      name: "steak",
-      type: "meat"),
-  Category(
-      id: "1",
-      imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
-      name: "fish cut piece",
-      type: "meat"),
-  Category(
-      id: "1",
-      imageUrl:
-          "https://media.istockphoto.com/id/505207430/photo/fresh-raw-beef-steak.jpg?s=612x612&w=0&k=20&c=QxOege3Io4h1TNJLtGYh71rxb29p1BfFcZvCipz4WVY=",
-      name: "steak",
-      type: "meat"),
-  Category(
-      id: "1",
-      imageUrl: "https://5.imimg.com/data5/WI/ZZ/OL/ANDROID-81993397/product-jpeg-500x500.jpg",
-      name: "fish cut piece",
-      type: "meat"),
-];
+class _AppBar extends StatelessWidget {
+  const _AppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HomeScreenController>(
+      builder: ((controller) {
+        String info = "";
+        User user = controller.getUserDetails;
+        if (user.shippingAddresses?[0] != null) {
+          info = user.shippingAddresses?[0].address as String;
+        } else if (user.pincode != null) {
+          info = user.pincode as String;
+        } else {
+          info = "Guest";
+        }
+
+        return HomeAppbarView(
+          address: info,
+        );
+      }),
+    );
+  }
+}

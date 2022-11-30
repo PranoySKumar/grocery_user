@@ -7,7 +7,7 @@ part of 'product_model.dart';
 // **************************************************************************
 
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       name: json['name'] as String?,
       description: json['description'] as String?,
       price: (json['price'] as num?)?.toDouble(),
@@ -15,9 +15,9 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       quantity: json['quantity'] == null
           ? null
           : Quantity.fromJson(json['quantity'] as Map<String, dynamic>),
-      category: json['category'] == null
-          ? null
-          : Category.fromJson(json['category'] as Map<String, dynamic>),
+      categories: (json['categories'] as List<dynamic>?)
+          ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
+          .toList(),
       imageUrl: json['imageUrl'] as String?,
     );
 
@@ -29,7 +29,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'discount': instance.discount,
       'quantity': instance.quantity,
       'imageUrl': instance.imageUrl,
-      'category': instance.category,
+      'categories': instance.categories,
     };
 
 Quantity _$QuantityFromJson(Map<String, dynamic> json) => Quantity(

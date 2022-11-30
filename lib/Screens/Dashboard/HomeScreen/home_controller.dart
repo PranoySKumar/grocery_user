@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/Category/category_model.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
+import 'package:grocery_user/Model/User/user_model.dart';
 import 'package:grocery_user/Remote/Providers/categories_provider.dart';
 import 'package:grocery_user/Remote/Providers/products_provider.dart';
+import 'package:grocery_user/Remote/Providers/user_provider.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Screens/Products/products_controller.dart';
 import 'package:grocery_user/Screens/Products/products_screen.dart';
@@ -24,8 +26,12 @@ class HomeScreenController extends GetxController {
 
   List<Product> get getDiscountedProducts =>
       _discountedProducts; // gets current discounted product list;
+
+  User _user = User(); // user details.
+
   get getMostPopularProducts => _mostPopularProducts; // gets current popular product list;
   get getCategories => _categories; // gets current categories list;
+  User get getUserDetails => _user; // gets user details.
 
   set setSearchQuery(String val) {
     searchQuery.value = val;
@@ -47,6 +53,7 @@ class HomeScreenController extends GetxController {
     await _loadAllDiscountedProducts();
     await _loadAllPopularProducts();
     await _loadAllCategories();
+    await _loadUserDetails();
 
     update();
   }
@@ -69,7 +76,7 @@ class HomeScreenController extends GetxController {
     try {
       _categories = await CategoriesProvider().getAllCategories(limit: 8);
     } on HttpException catch (e) {
-      SnackBarDisplay.show(message: e.message);
+      SnackBarDisplay.show(message: "couldn't load categories");
     } catch (e) {
       print(e);
       SnackBarDisplay.show();
@@ -81,7 +88,7 @@ class HomeScreenController extends GetxController {
     try {
       _discountedProducts = await ProductsProvider().getDiscountedProducts(limit: 6);
     } on HttpException catch (e) {
-      SnackBarDisplay.show(message: e.message);
+      SnackBarDisplay.show(message: "couldn't load discount products");
     } catch (e) {
       print(e);
       SnackBarDisplay.show();
@@ -93,7 +100,19 @@ class HomeScreenController extends GetxController {
     try {
       _mostPopularProducts = await ProductsProvider().getMostPopularProducts(limit: 6);
     } on HttpException catch (e) {
-      SnackBarDisplay.show(message: e.message);
+      SnackBarDisplay.show(message: "couldn't load popular products");
+    } catch (e) {
+      print(e);
+      SnackBarDisplay.show();
+    }
+  }
+
+//loads user details.
+  Future<void> _loadUserDetails() async {
+    try {
+      _user = await UserProvider().getUserDetails();
+    } on HttpException catch (e) {
+      SnackBarDisplay.show(message: "couldn't load user details.");
     } catch (e) {
       print(e);
       SnackBarDisplay.show();

@@ -13,7 +13,7 @@ class Product {
   double? discount;
   Quantity? quantity;
   String? imageUrl;
-  Category? category;
+  List<Category>? categories;
 
   Product(
       {this.id,
@@ -22,7 +22,7 @@ class Product {
       this.price,
       this.discount,
       this.quantity,
-      this.category,
+      this.categories,
       this.imageUrl});
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
   Map<String, dynamic> get toJson => _$ProductToJson(this);

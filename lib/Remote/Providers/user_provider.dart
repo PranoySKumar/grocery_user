@@ -7,10 +7,8 @@ class UserProvider extends ApiService {
   String get _userLoginUrl => "/auth";
   String _sendOtpUrl(String phoneNumber) => "/auth/$phoneNumber";
   String _verifyOtpUrl(String phoneNumber, code) => "/auth/$phoneNumber/otp/$code";
-
-  UserProvider() {
-    baseUrl = super.baseUrl;
-  }
+  String get _updateUserDataUrl => "/profile";
+  String get _getUserDetails => "/profile";
 
   Future<LoginResponse> login(
       {int? phoneNumber, String? userName, int? pincode, LatLng? location}) async {
@@ -53,6 +51,24 @@ class UserProvider extends ApiService {
       return response.body as Map<String, dynamic>;
     } else {
       throw Exception("something went wrong during otp verification");
+    }
+  }
+
+  Future<Map<String, dynamic>> updateUser(User user) async {
+    var response = await patch(_updateUserDataUrl, user.toJson);
+    if (response.statusCode == 201) {
+      return response.body as Map<String, dynamic>;
+    } else {
+      throw Exception("something went while updating user details.");
+    }
+  }
+
+  Future<User> getUserDetails() async {
+    var response = await get(_getUserDetails);
+    if (response.statusCode == 200) {
+      return User.fromJson(response.body);
+    } else {
+      throw Exception("something went while updating user details.");
     }
   }
 }

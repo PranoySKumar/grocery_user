@@ -6,10 +6,10 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class User {
-  String? id;
+  String? id; // phone number.
   String? userName;
   LatLng? location;
-  List<String>? address;
+  List<ShippingAddress>? shippingAddresses;
 
   int? pincode;
   String? profileImageUrl;
@@ -18,11 +18,21 @@ class User {
     this.id,
     this.userName,
     this.location,
-    this.address,
+    this.shippingAddresses,
     this.pincode,
     this.profileImageUrl,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> get toJson => _$UserToJson(this);
+}
+
+@JsonSerializable()
+class ShippingAddress {
+  String? address;
+  String? recipientName;
+
+  ShippingAddress({this.address, this.recipientName});
+  factory ShippingAddress.fromJson(Map<String, dynamic> json) => _$ShippingAddressFromJson(json);
+  Map<String, dynamic> get toJson => _$ShippingAddressToJson(this);
 }

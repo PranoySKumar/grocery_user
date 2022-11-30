@@ -12,7 +12,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       location: json['location'] == null
           ? null
           : LatLng.fromJson(json['location'] as Map<String, dynamic>),
-      address: json['address'] == null ? null : json['address'] as List<String>?,
+      shippingAddresses: (json['shippingAddresses'] as List<dynamic>?)
+          ?.map((e) => ShippingAddress.fromJson(e as Map<String, dynamic>))
+          .toList(),
       pincode: json['pincode'] as int?,
       profileImageUrl: json['profileImageUrl'] as String?,
     );
@@ -21,7 +23,17 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
       'userName': instance.userName,
       'location': instance.location,
-      'address': instance.address,
+      'shippingAddresses': instance.shippingAddresses,
       'pincode': instance.pincode,
       'profileImageUrl': instance.profileImageUrl,
+    };
+
+ShippingAddress _$ShippingAddressFromJson(Map<String, dynamic> json) => ShippingAddress(
+      address: json['address'] as String?,
+      recipientName: json['recipientName'] as String?,
+    );
+
+Map<String, dynamic> _$ShippingAddressToJson(ShippingAddress instance) => <String, dynamic>{
+      'address': instance.address,
+      'recipientName': instance.recipientName,
     };

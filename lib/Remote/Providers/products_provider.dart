@@ -18,7 +18,10 @@ class ProductsProvider extends ApiService {
     if (response.statusCode == 200) {
       var productsData = response.body?["products"] as List<dynamic>;
 
-      return productsData.map((json) => Product.fromJson(json)).toList();
+      return productsData.map((json) {
+        (json as Map<String, dynamic>).remove("categories");
+        return Product.fromJson(json);
+      }).toList();
     } else {
       throw const HttpException("Something went wrong while fetching products");
     }

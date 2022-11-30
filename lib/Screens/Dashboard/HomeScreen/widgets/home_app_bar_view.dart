@@ -35,18 +35,23 @@ class HomeAppbarView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Kulathoor Road",
-                      style: Get.theme.textTheme.labelMedium,
+                      address!.split(",")[0],
+                      style: Get.theme.textTheme.labelMedium
+                          ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
-                    const Text(
-                      "Kulathoor, Kazhakootam",
+                    Text(
+                      address!.split(",")[1].trimLeft(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Get.theme.textTheme.labelMedium
+                          ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                     )
                   ],
                 )
               ],
             ),
             const SizedBox(
-              height: 24,
+              height: 22,
             ),
             const SearchBar()
           ],
