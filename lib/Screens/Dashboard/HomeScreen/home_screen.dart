@@ -26,7 +26,9 @@ class HomeScreen extends StatelessWidget {
               color: Colors.black,
               child: CustomScrollView(
                 slivers: [
-                  const _AppBar(),
+                  _AppBar(
+                    user: homeScreenController.user.value,
+                  ),
                   const SliverToBoxAdapter(
                     child: SizedBox(
                       height: 8,
@@ -34,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   CategoriesListStripe(
                       onTapCategory: homeScreenController.navigateToCategoryProductsScreen,
-                      categoryList: homeScreenController.getCategories),
+                      categoryList: homeScreenController.categories),
                   const SliverToBoxAdapter(
                     child: SizedBox(
                       height: 12,
@@ -46,38 +48,34 @@ class HomeScreen extends StatelessWidget {
                       height: 10,
                     ),
                   ),
-                  GetBuilder<HomeScreenController>(
-                      builder: ((controller) => ProductsListSectionWidget(
-                            title: "Products On Sale!",
-                            itemWidth: 200,
-                            itemHeight: 240,
-                            products: controller.getDiscountedProducts,
-                            onTapViewAllHandler:
-                                homeScreenController.navigateToAllDiscountedProductsScreen,
-                          ))),
+                  ProductsListSectionWidget(
+                    title: "Products On Sale!",
+                    itemWidth: 200,
+                    itemHeight: 240,
+                    products: homeScreenController.discountedProducts,
+                    onTapViewAllHandler: homeScreenController.navigateToAllDiscountedProductsScreen,
+                  ),
                   const SliverToBoxAdapter(
                     child: SizedBox(
                       height: 25,
                     ),
                   ),
-                  GetBuilder<HomeScreenController>(
-                      builder: ((controller) => ProductsListSectionWidget(
-                            title: "Popular Products",
-                            itemWidth: 165,
-                            products: controller.getMostPopularProducts,
-                            onTapViewAllHandler: controller.navigateToMostPopularProductsScreen,
-                          ))),
+                  ProductsListSectionWidget(
+                    title: "Popular Products",
+                    itemWidth: 165,
+                    products: homeScreenController.mostPopularProducts,
+                    onTapViewAllHandler: homeScreenController.navigateToMostPopularProductsScreen,
+                  ),
                   const SliverToBoxAdapter(
                     child: SizedBox(
                       height: 25,
                     ),
                   ),
-                  GetBuilder<HomeScreenController>(
-                      builder: ((controller) => CategoryListView(
-                            onTapCategoryHandler: controller.navigateToCategoryProductsScreen,
-                            onTapViewAllHandler: controller.navigateToCategoriesScreen,
-                            categoriesList: controller.getCategories,
-                          )))
+                  CategoryListView(
+                    onTapCategoryHandler: homeScreenController.navigateToCategoryProductsScreen,
+                    onTapViewAllHandler: homeScreenController.navigateToCategoriesScreen,
+                    categoriesList: homeScreenController.categories,
+                  )
                 ],
               ),
             )),
@@ -103,26 +101,22 @@ class _GreetingsWidget extends StatelessWidget {
 }
 
 class _AppBar extends StatelessWidget {
-  const _AppBar({super.key});
+  final User user;
+  const _AppBar({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeScreenController>(
-      builder: ((controller) {
-        String info = "";
-        User user = controller.getUserDetails;
-        if (user.shippingAddresses?[0] != null) {
-          info = user.shippingAddresses?[0].address as String;
-        } else if (user.pincode != null) {
-          info = user.pincode as String;
-        } else {
-          info = "Guest";
-        }
+    String info = "";
+    if (user.shippingAddresses?[0] != null) {
+      info = user.shippingAddresses?[0].address as String;
+    } else if (user.pincode != null) {
+      info = user.pincode as String;
+    } else {
+      info = "Guest";
+    }
 
-        return HomeAppbarView(
-          address: info,
-        );
-      }),
+    return HomeAppbarView(
+      address: info,
     );
   }
 }

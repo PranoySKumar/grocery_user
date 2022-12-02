@@ -17,12 +17,13 @@ class ProductsController extends GetxController {
     //Loading required data from the network.
 
     isLoading.value = true;
-    if (Get.arguments == ProductScreenFilter.mostPopular) await _loadMostPopularProducts();
-    if (Get.arguments == ProductScreenFilter.discounted) await _loadAllDiscountedProducts();
-    if (Get.arguments["type"] == ProductScreenFilter.category) {
+    if (Get.arguments == ProductScreenFilter.mostPopular) {
+      await _loadMostPopularProducts();
+    } else if (Get.arguments == ProductScreenFilter.discounted) {
+      await _loadAllDiscountedProducts();
+    } else if (Get.arguments["type"] == ProductScreenFilter.category) {
       await _loadAllCategoryProducts(Get.arguments["categoryId"]);
-    }
-    if (Get.arguments["type"] == ProductScreenFilter.search) {
+    } else if (Get.arguments["type"] == ProductScreenFilter.search) {
       await _loadProductsBySearch(Get.arguments["searchTerm"]);
     }
     isLoading.value = false;

@@ -12,26 +12,21 @@ import 'package:grocery_user/Remote/Providers/products_provider.dart';
 import 'package:grocery_user/Remote/Providers/user_provider.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Screens/Products/products_controller.dart';
-import 'package:grocery_user/Screens/Products/products_screen.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
 class HomeScreenController extends GetxController {
   final searchBarEditingController = TextEditingController(); // editing controller for search bar.
 
-  List<Product> _discountedProducts = [];
-  List<Product> _mostPopularProducts = [];
+  final discountedProducts = <Product>[].obs;
+  final mostPopularProducts = <Product>[].obs;
   final isLoading = true.obs; // is loading variable to show loading circle.
   final searchQuery = "".obs; // search string entered by the user.
-  List<Category> _categories = []; // list of categories.
+  final categories = <Category>[].obs; // list of categories.
 
-  List<Product> get getDiscountedProducts =>
-      _discountedProducts; // gets current discounted product list;
+  final user = User().obs; // user details.
 
-  User _user = User(); // user details.
-
-  get getMostPopularProducts => _mostPopularProducts; // gets current popular product list;
-  get getCategories => _categories; // gets current categories list;
-  User get getUserDetails => _user; // gets user details.
+  // gets current popular product list;
+  User get getUserDetails => user.value; // gets user details.
 
   set setSearchQuery(String val) {
     searchQuery.value = val;
@@ -49,13 +44,11 @@ class HomeScreenController extends GetxController {
     super.onInit();
   }
 
-  Future<void> loadData({bool? doNotUpdate}) async {
+  Future<void> loadData() async {
     await _loadAllDiscountedProducts();
     await _loadAllPopularProducts();
     await _loadAllCategories();
     await _loadUserDetails();
-
-    update();
   }
 
   @override
@@ -74,7 +67,7 @@ class HomeScreenController extends GetxController {
   //loads categories data from network into _product.
   Future<void> _loadAllCategories() async {
     try {
-      _categories = await CategoriesProvider().getAllCategories(limit: 8);
+      categories.assignAll(await CategoriesProvider().getAllCategories(limit: 8));
     } on HttpException catch (e) {
       SnackBarDisplay.show(message: "couldn't load categories");
     } catch (e) {
@@ -86,7 +79,7 @@ class HomeScreenController extends GetxController {
   //loads discounted products data from network into _categories.
   Future<void> _loadAllDiscountedProducts() async {
     try {
-      _discountedProducts = await ProductsProvider().getDiscountedProducts(limit: 6);
+      discountedProducts.assignAll(await ProductsProvider().getDiscountedProducts(limit: 6));
     } on HttpException catch (e) {
       SnackBarDisplay.show(message: "couldn't load discount products");
     } catch (e) {
@@ -98,7 +91,7 @@ class HomeScreenController extends GetxController {
   //loads popular products data from network into _categories.
   Future<void> _loadAllPopularProducts() async {
     try {
-      _mostPopularProducts = await ProductsProvider().getMostPopularProducts(limit: 6);
+      mostPopularProducts.assignAll(await ProductsProvider().getMostPopularProducts(limit: 6));
     } on HttpException catch (e) {
       SnackBarDisplay.show(message: "couldn't load popular products");
     } catch (e) {
@@ -110,7 +103,7 @@ class HomeScreenController extends GetxController {
 //loads user details.
   Future<void> _loadUserDetails() async {
     try {
-      _user = await UserProvider().getUserDetails();
+      user.value = await UserProvider().getUserDetails();
     } on HttpException catch (e) {
       SnackBarDisplay.show(message: "couldn't load user details.");
     } catch (e) {
