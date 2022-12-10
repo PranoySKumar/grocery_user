@@ -7,7 +7,7 @@ part of 'user_model.dart';
 // **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
-      id: json['_id'] as String?,
+      id: json['id'] as String?,
       userName: json['userName'] as String?,
       location: json['location'] == null
           ? null
@@ -28,12 +28,18 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'profileImageUrl': instance.profileImageUrl,
     };
 
-ShippingAddress _$ShippingAddressFromJson(Map<String, dynamic> json) => ShippingAddress(
+ShippingAddress _$ShippingAddressFromJson(Map<String, dynamic> json) =>
+    ShippingAddress(
       address: json['address'] as String?,
       recipientName: json['recipientName'] as String?,
+      landmark: json['landmark'] as String?,
+      pincode: json['pincode'] as int?,
     );
 
-Map<String, dynamic> _$ShippingAddressToJson(ShippingAddress instance) => <String, dynamic>{
+Map<String, dynamic> _$ShippingAddressToJson(ShippingAddress instance) =>
+    <String, dynamic>{
       'address': instance.address,
       'recipientName': instance.recipientName,
+      'pincode': instance.pincode,
+      'landmark': instance.landmark,
     };
