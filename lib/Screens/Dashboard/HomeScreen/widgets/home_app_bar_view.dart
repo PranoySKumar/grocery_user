@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
-import 'package:grocery_user/Screens/common/icon_text_field.dart';
+import 'package:grocery_user/Screens/common/custom_text_field.dart';
 
 class HomeAppbarView extends StatelessWidget {
   final String? address;
@@ -14,6 +14,7 @@ class HomeAppbarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var homeScreenController = Get.find<HomeScreenController>();
     return SliverAppBar(
       pinned: true,
       elevation: 0,
@@ -24,31 +25,34 @@ class HomeAppbarView extends StatelessWidget {
         margin: const EdgeInsets.only(top: 38, left: 12),
         child: Column(
           children: [
-            Row(
-              children: [
-                const Icon(Icons.my_location_outlined),
-                const SizedBox(
-                  width: 17,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      address!.split(",")[0],
-                      style: Get.theme.textTheme.labelMedium
-                          ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      address!.split(",")[1].trimLeft(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Get.theme.textTheme.labelMedium
-                          ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
-                    )
-                  ],
-                )
-              ],
+            InkWell(
+              onTap: () => homeScreenController.navigateToShippingDetailsScreen(),
+              child: Row(
+                children: [
+                  const Icon(Icons.my_location_outlined),
+                  const SizedBox(
+                    width: 17,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        address!.split(",")[0],
+                        style: Get.theme.textTheme.labelMedium
+                            ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        address!.split(",")[1].trimLeft(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Get.theme.textTheme.labelMedium
+                            ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
             const SizedBox(
               height: 22,
@@ -96,7 +100,7 @@ class SearchBar extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.only(right: 12),
-        child: IconTextField(
+        child: CustomTextField(
           focusNode: focusNode,
           controller: homeScreenController.searchBarEditingController,
           hint: "Fish, Meat, Mutton etc",

@@ -10,8 +10,6 @@ import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_binding.dart';
 import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_screen.dart';
 import 'package:grocery_user/Screens/Products/products_binding.dart';
 import 'package:grocery_user/Screens/Products/products_screen.dart';
-import 'package:grocery_user/Screens/ShippingDetails/shipping_details_binding.dart';
-import 'package:grocery_user/Screens/ShippingDetails/shipping_details_screen.dart';
 
 import '../Screens/Login/EnterLocationScreen/enter_location_screen.dart';
 import '../Screens/Login/EnterPhoneNumberScreen/verify_number_binding.dart';
@@ -20,6 +18,8 @@ import '../Screens/Login/EnterUserNameScreen/enter_username_screen.dart';
 import '../Screens/Login/IntroScreen/intro_screen.dart';
 import '../Screens/Login/OtpVerificationScreen/verify_otp_binding.dart';
 import '../Screens/Login/OtpVerificationScreen/verify_otp_screen.dart';
+import '../Screens/ShippingDetails/ShippingDetailsScreen/shipping_details_binding.dart';
+import '../Screens/ShippingDetails/ShippingDetailsScreen/shipping_details_screen.dart';
 
 class RouteHelper {
   static const introScreen = "/intro";

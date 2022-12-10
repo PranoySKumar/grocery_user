@@ -133,4 +133,8 @@ class HomeScreenController extends GetxController {
     Get.toNamed(RouteHelper.productsScreen,
         arguments: {"type": ProductScreenFilter.search, "searchTerm": searchTerm});
   }
+
+  void navigateToShippingDetailsScreen() {
+    Get.toNamed(RouteHelper.shippingDetailsScreen);
+  }
 }

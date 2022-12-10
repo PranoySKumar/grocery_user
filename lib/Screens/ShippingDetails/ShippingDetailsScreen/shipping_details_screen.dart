@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
-import 'package:grocery_user/Screens/ShippingDetails/shipping_details_controller.dart';
+import 'package:grocery_user/Screens/ShippingDetails/ShippingDetailsScreen/shipping_details_controller.dart';
 
 class ShippingDetailsScreen extends StatelessWidget {
   const ShippingDetailsScreen({super.key});
@@ -11,16 +11,34 @@ class ShippingDetailsScreen extends StatelessWidget {
     var shippingDetailsController = Get.find<ShippingDetailsController>();
     var addresses = shippingDetailsController.shippingDetails;
     return Scaffold(
-      appBar: AppBar(title: const Text("Shipping Details")),
+      appBar: AppBar(
+          leading: const BackButton(
+            color: Colors.black,
+          ),
+          centerTitle: true,
+          elevation: 0,
+          actions: const [
+            Icon(
+              Icons.add,
+              color: Colors.black,
+            )
+          ],
+          title: Text(
+            "Shipping Details",
+            style: Get.theme.textTheme.titleMedium,
+          ),
+          backgroundColor: Get.theme.scaffoldBackgroundColor),
       body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           children: [
-            ListView.builder(
-              itemCount: addresses.length,
-              itemExtent: 50,
-              itemBuilder: (context, index) =>
-                  _SingleAddressView(shippingAddress: addresses[index]),
+            Expanded(
+              child: ListView.builder(
+                itemCount: addresses.length,
+                itemExtent: 80,
+                itemBuilder: (context, index) =>
+                    _SingleAddressView(shippingAddress: addresses[index]),
+              ),
             )
           ],
         ),
@@ -43,10 +61,14 @@ class _SingleAddressView extends StatelessWidget {
           border: Border.all(width: 2, color: Colors.black)),
       child: Row(
         children: [
-          Text(shippingAddress.address!, maxLines: 2, overflow: TextOverflow.ellipsis),
+          Expanded(
+              child: Text(shippingAddress.address!, maxLines: 2, overflow: TextOverflow.ellipsis)),
           const Icon(
             Icons.edit,
             size: 24,
+          ),
+          const SizedBox(
+            width: 10,
           ),
           const Icon(
             Icons.delete_outline,

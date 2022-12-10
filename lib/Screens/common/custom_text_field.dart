@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class IconTextField extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String?)? onChanged;
   final Function(String?) onSubmitted;
@@ -15,8 +15,10 @@ class IconTextField extends StatelessWidget {
   final TextStyle? hintTextStyle;
   final TextAlign? textAlign;
   final FocusNode? focusNode;
+  final int? min;
+  final int? max;
 
-  const IconTextField(
+  const CustomTextField(
       {super.key,
       required this.controller,
       this.onChanged,
@@ -31,13 +33,17 @@ class IconTextField extends StatelessWidget {
       this.contentPadding,
       this.textAlign,
       this.hintTextStyle,
-      this.focusNode});
+      this.focusNode,
+      this.min,
+      this.max});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
     return TextField(
+      minLines: min,
+      maxLines: max,
       focusNode: focusNode,
       onSubmitted: onSubmitted,
       controller: controller,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_controller.dart';
 
-import '../../common/icon_text_field.dart';
+import '../../common/custom_text_field.dart';
 import '../../common/header_widget.dart';
 
 class EnterLocationScreen extends StatelessWidget {
@@ -24,7 +24,7 @@ class EnterLocationScreen extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
-            IconTextField(
+            CustomTextField(
                 prefixIcon: const Icon(
                   Icons.near_me,
                   color: Colors.black,

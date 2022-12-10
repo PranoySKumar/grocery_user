@@ -54,8 +54,8 @@ class UserProvider extends ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> updateUser(User user) async {
-    var response = await patch(_updateUserDataUrl, user.toJson);
+  Future<Map<String, dynamic>> updateUserData(Map<String, dynamic> data) async {
+    var response = await patch(_updateUserDataUrl, data);
     if (response.statusCode == 201) {
       return response.body as Map<String, dynamic>;
     } else {
