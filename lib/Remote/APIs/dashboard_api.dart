@@ -1,26 +1,34 @@
 class DashboardApi {
   static const String loadDataQuery = """
-  query LoadDashBoardScreenData(){
+  query LoadDashBoardScreenData{
   discountedProducts: products(options: {limit:6,discountFilter:true}) {
     id
     name
     imageUrl
-    quantity
+    quantity{
+        totalQuantity
+        type
+        value
+    }
     discount
   }
   popularProducts: products(options: {limit:6,popularFilter:true}) {
     id
     name
     imageUrl
-    quantity
+    quantity{
+            totalQuantity
+            type
+            value
+         }
     discount
   }
-  categories(limit:8){
+    categories(limit:8){
     id
     name
     imageUrl
-  }
- user{
+    }
+    user{
         id
         userName
         pincode
@@ -42,7 +50,6 @@ class DashboardApi {
           landmark
         }
       }
-  }
   }
 """;
 }

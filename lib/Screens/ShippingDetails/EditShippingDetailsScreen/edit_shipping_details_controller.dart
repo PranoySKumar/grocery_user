@@ -38,23 +38,29 @@ class EditShippingDetailsController extends GetxController {
       data["shippingAddress"]?["address"] = landmark;
     }
 
-    await updateAddress(data: data);
     var homeScreenController = Get.find<HomeScreenController>();
     var shippingDetailsController = Get.find<ShippingDetailsController>();
 
-    homeScreenController.user.value.shippingAddresses?.add(ShippingAddress(
-        address: address, landmark: landmark, pincode: pincode, recipientName: recipientName));
-    shippingDetailsController.loadShippingDetails();
-    Get.toNamed(RouteHelper.shippingDetailsScreen);
-    isLoading.value = false;
-  }
-
-// updates Address.
-  Future<void> updateAddress({required Map<String, dynamic> data}) async {
     try {
-      await GraphqlActions.mutate(api: UserApi.updateUserMutation, variables: {"data": data});
+      //update address
+      await GraphqlActions.mutate(
+          api: UserApi.updateUserMutation,
+          variables: {"id": homeScreenController.user.value.id!, "data": data});
+
+      //update the list of shipping addresses in homescreen.
+      homeScreenController.user.value.shippingAddresses?.add(ShippingAddress(
+          address: address, landmark: landmark, pincode: pincode, recipientName: recipientName));
+
+      //reload all the addresses in shipping addresses list screen
+      shippingDetailsController.loadShippingDetails();
+
+      Get.toNamed(RouteHelper.shippingDetailsScreen); //get to shipping address detaisl screen.
+
+      isLoading.value = false; //loading is set to false
+
     } catch (e) {
       SnackBarDisplay.show(message: "something went wrong while updating address");
+      Get.toNamed(RouteHelper.shippingDetailsScreen);
       rethrow;
     }
   }

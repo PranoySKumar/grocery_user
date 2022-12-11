@@ -1,13 +1,13 @@
 class UserApi {
   static const String sendUserOtpMutation = """
-  mutation SendOtp(\$phoneNumber){
+  mutation SendOtp(\$phoneNumber:Int!){
     sendUserOtp(phoneNumber:\$phoneNumber)
   }
 """;
 
   static const String verifyUserOtpMutation = """
-  mutation VerifyOtp(\$code){
-    verifyUserOtp(code:\$code)
+   mutation VerifyOtp(\$code:Int!){
+   verifyUserOtp(code:\$code)
   }
 """;
 
@@ -38,7 +38,7 @@ class UserApi {
   }
 """;
   static const String loginUserMutation = """
-  mutation LoginUser(\$data:UserLoginInput) {
+  mutation LoginUser(\$data:UserLoginInput!) {
    userLogin(data:\$data) {
       token,
       user{
@@ -67,8 +67,8 @@ class UserApi {
   }
 """;
   static const String updateUserMutation = """
-  mutation LoginUser(\$data:UserInputType) {
-   updateUser(data:\$data)
+  mutation LoginUser(\$id:String!, \$data:UserInputType!) {
+   updateUser(id:\$id,data:\$data)
   }
 """;
 }
