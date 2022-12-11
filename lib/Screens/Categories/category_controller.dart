@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:grocery_user/Remote/APIs/categories_screen_api.dart';
+import 'package:grocery_user/Remote/grapql_client.dart';
 
 import '../../Model/Category/category_model.dart';
 import '../../Remote/Providers/categories_provider.dart';
@@ -26,7 +28,11 @@ class CategoryController extends GetxController {
   //loads product data from network into _product.
   Future<void> _loadAllCategories() async {
     try {
-      _categories = await CategoriesProvider().getAllCategories();
+      var resultData = await GraphqlActions.query(api: CategoriesScreenApi.loadAllCategoriesApi);
+      List<dynamic> categoriesJson = resultData?["categories"];
+
+      _categories =
+          categoriesJson.map((cat) => Category.fromJson(cat as Map<String, dynamic>)).toList();
     } on HttpException catch (e) {
       SnackBarDisplay.show(message: e.message);
     } catch (e) {

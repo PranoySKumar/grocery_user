@@ -7,12 +7,11 @@ setupGraphql() async {
   await initHiveForFlutter();
 
   final HttpLink httpLink = HttpLink(
-    'https://api.github.com/graphql',
+    'http://192.168.43.39:4000/graphql',
   );
 
-  final AuthLink authLink = AuthLink(
-    getToken: () => 'Bearer ${GetStorage().read("token")}',
-  );
+  final AuthLink authLink =
+      AuthLink(getToken: () => 'Bearer ${GetStorage().read("token")}', headerKey: "Authorization");
 
   final Link link = authLink.concat(httpLink);
 
@@ -25,6 +24,11 @@ setupGraphql() async {
 }
 
 class GraphqlActions {
+  static void setAuth() {
+    graphqlClient.link
+        .concat(AuthLink(getToken: () => 'Bearer ${"hey"}', headerKey: "Authorization"));
+  }
+
   static Future<Map<String, dynamic>?> mutate(
       {required String api, Map<String, dynamic>? variables}) async {
     var result = await graphqlClient.mutate(

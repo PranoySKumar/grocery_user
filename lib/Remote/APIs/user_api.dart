@@ -1,6 +1,6 @@
 class UserApi {
   static const String sendUserOtpMutation = """
-  mutation SendOtp(\$phoneNumber:Int!){
+  mutation SendOtp(\$phoneNumber:String!){
     sendUserOtp(phoneNumber:\$phoneNumber)
   }
 """;

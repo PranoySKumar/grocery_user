@@ -11,6 +11,7 @@ class ProductsScreenApi {
         value
     }
     discount
+    price
    }
 }
   
@@ -28,12 +29,13 @@ query getAllProducts {
         value
     }
     discount
+    price
    }
    }
 """;
 
   static const getAllDiscountedProducts = """
-query getAllProducts {
+query getAllDiscountedProducts {
    products(options:{discountFilter:true}){
     id
     name
@@ -44,14 +46,13 @@ query getAllProducts {
         value
     }
     discount
+    price
    }
    }
-
-
 """;
 
-  static const getAllPopularProducts = """"
-query getAllProducts {
+  static const getAllPopularProducts = """
+query getAllPopularProducts {
    products(options:{popularFilter:true}){
     id
     name
@@ -62,12 +63,12 @@ query getAllProducts {
         value
     }
     discount
+    price
    }
    }
-
 """;
-  static const getSingleCategoryProducts = """"
-query getAllProducts(\$categoryId:String!) {
+  static const getSingleCategoryProducts = """
+query getSingleCategoryProducts(\$categoryId:String!) {
    products(options:{categoryId:\$categoryId}){
     id
     name
@@ -78,6 +79,7 @@ query getAllProducts(\$categoryId:String!) {
         value
     }
     discount
+    price
    }
    }
 

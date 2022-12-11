@@ -46,8 +46,8 @@ class EnterUserNameController extends GetxController {
       };
       var result =
           await GraphqlActions.mutate(api: UserApi.loginUserMutation, variables: variables);
+      await GetStorage().write("token", result?["userLogin"]["token"]); //setting the token;
 
-      await GetStorage().write("token", result?["token"]); //setting the token;
       Get.toNamed(RouteHelper.welcomeScreen, arguments: result);
     } catch (e) {
       print(e);

@@ -107,7 +107,9 @@ class _AppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String info = "";
-    if (user.shippingAddresses?[0] != null) {
+    if (user.shippingAddresses!.isEmpty) {
+      info = "Set an Address";
+    } else if (user.shippingAddresses?[0] != null) {
       info = user.shippingAddresses?[0].address as String;
     } else if (user.pincode != null) {
       info = user.pincode as String;

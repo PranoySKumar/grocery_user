@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
+import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Screens/ShippingDetails/ShippingDetailsScreen/shipping_details_controller.dart';
 
 class ShippingDetailsScreen extends StatelessWidget {
@@ -17,32 +18,57 @@ class ShippingDetailsScreen extends StatelessWidget {
           ),
           centerTitle: true,
           elevation: 0,
-          actions: const [
-            Icon(
-              Icons.add,
-              color: Colors.black,
-            )
-          ],
-          title: Text(
-            "Shipping Details",
-            style: Get.theme.textTheme.titleMedium,
-          ),
-          backgroundColor: Get.theme.scaffoldBackgroundColor),
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: addresses.length,
-                itemExtent: 80,
-                itemBuilder: (context, index) =>
-                    _SingleAddressView(shippingAddress: addresses[index]),
+          actions: [
+            Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: InkWell(
+                onTap: (() => Get.toNamed(RouteHelper.editShippingAddressScreen)),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.black,
+                  size: 25,
+                ),
               ),
             )
           ],
-        ),
-      ),
+          title: Text(
+            "Shipping Addresses",
+            style: Get.theme.textTheme.titleMedium,
+          ),
+          backgroundColor: Get.theme.scaffoldBackgroundColor),
+      body: Builder(builder: (context) {
+        if (addresses.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "No Addresses Available",
+                ),
+                Text(
+                  "Tap + to add One",
+                  style: Get.theme.textTheme.labelMedium,
+                )
+              ],
+            ),
+          );
+        }
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: addresses.length,
+                  itemExtent: 80,
+                  itemBuilder: (context, index) =>
+                      _SingleAddressView(shippingAddress: addresses[index]),
+                ),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }

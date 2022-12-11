@@ -11,6 +11,7 @@ class DashboardScreenApi {
         value
     }
     discount
+    price
   }
   popularProducts: products(options: {limit:6,popularFilter:true}) {
     id
@@ -22,6 +23,7 @@ class DashboardScreenApi {
             value
          }
     discount
+    price
   }
     categories(limit:8){
     id

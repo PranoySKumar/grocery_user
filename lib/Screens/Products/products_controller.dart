@@ -37,8 +37,9 @@ class ProductsController extends GetxController {
   Future<void> _loadMostPopularProducts() async {
     try {
       var result = await GraphqlActions.query(api: ProductsScreenApi.getAllPopularProducts);
-
-      _products = result?["products"].map((prod) => Product.fromJson(prod));
+      List<dynamic> productsJson = result?["products"];
+      _products =
+          productsJson.map((prod) => Product.fromJson(prod as Map<String, dynamic>)).toList();
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't fetch most popular products.");
     } catch (e) {
@@ -53,7 +54,9 @@ class ProductsController extends GetxController {
     try {
       var result = await GraphqlActions.query(api: ProductsScreenApi.getAllDiscountedProducts);
 
-      _products = result?["products"].map((prod) => Product.fromJson(prod));
+      List<dynamic> productsJson = result?["products"];
+      _products =
+          productsJson.map((prod) => Product.fromJson(prod as Map<String, dynamic>)).toList();
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't fetch discounted products");
     } catch (e) {
@@ -69,7 +72,9 @@ class ProductsController extends GetxController {
       var result = await GraphqlActions.query(
           api: ProductsScreenApi.getSingleCategoryProducts, variables: {"categoryId": categoryId});
 
-      _products = result?["products"].map((prod) => Product.fromJson(prod));
+      List<dynamic> productsJson = result?["products"];
+      _products =
+          productsJson.map((prod) => Product.fromJson(prod as Map<String, dynamic>)).toList();
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't fetch category products");
     } catch (e) {
@@ -85,7 +90,9 @@ class ProductsController extends GetxController {
       var result = await GraphqlActions.query(
           api: ProductsScreenApi.searchProductsQuery, variables: {"searchTerm": searchTerm});
 
-      _products = result?["products"].map((prod) => Product.fromJson(prod));
+      List<dynamic> productsJson = result?["products"];
+      _products =
+          productsJson.map((prod) => Product.fromJson(prod as Map<String, dynamic>)).toList();
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't search for products");
     } catch (e) {

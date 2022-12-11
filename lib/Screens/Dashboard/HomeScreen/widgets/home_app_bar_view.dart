@@ -34,7 +34,7 @@ class HomeAppbarView extends StatelessWidget {
                     width: 17,
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -42,13 +42,14 @@ class HomeAppbarView extends StatelessWidget {
                         style: Get.theme.textTheme.labelMedium
                             ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                       ),
-                      Text(
-                        address!.split(",")[1].trimLeft(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Get.theme.textTheme.labelMedium
-                            ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
-                      )
+                      if (address!.split(",").length > 1)
+                        Text(
+                          address!.split(",")[1].trimLeft(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Get.theme.textTheme.labelMedium
+                              ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                        )
                     ],
                   )
                 ],
@@ -63,10 +64,11 @@ class HomeAppbarView extends StatelessWidget {
       ),
       actions: [
         Container(
-          margin: const EdgeInsets.only(right: 12),
+          margin: const EdgeInsets.only(right: 12, bottom: 10),
           child: const Icon(
             Icons.account_circle_outlined,
             color: Colors.black,
+            size: 24,
           ),
         )
       ],
@@ -101,6 +103,7 @@ class SearchBar extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(right: 12),
         child: CustomTextField(
+          max: 1,
           focusNode: focusNode,
           controller: homeScreenController.searchBarEditingController,
           hint: "Fish, Meat, Mutton etc",

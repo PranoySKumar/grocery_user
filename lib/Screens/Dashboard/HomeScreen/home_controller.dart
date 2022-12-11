@@ -57,9 +57,9 @@ class HomeScreenController extends GetxController {
     try {
       var resultData = await GraphqlActions.mutate(api: DashboardScreenApi.loadDataQuery);
 
-      List<Map<String, dynamic>> categoriesJson = resultData?["categories"];
-      List<Map<String, dynamic>> discountedProductsJson = resultData?["discountedProducts"];
-      List<Map<String, dynamic>> mostPopularProductsJson = resultData?["popularProducts"];
+      List<dynamic> categoriesJson = resultData?["categories"];
+      List<dynamic> discountedProductsJson = resultData?["discountedProducts"];
+      List<dynamic> mostPopularProductsJson = resultData?["popularProducts"];
       var userJson = resultData?["user"];
 
       //setting data
@@ -68,7 +68,8 @@ class HomeScreenController extends GetxController {
       mostPopularProducts.assignAll(mostPopularProductsJson.map((prod) => Product.fromJson(prod)));
       user.value = User.fromJson(userJson);
     } catch (e) {
-      SnackBarDisplay.show(message: "couldn't load discount products");
+      print(e);
+      SnackBarDisplay.show(message: "couldn't load data");
       rethrow;
     }
   }
