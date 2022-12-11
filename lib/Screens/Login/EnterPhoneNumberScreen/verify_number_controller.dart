@@ -25,13 +25,13 @@ class VerifyNumberController extends GetxController {
         .split("-")
         .join(""); //the text value will have a dash in the middle which is removed here.
     phoneNumber = modifiedVal; // user id is the phonenumber itself.
-    _verifyPhoneNumber(modifiedVal);
+    _sendOtpToVerifyPhoneNumber(modifiedVal);
     Get.toNamed(RouteHelper.verifyOtpScreen);
   }
 
-  void _verifyPhoneNumber(String phoneNumber) async {
+  void _sendOtpToVerifyPhoneNumber(String phoneNumber) async {
     try {
-      var res = await UserProvider().sendOtpPhoneNumber(phoneNumber);
+      var res = await UserProvider().sendUserOtp(phoneNumber);
     } catch (e) {
       SnackBarDisplay.show();
       rethrow;

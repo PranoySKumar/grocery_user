@@ -34,9 +34,9 @@ class EnterUserNameController extends GetxController {
       var phoneNumberController = Get.find<VerifyNumberController>();
       var locationController = Get.find<EnterLocationController>();
 
-      var result = await UserProvider().login(
-          phoneNumber: int.parse(phoneNumberController.phoneNumber),
-          location: locationController.location,
+      var result = await UserProvider().userLogin(
+          phoneNumber: phoneNumberController.phoneNumber,
+          latLng: locationController.location,
           pincode:
               locationController.pincode.isNotEmpty ? int.parse(locationController.pincode) : null,
           userName: userName);

@@ -41,7 +41,7 @@ dependencies:
   json_annotation: ^4.7.0
   sliver_tools: ^0.2.8
   location: ^4.4.0
-graphql_flutter: ^5.1.0
+  graphql_flutter: ^5.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

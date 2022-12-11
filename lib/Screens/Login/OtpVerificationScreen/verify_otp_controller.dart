@@ -22,8 +22,7 @@ class VerifyOtpController extends GetxController {
     var phoneNumberController = Get.find<VerifyNumberController>();
 
     try {
-      var result = await UserProvider().verifyOtp(phoneNumberController.phoneNumber, val);
-      print(result);
+      var result = await UserProvider().verifyUserOtp(int.parse(val));
       Get.offNamed(RouteHelper.locationScreen);
     } catch (e) {
       SnackBarDisplay.show();

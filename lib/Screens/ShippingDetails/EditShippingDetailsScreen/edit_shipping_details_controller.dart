@@ -35,7 +35,7 @@ class EditShippingDetailsController extends GetxController {
     if (landmarkTextController.text.isNotEmpty) {
       data["shippingAddress"]?["address"] = landmark;
     }
-    await UserProvider().updateUserData(data);
+    await UserProvider().updateUserDetails(data);
     var homeScreenController = Get.find<HomeScreenController>();
     var shippingDetailsController = Get.find<ShippingDetailsController>();
 
