@@ -1,15 +1,10 @@
-// ignore_for_file: unused_field
-
-import 'dart:ffi';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/Category/category_model.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
-import 'package:grocery_user/Remote/Providers/categories_provider.dart';
-import 'package:grocery_user/Remote/Providers/products_provider.dart';
-import 'package:grocery_user/Remote/Providers/user_provider.dart';
+import 'package:grocery_user/Remote/APIs/dashboard_api.dart';
+import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Screens/Products/products_controller.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
@@ -44,13 +39,6 @@ class HomeScreenController extends GetxController {
     super.onInit();
   }
 
-  Future<void> loadData() async {
-    await _loadAllDiscountedProducts();
-    await _loadAllPopularProducts();
-    await _loadAllCategories();
-    await _loadUserDetails();
-  }
-
   @override
   onClose() {
     //clears controller from memory.
@@ -64,51 +52,24 @@ class HomeScreenController extends GetxController {
     searchQuery.value = val ?? "";
   }
 
-  //loads categories data from network into _product.
-  Future<void> _loadAllCategories() async {
-    try {
-      categories.assignAll(await CategoriesProvider().getAllCategories(limit: 8));
-    } on HttpException catch (e) {
-      SnackBarDisplay.show(message: "couldn't load categories");
-    } catch (e) {
-      print(e);
-      SnackBarDisplay.show();
-    }
-  }
-
   //loads discounted products data from network into _categories.
-  Future<void> _loadAllDiscountedProducts() async {
+  Future<void> loadData() async {
     try {
-      discountedProducts.assignAll(await ProductsProvider().getDiscountedProducts(limit: 6));
-    } on HttpException catch (e) {
+      var resultData = await GraphqlActions.mutate(api: DashboardApi.loadDataQuery);
+
+      List<Map<String, dynamic>> categoriesJson = resultData?["categories"];
+      List<Map<String, dynamic>> discountedProductsJson = resultData?["discountedProducts"];
+      List<Map<String, dynamic>> mostPopularProductsJson = resultData?["popularProducts"];
+      var userJson = resultData?["user"];
+
+      //setting data
+      categories.assignAll(categoriesJson.map((cat) => Category.fromJson(cat)));
+      discountedProducts.assignAll(discountedProductsJson.map((prod) => Product.fromJson(prod)));
+      mostPopularProducts.assignAll(mostPopularProductsJson.map((prod) => Product.fromJson(prod)));
+      user.value = User.fromJson(userJson);
+    } catch (e) {
       SnackBarDisplay.show(message: "couldn't load discount products");
-    } catch (e) {
-      print(e);
-      SnackBarDisplay.show();
-    }
-  }
-
-  //loads popular products data from network into _categories.
-  Future<void> _loadAllPopularProducts() async {
-    try {
-      mostPopularProducts.assignAll(await ProductsProvider().getMostPopularProducts(limit: 6));
-    } on HttpException catch (e) {
-      SnackBarDisplay.show(message: "couldn't load popular products");
-    } catch (e) {
-      print(e);
-      SnackBarDisplay.show();
-    }
-  }
-
-//loads user details.
-  Future<void> _loadUserDetails() async {
-    try {
-      user.value = await UserProvider().getUserDetails();
-    } on HttpException catch (e) {
-      SnackBarDisplay.show(message: "couldn't load user details.");
-    } catch (e) {
-      print(e);
-      SnackBarDisplay.show();
+      rethrow;
     }
   }
 

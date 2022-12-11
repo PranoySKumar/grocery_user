@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Remote/APIs/user_api.dart';
+import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
-import '../../../Remote/Providers/user_provider.dart';
 import '../../../Routes/route_helper.dart';
 
 class VerifyNumberController extends GetxController {
@@ -31,7 +32,8 @@ class VerifyNumberController extends GetxController {
 
   void _sendOtpToVerifyPhoneNumber(String phoneNumber) async {
     try {
-      var res = await UserProvider().sendUserOtp(phoneNumber);
+      var result = await GraphqlActions.mutate(
+          api: UserApi.sendUserOtpMutation, variables: {"phoneNumber": phoneNumber});
     } catch (e) {
       SnackBarDisplay.show();
       rethrow;

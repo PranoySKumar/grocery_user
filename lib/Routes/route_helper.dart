@@ -10,6 +10,8 @@ import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_binding.dart';
 import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_screen.dart';
 import 'package:grocery_user/Screens/Products/products_binding.dart';
 import 'package:grocery_user/Screens/Products/products_screen.dart';
+import 'package:grocery_user/Screens/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_binding.dart';
+import 'package:grocery_user/Screens/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_screen.dart';
 
 import '../Screens/Login/EnterLocationScreen/enter_location_screen.dart';
 import '../Screens/Login/EnterPhoneNumberScreen/verify_number_binding.dart';
@@ -32,6 +34,7 @@ class RouteHelper {
   static const categoriesScreen = "/categories";
   static const productsScreen = "/products";
   static const shippingDetailsScreen = "/shipping-details";
+  static const editShippingAddressScreen = "/edit-address-details";
 
   static getAppRoutes() => [
         GetPage(
@@ -87,6 +90,12 @@ class RouteHelper {
           name: shippingDetailsScreen,
           page: () => const ShippingDetailsScreen(),
           binding: ShippingDetailsBinding(),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: editShippingAddressScreen,
+          page: () => const EditShippingAddressScreen(),
+          binding: EditShippingAddressBinding(),
           transition: Transition.rightToLeftWithFade,
         ),
       ];

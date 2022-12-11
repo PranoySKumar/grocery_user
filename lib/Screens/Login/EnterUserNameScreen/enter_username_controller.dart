@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:grocery_user/Remote/Providers/user_provider.dart';
+import 'package:grocery_user/Remote/APIs/user_api.dart';
+import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_controller.dart';
 import 'package:grocery_user/Screens/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
@@ -34,13 +35,19 @@ class EnterUserNameController extends GetxController {
       var phoneNumberController = Get.find<VerifyNumberController>();
       var locationController = Get.find<EnterLocationController>();
 
-      var result = await UserProvider().userLogin(
-          phoneNumber: phoneNumberController.phoneNumber,
-          latLng: locationController.location,
-          pincode:
+      var variables = {
+        "data": {
+          "location": locationController.location?.toJson,
+          "userName": userName,
+          "pincode":
               locationController.pincode.isNotEmpty ? int.parse(locationController.pincode) : null,
-          userName: userName);
-      await GetStorage().write("token", result.token); //setting the token;
+          "phoneNumber": phoneNumberController.phoneNumber
+        }
+      };
+      var result =
+          await GraphqlActions.mutate(api: UserApi.loginUserMutation, variables: variables);
+
+      await GetStorage().write("token", result?["token"]); //setting the token;
       Get.toNamed(RouteHelper.welcomeScreen, arguments: result);
     } catch (e) {
       print(e);

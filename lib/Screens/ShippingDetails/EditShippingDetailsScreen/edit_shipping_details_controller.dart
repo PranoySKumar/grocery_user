@@ -3,10 +3,12 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
-import 'package:grocery_user/Remote/Providers/user_provider.dart';
+import 'package:grocery_user/Remote/APIs/user_api.dart';
+import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Screens/ShippingDetails/ShippingDetailsScreen/shipping_details_controller.dart';
+import 'package:grocery_user/Utils/snackbar.dart';
 
 class EditShippingDetailsController extends GetxController {
   final TextEditingController addressTextController = TextEditingController();
@@ -35,7 +37,8 @@ class EditShippingDetailsController extends GetxController {
     if (landmarkTextController.text.isNotEmpty) {
       data["shippingAddress"]?["address"] = landmark;
     }
-    await UserProvider().updateUserDetails(data);
+
+    await updateAddress(data: data);
     var homeScreenController = Get.find<HomeScreenController>();
     var shippingDetailsController = Get.find<ShippingDetailsController>();
 
@@ -44,5 +47,15 @@ class EditShippingDetailsController extends GetxController {
     shippingDetailsController.loadShippingDetails();
     Get.toNamed(RouteHelper.shippingDetailsScreen);
     isLoading.value = false;
+  }
+
+// updates Address.
+  Future<void> updateAddress({required Map<String, dynamic> data}) async {
+    try {
+      await GraphqlActions.mutate(api: UserApi.updateUserMutation, variables: {"data": data});
+    } catch (e) {
+      SnackBarDisplay.show(message: "something went wrong while updating address");
+      rethrow;
+    }
   }
 }

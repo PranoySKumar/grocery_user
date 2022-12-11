@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Remote/Providers/user_provider.dart';
+import 'package:grocery_user/Remote/APIs/user_api.dart';
+import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Screens/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
 
 import '../../../Routes/route_helper.dart';
@@ -22,7 +23,8 @@ class VerifyOtpController extends GetxController {
     var phoneNumberController = Get.find<VerifyNumberController>();
 
     try {
-      var result = await UserProvider().verifyUserOtp(int.parse(val));
+      var res = await GraphqlActions.mutate(
+          api: UserApi.verifyUserOtpMutation, variables: {"code": int.parse(val)});
       Get.offNamed(RouteHelper.locationScreen);
     } catch (e) {
       SnackBarDisplay.show();

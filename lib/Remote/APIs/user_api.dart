@@ -1,13 +1,13 @@
 class UserApi {
   static const String sendUserOtpMutation = """
   mutation SendOtp(\$phoneNumber){
-    sendUserOtp
+    sendUserOtp(phoneNumber:\$phoneNumber)
   }
 """;
 
   static const String verifyUserOtpMutation = """
   mutation VerifyOtp(\$code){
-    verifyUserOtp
+    verifyUserOtp(code:\$code)
   }
 """;
 
