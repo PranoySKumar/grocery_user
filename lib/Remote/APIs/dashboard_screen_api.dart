@@ -1,4 +1,4 @@
-class DashboardApi {
+class DashboardScreenApi {
   static const String loadDataQuery = """
   query LoadDashBoardScreenData{
   discountedProducts: products(options: {limit:6,discountFilter:true}) {

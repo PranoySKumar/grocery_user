@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:grocery_user/Model/Category/category_model.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
-import 'package:grocery_user/Remote/APIs/dashboard_api.dart';
+import 'package:grocery_user/Remote/APIs/dashboard_screen_api.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Screens/Products/products_controller.dart';
@@ -55,7 +55,7 @@ class HomeScreenController extends GetxController {
   //loads discounted products data from network into _categories.
   Future<void> loadData() async {
     try {
-      var resultData = await GraphqlActions.mutate(api: DashboardApi.loadDataQuery);
+      var resultData = await GraphqlActions.mutate(api: DashboardScreenApi.loadDataQuery);
 
       List<Map<String, dynamic>> categoriesJson = resultData?["categories"];
       List<Map<String, dynamic>> discountedProductsJson = resultData?["discountedProducts"];

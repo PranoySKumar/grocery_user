@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
+import 'package:grocery_user/Remote/APIs/products_screen_api.dart';
 import 'package:grocery_user/Remote/Providers/products_provider.dart';
+import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
 enum ProductScreenFilter { search, discounted, mostPopular, category }
@@ -34,7 +36,9 @@ class ProductsController extends GetxController {
   //loads category data from network into _categories.
   Future<void> _loadMostPopularProducts() async {
     try {
-      _products = await ProductsProvider().getMostPopularProducts();
+      var result = await GraphqlActions.query(api: ProductsScreenApi.getAllPopularProducts);
+
+      _products = result?["products"].map((prod) => Product.fromJson(prod));
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't fetch most popular products.");
     } catch (e) {
@@ -47,7 +51,9 @@ class ProductsController extends GetxController {
 //loads all discounted products
   Future<void> _loadAllDiscountedProducts() async {
     try {
-      _products = await ProductsProvider().getDiscountedProducts();
+      var result = await GraphqlActions.query(api: ProductsScreenApi.getAllDiscountedProducts);
+
+      _products = result?["products"].map((prod) => Product.fromJson(prod));
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't fetch discounted products");
     } catch (e) {
@@ -60,7 +66,10 @@ class ProductsController extends GetxController {
 //loads all category products.
   Future<void> _loadAllCategoryProducts(String categoryId) async {
     try {
-      _products = await ProductsProvider().getCategoryProducts(categoryId);
+      var result = await GraphqlActions.query(
+          api: ProductsScreenApi.getSingleCategoryProducts, variables: {"categoryId": categoryId});
+
+      _products = result?["products"].map((prod) => Product.fromJson(prod));
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't fetch category products");
     } catch (e) {
@@ -70,10 +79,13 @@ class ProductsController extends GetxController {
     }
   }
 
-  //loads all category products.
+  //loads all searchProducts
   Future<void> _loadProductsBySearch(String searchTerm) async {
     try {
-      _products = await ProductsProvider().getProductsBySearchTerm(searchTerm);
+      var result = await GraphqlActions.query(
+          api: ProductsScreenApi.searchProductsQuery, variables: {"searchTerm": searchTerm});
+
+      _products = result?["products"].map((prod) => Product.fromJson(prod));
     } on HttpException {
       SnackBarDisplay.show(message: "couldn't search for products");
     } catch (e) {
