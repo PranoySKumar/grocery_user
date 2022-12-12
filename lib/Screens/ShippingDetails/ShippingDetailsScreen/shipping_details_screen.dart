@@ -58,14 +58,16 @@ class ShippingDetailsScreen extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 10,
-                  ),
-                  itemCount: addresses.length,
-                  itemBuilder: (context, index) => _SingleAddressView(
-                    shippingAddress: addresses[index],
-                    deleteHandler: () => shippingDetailsController.deleteAddressHandler(index),
+                child: Obx(
+                  () => ListView.separated(
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 10,
+                    ),
+                    itemCount: addresses.length,
+                    itemBuilder: (context, index) => _SingleAddressView(
+                      shippingAddress: addresses[index],
+                      deleteHandler: () => shippingDetailsController.deleteAddressHandler(index),
+                    ),
                   ),
                 ),
               )
@@ -89,20 +91,16 @@ class _SingleAddressView extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
-          border: Border.all(width: 2, color: Colors.black)),
+          border: Border.all(width: 2, color: Colors.grey)),
       child: Row(
         children: [
           Expanded(
               child: Text(shippingAddress.address!, maxLines: 2, overflow: TextOverflow.ellipsis)),
-          const Icon(
-            Icons.edit,
-            size: 24,
-          ),
           const SizedBox(
             width: 10,
           ),
           InkWell(
-            onTap: (() => deleteHandler),
+            onTap: (() => deleteHandler()),
             child: const Icon(
               Icons.delete_outline,
               size: 24,
