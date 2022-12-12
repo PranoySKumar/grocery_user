@@ -17,6 +17,8 @@ class CustomTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final int? min;
   final int? max;
+  final TextInputAction? textInputAction;
+  final String? errorText;
 
   const CustomTextField(
       {super.key,
@@ -35,6 +37,8 @@ class CustomTextField extends StatelessWidget {
       this.hintTextStyle,
       this.focusNode,
       this.min,
+      this.textInputAction,
+      this.errorText,
       this.max});
 
   @override
@@ -51,6 +55,7 @@ class CustomTextField extends StatelessWidget {
       onChanged: onChanged,
       cursorColor: Colors.black,
       keyboardType: keyboardType,
+      textInputAction: textInputAction,
       textAlign: textAlign ?? TextAlign.start,
       style: textStyle ?? Theme.of(context).textTheme.labelMedium,
       decoration: InputDecoration(
@@ -72,6 +77,21 @@ class CustomTextField extends StatelessWidget {
               BorderSide(width: borderSize ?? 1, color: Colors.black, style: BorderStyle.solid),
         ),
         counterText: "",
+        errorBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(4),
+          ),
+          borderSide:
+              BorderSide(width: borderSize ?? 1, color: Colors.red, style: BorderStyle.solid),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(4),
+          ),
+          borderSide:
+              BorderSide(width: borderSize ?? 1, color: Colors.red, style: BorderStyle.solid),
+        ),
+        errorText: errorText,
         hintText: hint,
         hintStyle: hintTextStyle ?? theme.textTheme.labelMedium,
       ),

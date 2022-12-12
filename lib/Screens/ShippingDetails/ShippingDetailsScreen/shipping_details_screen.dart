@@ -19,10 +19,10 @@ class ShippingDetailsScreen extends StatelessWidget {
           centerTitle: true,
           elevation: 0,
           actions: [
-            Container(
-              margin: const EdgeInsets.only(right: 10),
-              child: InkWell(
-                onTap: (() => Get.toNamed(RouteHelper.editShippingAddressScreen)),
+            InkWell(
+              onTap: (() => Get.toNamed(RouteHelper.editShippingAddressScreen)),
+              child: Container(
+                width: 50,
                 child: const Icon(
                   Icons.add,
                   color: Colors.black,
@@ -58,11 +58,15 @@ class ShippingDetailsScreen extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
+                  ),
                   itemCount: addresses.length,
-                  itemExtent: 80,
-                  itemBuilder: (context, index) =>
-                      _SingleAddressView(shippingAddress: addresses[index]),
+                  itemBuilder: (context, index) => _SingleAddressView(
+                    shippingAddress: addresses[index],
+                    deleteHandler: () => shippingDetailsController.deleteAddressHandler(index),
+                  ),
                 ),
               )
             ],
@@ -75,8 +79,9 @@ class ShippingDetailsScreen extends StatelessWidget {
 
 class _SingleAddressView extends StatelessWidget {
   final ShippingAddress shippingAddress;
+  final VoidCallback deleteHandler;
 
-  const _SingleAddressView({required this.shippingAddress});
+  const _SingleAddressView({required this.shippingAddress, required this.deleteHandler});
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +101,12 @@ class _SingleAddressView extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          const Icon(
-            Icons.delete_outline,
-            size: 24,
+          InkWell(
+            onTap: (() => deleteHandler),
+            child: const Icon(
+              Icons.delete_outline,
+              size: 24,
+            ),
           )
         ],
       ),

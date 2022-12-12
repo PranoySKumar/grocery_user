@@ -16,31 +16,68 @@ class EditShippingDetailsController extends GetxController {
   final TextEditingController pinCodeTextController = TextEditingController();
   final TextEditingController landmarkTextController = TextEditingController();
 
+  //states
   var isLoading = false.obs;
+  var hasError = false.obs;
+
+  //foucs nodes for edit text
+  var recipentNameFocusNode = FocusNode();
+  var addressFocusNode = FocusNode();
+  var pincodeFocusNode = FocusNode();
+  var landMarkFocusNode = FocusNode();
+
+  //error texts
+  Rx<String> recipientNameErrorText = "".obs;
+  Rx<String> addressErrorText = "".obs;
+  Rx<String> pincodeErrorText = "".obs;
 
   @override
   onClose() {}
 
   Future<void> onSubmit() async {
+    //restoring error fields
+    recipientNameErrorText.value = "";
+    addressErrorText.value = "";
+    pincodeErrorText.value = "";
+
     var address = addressTextController.text;
     var recipientName = recipentNameTextController.text;
-    var pincode = int.parse(pinCodeTextController.text);
+    var pincode = pinCodeTextController.text;
     var landmark = landmarkTextController.text;
-    isLoading.value = true;
-    var data = {
-      " shippingAddress": {
-        "address": address,
-        "recipientName": recipientName,
-        "pincode": pincode,
-      },
-    };
-    if (landmarkTextController.text.isNotEmpty) {
-      data["shippingAddress"]?["address"] = landmark;
-    }
+
+    //validation
+    if (recipientName.isEmpty) recipientNameErrorText.value = "This field cannot be empty";
+    if (address.isEmpty) addressErrorText.value = "This field cannot be empty";
+    if (pincode.isEmpty) pincodeErrorText.value = "This field cannot be empty";
+
+    if (recipientNameErrorText.value.isNotEmpty ||
+        addressErrorText.value.isNotEmpty ||
+        pincodeErrorText.value.isNotEmpty) return;
+
+    var parsedPincode = int.parse(pincode); // parsing the pincode
+
+    isLoading.value = true; //setting the page to load
 
     var homeScreenController = Get.find<HomeScreenController>();
     var shippingDetailsController = Get.find<ShippingDetailsController>();
 
+//preparing data
+    var newShippingAddress = {
+      "address": address,
+      "recipientName": recipientName,
+      "pincode": parsedPincode,
+    };
+    if (landmarkTextController.text.isNotEmpty) {
+      newShippingAddress["address"] = landmark;
+    }
+    var data = {
+      "shippingAddresses": [
+        newShippingAddress,
+        ...homeScreenController.user.value.shippingAddresses!.map((e) => e.toJson)
+      ],
+    };
+
+//sending data.
     try {
       //update address
       await GraphqlActions.mutate(
@@ -49,18 +86,21 @@ class EditShippingDetailsController extends GetxController {
 
       //update the list of shipping addresses in homescreen.
       homeScreenController.user.value.shippingAddresses?.add(ShippingAddress(
-          address: address, landmark: landmark, pincode: pincode, recipientName: recipientName));
+          address: address,
+          landmark: landmark,
+          pincode: parsedPincode,
+          recipientName: recipientName));
 
       //reload all the addresses in shipping addresses list screen
       shippingDetailsController.loadShippingDetails();
 
-      Get.toNamed(RouteHelper.shippingDetailsScreen); //get to shipping address detaisl screen.
+      Get.back(); //get to shipping address detaisl screen.
 
       isLoading.value = false; //loading is set to false
 
     } catch (e) {
       SnackBarDisplay.show(message: "something went wrong while updating address");
-      Get.toNamed(RouteHelper.shippingDetailsScreen);
+      Get.back();
       rethrow;
     }
   }
