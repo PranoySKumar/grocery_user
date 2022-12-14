@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
-import 'package:grocery_user/Screens/common/product_card_widget.dart';
+import 'package:grocery_user/Views/common/product_card_widget.dart';
 
 import 'package:sliver_tools/sliver_tools.dart';
 

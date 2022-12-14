@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
-import 'package:grocery_user/Screens/ShippingDetails/ShippingDetailsScreen/shipping_details_controller.dart';
+import 'package:grocery_user/Views/ShippingDetails/ShippingDetailsScreen/shipping_details_controller.dart';
 
 class ShippingDetailsScreen extends StatelessWidget {
   const ShippingDetailsScreen({super.key});

@@ -6,7 +6,7 @@ import 'package:grocery_user/Model/User/user_model.dart';
 import 'package:grocery_user/Remote/APIs/dashboard_screen_api.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
-import 'package:grocery_user/Screens/Products/products_controller.dart';
+import 'package:grocery_user/Views/Products/products_controller.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
 class HomeScreenController extends GetxController {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_controller.dart';
+import 'package:grocery_user/Views/Login/EnterLocationScreen/enter_location_controller.dart';
 
 import '../../common/custom_text_field.dart';
 import '../../common/header_widget.dart';

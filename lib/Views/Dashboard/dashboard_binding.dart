@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 
 import '../Cart/cart_controller.dart';
 

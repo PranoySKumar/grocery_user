@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_controller.dart';
-import 'package:grocery_user/Screens/common/header_widget.dart';
+import 'package:grocery_user/Views/Login/WelcomeScreen/welcome_controller.dart';
+import 'package:grocery_user/Views/common/header_widget.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final _controller = Get.find<WelcomeController>();

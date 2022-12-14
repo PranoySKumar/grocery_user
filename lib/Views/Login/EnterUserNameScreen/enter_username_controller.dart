@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Remote/APIs/user_api.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
-import 'package:grocery_user/Screens/Login/EnterLocationScreen/enter_location_controller.dart';
-import 'package:grocery_user/Screens/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
+import 'package:grocery_user/Views/Login/EnterLocationScreen/enter_location_controller.dart';
+import 'package:grocery_user/Views/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 

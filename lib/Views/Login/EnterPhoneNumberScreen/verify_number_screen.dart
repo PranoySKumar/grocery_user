@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:grocery_user/Screens/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
-import 'package:grocery_user/Screens/common/borderless_textfield_widget.dart';
-import 'package:grocery_user/Screens/common/header_widget.dart';
+import 'package:grocery_user/Views/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
+import 'package:grocery_user/Views/common/borderless_textfield_widget.dart';
+import 'package:grocery_user/Views/common/header_widget.dart';
 
 import '../../common/full_length_button_widget.dart';
 

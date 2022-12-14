@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Categories/category_controller.dart';
+import 'package:grocery_user/Views/Categories/category_controller.dart';
 
 import '../common/category_list_item_widget.dart';
 

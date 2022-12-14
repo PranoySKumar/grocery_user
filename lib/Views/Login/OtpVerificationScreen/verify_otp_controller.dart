@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Remote/APIs/user_api.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
-import 'package:grocery_user/Screens/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
+import 'package:grocery_user/Views/Login/EnterPhoneNumberScreen/verify_number_controller.dart';
 
 import '../../../Routes/route_helper.dart';
 import '../../../Utils/snackbar.dart';

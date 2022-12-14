@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Login/EnterUserNameScreen/enter_username_controller.dart';
+import 'package:grocery_user/Views/Login/EnterUserNameScreen/enter_username_controller.dart';
 
-import 'package:grocery_user/Screens/common/custom_text_field.dart';
-import 'package:grocery_user/Screens/common/header_widget.dart';
+import 'package:grocery_user/Views/common/custom_text_field.dart';
+import 'package:grocery_user/Views/common/header_widget.dart';
 
 class EnterUserNameScreen extends StatelessWidget {
   const EnterUserNameScreen({super.key});

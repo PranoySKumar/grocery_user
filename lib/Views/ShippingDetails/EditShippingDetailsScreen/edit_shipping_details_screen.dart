@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_controller.dart';
-import 'package:grocery_user/Screens/common/custom_text_field.dart';
-import 'package:grocery_user/Screens/common/full_length_button_widget.dart';
+import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_controller.dart';
+import 'package:grocery_user/Views/common/custom_text_field.dart';
+import 'package:grocery_user/Views/common/full_length_button_widget.dart';
 
 class EditShippingAddressScreen extends StatelessWidget {
   const EditShippingAddressScreen({super.key});

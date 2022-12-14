@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Products/products_controller.dart';
-import 'package:grocery_user/Screens/common/product_card_widget.dart';
-import 'package:grocery_user/Screens/common/progress_screen.dart';
+import 'package:grocery_user/Views/Products/products_controller.dart';
+import 'package:grocery_user/Views/common/product_card_widget.dart';
+import 'package:grocery_user/Views/common/progress_screen.dart';
 
 import '../../Model/Product/product_model.dart';
 

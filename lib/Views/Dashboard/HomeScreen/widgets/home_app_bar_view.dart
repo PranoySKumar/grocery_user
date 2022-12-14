@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
-import 'package:grocery_user/Screens/common/custom_text_field.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
+import 'package:grocery_user/Views/common/custom_text_field.dart';
 
 class HomeAppbarView extends StatelessWidget {
   final String? address;

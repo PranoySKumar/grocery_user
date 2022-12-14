@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Login/OtpVerificationScreen/verify_otp_controller.dart';
-import 'package:grocery_user/Screens/common/full_length_button_widget.dart';
-import 'package:grocery_user/Screens/common/header_widget.dart';
+import 'package:grocery_user/Views/Login/OtpVerificationScreen/verify_otp_controller.dart';
+import 'package:grocery_user/Views/common/full_length_button_widget.dart';
+import 'package:grocery_user/Views/common/header_widget.dart';
 
 import '../../common/borderless_textfield_widget.dart';
 

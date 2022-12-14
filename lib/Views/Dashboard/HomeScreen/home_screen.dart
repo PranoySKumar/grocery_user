@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grocery_user/Screens/Dashboard/HomeScreen/home_controller.dart';
-import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/categories_list_strip.dart';
-import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/category_list_view.dart';
-import 'package:grocery_user/Screens/Dashboard/HomeScreen/widgets/home_app_bar_view.dart';
-import 'package:grocery_user/Screens/common/products_list_section_widget.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/widgets/categories_list_strip.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/widgets/category_list_view.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/widgets/home_app_bar_view.dart';
+import 'package:grocery_user/Views/common/products_list_section_widget.dart';
 
 import '../../../Model/User/user_model.dart';
 
