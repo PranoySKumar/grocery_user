@@ -1,5 +1,5 @@
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:get/get.dart';
+import 'package:grocery_user/Screens/Cart/CartScreen/cart_screen.dart';
 import 'package:grocery_user/Screens/Categories/category_screen.dart';
 import 'package:grocery_user/Screens/Categories/category_screen_binding.dart';
 import 'package:grocery_user/Screens/Dashboard/dashboard_binding.dart';
@@ -10,7 +10,7 @@ import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_binding.dart';
 import 'package:grocery_user/Screens/Login/WelcomeScreen/welcome_screen.dart';
 import 'package:grocery_user/Screens/Products/products_binding.dart';
 import 'package:grocery_user/Screens/Products/products_screen.dart';
-import 'package:grocery_user/Screens/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_binding.dart';
+import 'package:grocery_user/Screens/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_controller.dart';
 import 'package:grocery_user/Screens/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_screen.dart';
 
 import '../Screens/Login/EnterLocationScreen/enter_location_screen.dart';
@@ -35,6 +35,7 @@ class RouteHelper {
   static const productsScreen = "/products";
   static const shippingDetailsScreen = "/shipping-details";
   static const editShippingAddressScreen = "/edit-address-details";
+  static const cartScreen = "/cart";
 
   static getAppRoutes() => [
         GetPage(
@@ -88,14 +89,19 @@ class RouteHelper {
         ),
         GetPage(
           name: shippingDetailsScreen,
-          page: () => const ShippingDetailsScreen(),
+          page: () => ShippingDetailsScreen(),
           binding: ShippingDetailsBinding(),
           transition: Transition.rightToLeftWithFade,
         ),
         GetPage(
           name: editShippingAddressScreen,
           page: () => const EditShippingAddressScreen(),
-          binding: EditShippingAddressBinding(),
+          binding: BindingsBuilder(() => Get.lazyPut(() => EditShippingDetailsController())),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: cartScreen,
+          page: () => const CartScreen(),
           transition: Transition.rightToLeftWithFade,
         ),
       ];

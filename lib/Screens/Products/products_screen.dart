@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Screens/Products/products_controller.dart';
 import 'package:grocery_user/Screens/common/product_card_widget.dart';
+import 'package:grocery_user/Screens/common/progress_screen.dart';
 
 import '../../Model/Product/product_model.dart';
 
@@ -15,13 +16,7 @@ class ProductsScreen extends StatelessWidget {
 
     return Obx(
       (() => productsController.isLoading.isTrue
-          ? const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
-                ),
-              ),
-            )
+          ? const ProgressScreen()
           : Scaffold(
               appBar: AppBar(
                   leading: const BackButton(

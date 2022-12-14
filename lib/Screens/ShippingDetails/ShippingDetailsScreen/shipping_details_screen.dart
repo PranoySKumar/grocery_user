@@ -21,9 +21,9 @@ class ShippingDetailsScreen extends StatelessWidget {
           actions: [
             InkWell(
               onTap: (() => Get.toNamed(RouteHelper.editShippingAddressScreen)),
-              child: Container(
+              child: const SizedBox(
                 width: 50,
-                child: const Icon(
+                child: Icon(
                   Icons.add,
                   color: Colors.black,
                   size: 25,
@@ -38,43 +38,59 @@ class ShippingDetailsScreen extends StatelessWidget {
           backgroundColor: Get.theme.scaffoldBackgroundColor),
       body: Builder(builder: (context) {
         if (addresses.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "No Addresses Available",
-                ),
-                Text(
-                  "Tap + to add One",
-                  style: Get.theme.textTheme.labelMedium,
-                )
-              ],
-            ),
-          );
+          return _EmptyAddressListBody();
         }
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Column(
-            children: [
-              Expanded(
-                child: Obx(
-                  () => ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 10,
-                    ),
-                    itemCount: addresses.length,
-                    itemBuilder: (context, index) => _SingleAddressView(
-                      shippingAddress: addresses[index],
-                      deleteHandler: () => shippingDetailsController.deleteAddressHandler(index),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
+        return _AddressList();
       }),
+    );
+  }
+}
+
+class _AddressList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var shippingDetailsController = Get.find<ShippingDetailsController>();
+    var addresses = shippingDetailsController.shippingDetails;
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        children: [
+          Expanded(
+            child: Obx(
+              () => ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: addresses.length,
+                itemBuilder: (context, index) => _SingleAddressView(
+                  shippingAddress: addresses[index],
+                  deleteHandler: () => shippingDetailsController.deleteAddressHandler(index),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _EmptyAddressListBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            "No Addresses Available",
+          ),
+          Text(
+            "Tap + to add One",
+            style: Get.theme.textTheme.labelMedium,
+          )
+        ],
+      ),
     );
   }
 }

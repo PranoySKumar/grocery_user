@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Screens/Cart/CartScreen/cart_screen.dart';
 
 import 'HomeScreen/home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final _index = 0.obs;
-  final _screens = [const HomeScreen()];
+  final _screens = [const HomeScreen(), const CartScreen()];
   DashboardScreen({super.key});
 
 //sets the index of the selected screen.
@@ -26,10 +27,10 @@ class DashboardScreen extends StatelessWidget {
             icon: Icon(Icons.cottage_outlined),
             label: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.window_outlined),
-            label: '',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.window_outlined),
+          //   label: '',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_basket_outlined),
             label: '',
