@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:grocery_user/Model/Product/product_model.dart';
+import 'package:grocery_user/Views/common/product_item_button.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final Product product;
@@ -71,24 +71,12 @@ class ProductCardWidget extends StatelessWidget {
               DiscountedPriceTag(discount: product.discount, price: product.price!.toInt())
             ],
           ),
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 15),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-              ),
-              child: Text(
-                "ADD +",
-                textAlign: TextAlign.center,
-                style: Get.theme.textTheme.titleMedium?.copyWith(
-                    fontSize: 16,
-                    height: 24 / 16,
-                    fontWeight: FontWeight.w800,
-                    color: const Color(0xff24DD7D)),
-              ),
-            ),
+          ProductItemButton(
+            onDecrese: () {},
+            onIncrease: () {},
+            currentValue: 1,
+            width: 100,
+            margin: EdgeInsets.only(top: 5),
           ),
           const SizedBox(
             height: 3,

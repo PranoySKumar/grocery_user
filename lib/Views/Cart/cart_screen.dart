@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Views/common/product_item_button.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -222,7 +223,7 @@ class _CancellationPolicy extends StatelessWidget {
             style: Get.theme.textTheme.labelMedium,
           ),
           Container(
-            margin: EdgeInsets.only(top: 8),
+            margin: const EdgeInsets.only(top: 8),
             child: Text(
               "100% cancellation fee will be applicable if you decide to cancel the order anytime after order placement. Avoid cancellation as it leads to wastage of food.",
               style: Get.theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
@@ -309,30 +310,7 @@ class _CartListItem extends StatelessWidget {
                         "₹194",
                         style: Get.theme.textTheme.labelLarge,
                       ),
-                      Container(
-                        height: 32,
-                        width: 86,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                            color: Get.theme.highlightColor,
-                            borderRadius: const BorderRadius.all(Radius.circular(4))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("-",
-                                style: Get.theme.textTheme.labelSmall
-                                    ?.copyWith(fontSize: 16, color: Colors.white)),
-                            Text(
-                              "1",
-                              style: Get.theme.textTheme.titleMedium?.copyWith(color: Colors.white),
-                            ),
-                            Text("+",
-                                style: Get.theme.textTheme.labelSmall
-                                    ?.copyWith(fontSize: 16, color: Colors.white))
-                          ],
-                        ),
-                      ),
+                      ProductItemButton(onDecrese: () {}, onIncrease: () {}, currentValue: 0)
                     ],
                   )
                 ],
