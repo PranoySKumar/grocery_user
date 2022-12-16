@@ -15,7 +15,7 @@ class ProductItemButton extends StatelessWidget {
       {super.key,
       required this.onDecrese,
       required this.onIncrease,
-      this.height = 32,
+      this.height = 34,
       this.width = 86,
       required this.currentValue,
       this.margin});
@@ -51,6 +51,13 @@ class ProductItemButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
           color: Get.theme.highlightColor,
+          boxShadow: [
+            const BoxShadow(
+              color: Color.fromARGB(50, 0, 0, 0),
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            )
+          ],
           borderRadius: const BorderRadius.all(Radius.circular(4))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,8 +65,12 @@ class ProductItemButton extends StatelessWidget {
         children: [
           InkWell(
             onTap: onDecrese,
-            child: Text("-",
-                style: Get.theme.textTheme.labelSmall?.copyWith(fontSize: 16, color: Colors.white)),
+            child: SizedBox(
+              width: 20,
+              child: Text("-",
+                  style:
+                      Get.theme.textTheme.labelSmall?.copyWith(fontSize: 16, color: Colors.white)),
+            ),
           ),
           Text(
             currentValue.toString(),
@@ -68,8 +79,12 @@ class ProductItemButton extends StatelessWidget {
           ),
           InkWell(
             onTap: onIncrease,
-            child: Text("+",
-                style: Get.theme.textTheme.labelSmall?.copyWith(fontSize: 16, color: Colors.white)),
+            child: SizedBox(
+              width: 20,
+              child: Text("+",
+                  style:
+                      Get.theme.textTheme.labelSmall?.copyWith(fontSize: 16, color: Colors.white)),
+            ),
           )
         ],
       ),

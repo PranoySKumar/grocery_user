@@ -26,9 +26,7 @@ class HomeScreen extends StatelessWidget {
               color: Colors.black,
               child: CustomScrollView(
                 slivers: [
-                  _AppBar(
-                    user: homeScreenController.user.value,
-                  ),
+                  HomeAppbarView(),
                   const SliverToBoxAdapter(
                     child: SizedBox(
                       height: 8,
@@ -96,29 +94,6 @@ class _GreetingsWidget extends StatelessWidget {
         ),
         child: Text("Hi Pranoy!", style: Get.theme.textTheme.labelLarge),
       ),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget {
-  final User user;
-  const _AppBar({super.key, required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    String info = "";
-    if (user.shippingAddresses!.isEmpty) {
-      info = "Set an Address";
-    } else if (user.shippingAddresses?[0] != null) {
-      info = user.shippingAddresses?[0].address as String;
-    } else if (user.pincode != null) {
-      info = user.pincode as String;
-    } else {
-      info = "Guest";
-    }
-
-    return HomeAppbarView(
-      address: info,
     );
   }
 }

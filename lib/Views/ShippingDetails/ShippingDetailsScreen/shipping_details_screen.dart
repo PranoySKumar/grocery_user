@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Views/ShippingDetails/ShippingDetailsScreen/shipping_details_controller.dart';
 
 class ShippingDetailsScreen extends StatelessWidget {
@@ -9,14 +11,11 @@ class ShippingDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var shippingDetailsController = Get.find<ShippingDetailsController>();
-    var addresses = shippingDetailsController.shippingDetails;
     return Scaffold(
       appBar: AppBar(
           leading: const BackButton(
             color: Colors.black,
           ),
-          centerTitle: true,
           elevation: 0,
           actions: [
             InkWell(
@@ -32,11 +31,13 @@ class ShippingDetailsScreen extends StatelessWidget {
             )
           ],
           title: Text(
-            "Shipping Addresses",
-            style: Get.theme.textTheme.titleMedium,
+            "Your Address",
+            style: Get.theme.textTheme.titleMedium?.copyWith(fontSize: 18),
           ),
           backgroundColor: Get.theme.scaffoldBackgroundColor),
-      body: Builder(builder: (context) {
+      body: Obx(() {
+        var shippingDetailsController = Get.find<ShippingDetailsController>();
+        var addresses = shippingDetailsController.shippingDetails;
         if (addresses.isEmpty) {
           return _EmptyAddressListBody();
         }
@@ -52,23 +53,31 @@ class _AddressList extends StatelessWidget {
     var shippingDetailsController = Get.find<ShippingDetailsController>();
     var addresses = shippingDetailsController.shippingDetails;
     return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.white),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Obx(
               () => ListView.separated(
                 separatorBuilder: (context, index) => const SizedBox(
-                  height: 10,
+                  height: 20,
+                  child: Divider(
+                    height: 2,
+                    color: Colors.grey,
+                  ),
                 ),
                 itemCount: addresses.length,
-                itemBuilder: (context, index) => _SingleAddressView(
-                  shippingAddress: addresses[index],
-                  deleteHandler: () => shippingDetailsController.deleteAddressHandler(index),
-                ),
+                itemBuilder: (context, index) {
+                  return _SingleAddressView(
+                      shippingAddress: addresses[index],
+                      deleteHandler: () => shippingDetailsController.deleteAddressHandler(index));
+                },
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -96,22 +105,64 @@ class _EmptyAddressListBody extends StatelessWidget {
 }
 
 class _SingleAddressView extends StatelessWidget {
-  final ShippingAddress shippingAddress;
   final VoidCallback deleteHandler;
 
-  const _SingleAddressView({required this.shippingAddress, required this.deleteHandler});
+  final ShippingAddress shippingAddress;
+  final shippingDetailsController = Get.find<ShippingDetailsController>();
+
+  _SingleAddressView({required this.shippingAddress, required this.deleteHandler});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          border: Border.all(width: 2, color: Colors.grey)),
+    String? selectedAddress = GetStorage().read("selected-address");
+    var isSelected = false;
+    if (selectedAddress != null && selectedAddress == shippingAddress.address) {
+      isSelected = true;
+    }
+
+    return SizedBox(
+      width: double.infinity,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-              child: Text(shippingAddress.address!, maxLines: 2, overflow: TextOverflow.ellipsis)),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () => shippingDetailsController.onSelectAddress(shippingAddress),
+                  child: Icon(
+                    !isSelected ? Icons.circle_outlined : Icons.check_circle,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text.rich(
+                        TextSpan(
+                          text: "Delivery at ",
+                          style: Get.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
+                          children: [
+                            TextSpan(text: "Home", style: Get.textTheme.labelMedium),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        shippingAddress.address!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Get.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(
             width: 10,
           ),

@@ -5,12 +5,7 @@ import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Views/common/custom_text_field.dart';
 
 class HomeAppbarView extends StatelessWidget {
-  final String? address;
-
-  const HomeAppbarView({
-    super.key,
-    this.address,
-  });
+  const HomeAppbarView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,24 +28,29 @@ class HomeAppbarView extends StatelessWidget {
                   const SizedBox(
                     width: 17,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        address!.split(",")[0],
-                        style: Get.theme.textTheme.labelMedium
-                            ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      if (address!.split(",").length > 1)
-                        Text(
-                          address!.split(",")[1].trimLeft(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Get.theme.textTheme.labelMedium
-                              ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
-                        )
-                    ],
+                  GetBuilder<HomeScreenController>(
+                    builder: ((controller) {
+                      var address = controller.selectedAddress.value;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            address.split(",")[0],
+                            style: Get.theme.textTheme.labelMedium
+                                ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                          ),
+                          if (address.split(",").length > 1)
+                            Text(
+                              address.split(",")[1].trimLeft(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Get.theme.textTheme.labelMedium
+                                  ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                            )
+                        ],
+                      );
+                    }),
                   )
                 ],
               ),

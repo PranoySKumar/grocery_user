@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:grocery_user/Model/Product/product_model.dart';
+import 'package:grocery_user/Views/Cart/cart_controller.dart';
 import 'package:grocery_user/Views/common/product_item_button.dart';
 
 class ProductCardWidget extends StatelessWidget {
@@ -9,8 +9,9 @@ class ProductCardWidget extends StatelessWidget {
   final TextStyle? titleStyle;
   final double? width;
   final double? height;
-  const ProductCardWidget(
-      {super.key, required this.product, this.titleStyle, this.width, this.height});
+
+  final cartController = Get.find<CartController>();
+  ProductCardWidget({super.key, required this.product, this.titleStyle, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +72,25 @@ class ProductCardWidget extends StatelessWidget {
               DiscountedPriceTag(discount: product.discount, price: product.price!.toInt())
             ],
           ),
-          ProductItemButton(
-            onDecrese: () {},
-            onIncrease: () {},
-            currentValue: 1,
-            width: 100,
-            margin: EdgeInsets.only(top: 5),
-          ),
+          Obx(() {
+            var cartItem =
+                cartController.cart.firstWhereOrNull((item) => item.product.id == product.id);
+            var currentItemAmount = 0;
+            if (cartItem != null) {
+              currentItemAmount = cartItem.amount;
+            }
+            return ProductItemButton(
+              onDecrese: () {
+                cartController.decreaseItemInCart(product);
+              },
+              onIncrease: () {
+                cartController.addItemToCart(product);
+              },
+              currentValue: currentItemAmount,
+              width: double.infinity,
+              margin: const EdgeInsets.only(top: 5, left: 12, right: 12, bottom: 9),
+            );
+          }),
           const SizedBox(
             height: 3,
           )

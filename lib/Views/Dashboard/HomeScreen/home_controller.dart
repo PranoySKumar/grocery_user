@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Model/Category/category_model.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
@@ -19,6 +20,7 @@ class HomeScreenController extends GetxController {
   final categories = <Category>[].obs; // list of categories.
 
   final user = User().obs; // user details.
+  final selectedAddress = "".obs;
 
   // gets current popular product list;
   User get getUserDetails => user.value; // gets user details.
@@ -36,6 +38,7 @@ class HomeScreenController extends GetxController {
     await loadData();
     isLoading.value = false;
 
+    setSeletedAddress();
     super.onInit();
   }
 
@@ -44,6 +47,23 @@ class HomeScreenController extends GetxController {
     //clears controller from memory.
     searchBarEditingController.dispose();
     super.onClose();
+  }
+
+  void setSeletedAddress() {
+    String info = "";
+    ShippingAddress? shippingAddress = user.value.shippingAddresses?.firstWhere(
+      (item) => item.address == GetStorage().read("selected-address"),
+      orElse: () => ShippingAddress(),
+    );
+    if (shippingAddress != null && shippingAddress.address != null) {
+      info = shippingAddress.address as String;
+    } else if (user.value.shippingAddresses!.isEmpty || user.value.shippingAddresses!.isNotEmpty) {
+      info = "Set an Address";
+    } else {
+      info = "Guest";
+    }
+    selectedAddress.value = info;
+    update();
   }
 
 //Listens to change in Query.
