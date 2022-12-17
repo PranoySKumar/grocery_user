@@ -1,55 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Views/Cart/cart_controller.dart';
 import 'package:grocery_user/Views/common/product_item_button.dart';
+import 'package:grocery_user/Views/common/progress_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          leading: const BackButton(
-            color: Colors.black,
-          ),
-          title: Text(
-            "Your Cart",
-            style: Get.theme.textTheme.labelMedium?.copyWith(
-              fontSize: 18,
+    var cartController = Get.find<CartController>();
+    return Obx(() => cartController.isGeneratingBill.isFalse
+        ? Scaffold(
+            appBar: AppBar(
+                leading: const BackButton(
+                  color: Colors.black,
+                ),
+                title: Text(
+                  "Your Cart",
+                  style: Get.theme.textTheme.labelMedium?.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+                backgroundColor: Get.theme.scaffoldBackgroundColor,
+                elevation: 0,
+                actions: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 18),
+                    child: const Icon(
+                      Icons.account_circle_outlined,
+                      color: Colors.black,
+                    ),
+                  )
+                ]),
+            body: Container(
+              margin: const EdgeInsets.only(left: 16, right: 16),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const _ProductItemList(),
+                    _ApplyCoupon(),
+                    _Subtotal(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    _DeliveryAddress(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    _CancellationPolicy(),
+                  ],
+                ),
+              ),
             ),
-          ),
-          backgroundColor: Get.theme.scaffoldBackgroundColor,
-          elevation: 0,
-          actions: [
-            Container(
-              margin: const EdgeInsets.only(right: 18),
-              child: const Icon(
-                Icons.account_circle_outlined,
-                color: Colors.black,
-              ),
-            )
-          ]),
-      body: Container(
-        margin: const EdgeInsets.only(left: 16, right: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const _ProductItemList(),
-              _ApplyCoupon(),
-              _Subtotal(),
-              const SizedBox(
-                height: 8,
-              ),
-              _DeliveryAddress(),
-              const SizedBox(
-                height: 8,
-              ),
-              _CancellationPolicy(),
-            ],
-          ),
-        ),
-      ),
-    );
+          )
+        : const ProgressScreen());
   }
 }
 
@@ -58,14 +63,21 @@ class _ProductItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cartController = Get.find<CartController>();
+
     return Container(
       decoration: const BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        children: const [_CartListItem(), _CartListItem()],
-      ),
+      child: Obx(() {
+        return ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: cartController.cart.length,
+          shrinkWrap: true,
+          itemBuilder: ((context, index) => _CartListItem(
+                cartItem: cartController.cart[index],
+              )),
+        );
+      }),
     );
   }
 }
@@ -73,85 +85,92 @@ class _ProductItemList extends StatelessWidget {
 class _Subtotal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var cartController = Get.find<CartController>();
     return Container(
-      height: 148,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
-      width: double.infinity,
-      decoration: const BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Row(
+        height: 148,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+        width: double.infinity,
+        decoration: const BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
+        child: Obx(
+          () => cartController.isGeneratingBill.isFalse
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        const Icon(
-                          Icons.shopping_basket_outlined,
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.shopping_basket_outlined,
+                                  ),
+                                  Container(
+                                      margin: const EdgeInsets.only(left: 13),
+                                      child:
+                                          Text("Subtotal", style: Get.theme.textTheme.labelMedium)),
+                                ],
+                              ),
+                              Text(
+                                "₹388",
+                                style: Get.theme.textTheme.labelMedium,
+                              ),
+                            ],
+                          ),
                         ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 13),
-                            child: Text("Subtotal", style: Get.theme.textTheme.labelMedium)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "GST & charges",
+                          style: Get.theme.textTheme.labelSmall,
+                        ),
+                        Text("₹19.4", style: Get.theme.textTheme.labelSmall)
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Delivery fee for partner",
+                          style: Get.theme.textTheme.labelSmall,
+                        ),
+                        Text(
+                          "₹40",
+                          style: Get.theme.textTheme.labelSmall,
+                        )
                       ],
                     ),
                     Text(
-                      "₹388",
-                      style: Get.theme.textTheme.labelMedium,
+                      "Fully goes to them for their time and effort",
+                      style: Get.theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
                     ),
+                    const Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Grand Total",
+                          style: Get.theme.textTheme.labelMedium,
+                        ),
+                        Text(
+                          "₹447.4",
+                          style: Get.theme.textTheme.labelMedium,
+                        )
+                      ],
+                    )
                   ],
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "GST & charges",
-                style: Get.theme.textTheme.labelSmall,
-              ),
-              Text("₹19.4", style: Get.theme.textTheme.labelSmall)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Delivery fee for partner",
-                style: Get.theme.textTheme.labelSmall,
-              ),
-              Text(
-                "₹40",
-                style: Get.theme.textTheme.labelSmall,
-              )
-            ],
-          ),
-          Text(
-            "Fully goes to them for their time and effort",
-            style: Get.theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
-          ),
-          const Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Grand Total",
-                style: Get.theme.textTheme.labelMedium,
-              ),
-              Text(
-                "₹447.4",
-                style: Get.theme.textTheme.labelMedium,
-              )
-            ],
-          )
-        ],
-      ),
-    );
+        ));
   }
 }
 
@@ -271,10 +290,12 @@ class _ApplyCoupon extends StatelessWidget {
 }
 
 class _CartListItem extends StatelessWidget {
-  const _CartListItem({super.key});
+  final CartItem cartItem;
+  const _CartListItem({super.key, required this.cartItem});
 
   @override
   Widget build(BuildContext context) {
+    var cartController = Get.find<CartController>();
     return Container(
       margin: const EdgeInsets.all(8),
       height: 94,
@@ -285,7 +306,7 @@ class _CartListItem extends StatelessWidget {
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             child: Image.network(
-              "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+              cartItem.product.imageUrl!,
               alignment: Alignment.topCenter,
               fit: BoxFit.fill,
               width: 90,
@@ -300,22 +321,34 @@ class _CartListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Sail Fish/ Ola Meen - Fillet (250g pack)",
+                    cartItem.product.name!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Get.theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                   ),
-                  Text("Net: 250g x 1 = 250g", style: Get.theme.textTheme.labelSmall),
+                  Text(
+                      "Net: ${(cartItem.product.quantity?.value)?.toInt()}g x ${cartItem.count} = ${(cartItem.product.quantity?.value)!.toInt() * cartItem.count}g",
+                      style: Get.theme.textTheme.labelSmall),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Text(
-                          "₹194",
+                          "₹${(cartItem.count * cartItem.productPrice).toInt()}",
                           style: Get.theme.textTheme.labelLarge,
                         ),
                       ),
-                      ProductItemButton(onDecrese: () {}, onIncrease: () {}, currentValue: 1)
+                      ProductItemButton(
+                          onDecrese: () {
+                            if (cartController.totalItemCount() == 1) {
+                              Get.back();
+                            }
+                            cartController.decreaseItemInCart(cartItem.product);
+                          },
+                          onIncrease: () {
+                            cartController.addItemToCart(cartItem.product);
+                          },
+                          currentValue: cartItem.count)
                     ],
                   )
                 ],

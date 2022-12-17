@@ -66,10 +66,12 @@ class ProductItemButton extends StatelessWidget {
           InkWell(
             onTap: onDecrese,
             child: SizedBox(
-              width: 10,
-              child: Text("-",
-                  style:
-                      Get.theme.textTheme.labelSmall?.copyWith(fontSize: 16, color: Colors.white)),
+              height: double.infinity,
+              child: Center(
+                child: Text("-",
+                    style: Get.theme.textTheme.labelSmall
+                        ?.copyWith(fontSize: 16, color: Colors.white)),
+              ),
             ),
           ),
           Text(
@@ -80,10 +82,12 @@ class ProductItemButton extends StatelessWidget {
           InkWell(
             onTap: onIncrease,
             child: SizedBox(
-              width: 10,
-              child: Text("+",
-                  style:
-                      Get.theme.textTheme.labelSmall?.copyWith(fontSize: 16, color: Colors.white)),
+              height: double.infinity,
+              child: Center(
+                child: Text("+",
+                    style: Get.theme.textTheme.labelSmall
+                        ?.copyWith(fontSize: 16, color: Colors.white)),
+              ),
             ),
           )
         ],
