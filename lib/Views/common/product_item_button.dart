@@ -48,11 +48,11 @@ class ProductItemButton extends StatelessWidget {
       height: height,
       width: width,
       margin: margin,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
           color: Get.theme.highlightColor,
-          boxShadow: [
-            const BoxShadow(
+          boxShadow: const [
+            BoxShadow(
               color: Color.fromARGB(50, 0, 0, 0),
               blurRadius: 8,
               offset: Offset(0, 4),
@@ -66,7 +66,7 @@ class ProductItemButton extends StatelessWidget {
           InkWell(
             onTap: onDecrese,
             child: SizedBox(
-              width: 20,
+              width: 10,
               child: Text("-",
                   style:
                       Get.theme.textTheme.labelSmall?.copyWith(fontSize: 16, color: Colors.white)),
@@ -80,7 +80,7 @@ class ProductItemButton extends StatelessWidget {
           InkWell(
             onTap: onIncrease,
             child: SizedBox(
-              width: 20,
+              width: 10,
               child: Text("+",
                   style:
                       Get.theme.textTheme.labelSmall?.copyWith(fontSize: 16, color: Colors.white)),

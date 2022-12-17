@@ -77,7 +77,7 @@ class ProductCardWidget extends StatelessWidget {
                 cartController.cart.firstWhereOrNull((item) => item.product.id == product.id);
             var currentItemAmount = 0;
             if (cartItem != null) {
-              currentItemAmount = cartItem.amount;
+              currentItemAmount = cartItem.count;
             }
             return ProductItemButton(
               onDecrese: () {

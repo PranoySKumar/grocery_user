@@ -9,6 +9,9 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          leading: const BackButton(
+            color: Colors.black,
+          ),
           title: Text(
             "Your Cart",
             style: Get.theme.textTheme.labelMedium?.copyWith(
@@ -27,7 +30,7 @@ class CartScreen extends StatelessWidget {
             )
           ]),
       body: Container(
-        margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
+        margin: const EdgeInsets.only(left: 16, right: 16),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -306,11 +309,13 @@ class _CartListItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "₹194",
-                        style: Get.theme.textTheme.labelLarge,
+                      Expanded(
+                        child: Text(
+                          "₹194",
+                          style: Get.theme.textTheme.labelLarge,
+                        ),
                       ),
-                      ProductItemButton(onDecrese: () {}, onIncrease: () {}, currentValue: 0)
+                      ProductItemButton(onDecrese: () {}, onIncrease: () {}, currentValue: 1)
                     ],
                   )
                 ],
