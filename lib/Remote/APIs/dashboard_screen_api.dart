@@ -50,6 +50,7 @@ class DashboardScreenApi {
           address
           pincode
           landmark
+          type
         }
       }
   }

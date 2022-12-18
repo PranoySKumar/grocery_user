@@ -33,6 +33,7 @@ class UserApi {
           address
           pincode
           landmark
+          type
         }
       }
   }
@@ -61,6 +62,7 @@ class UserApi {
           address
           pincode
           landmark
+          type
         }
       }
     }

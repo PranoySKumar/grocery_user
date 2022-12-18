@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
-import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Views/ShippingDetails/ShippingDetailsScreen/shipping_details_controller.dart';
 
 class ShippingDetailsScreen extends StatelessWidget {
@@ -17,19 +16,6 @@ class ShippingDetailsScreen extends StatelessWidget {
             color: Colors.black,
           ),
           elevation: 0,
-          actions: [
-            InkWell(
-              onTap: (() => Get.toNamed(RouteHelper.editShippingAddressScreen)),
-              child: const SizedBox(
-                width: 50,
-                child: Icon(
-                  Icons.add,
-                  color: Colors.black,
-                  size: 25,
-                ),
-              ),
-            )
-          ],
           title: Text(
             "Your Address",
             style: Get.theme.textTheme.titleMedium?.copyWith(fontSize: 18),
@@ -56,30 +42,47 @@ class _AddressList extends StatelessWidget {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.white),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Obx(
-              () => ListView.separated(
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 20,
-                  child: Divider(
-                    height: 2,
-                    color: Colors.grey,
-                  ),
-                ),
-                itemCount: addresses.length,
-                itemBuilder: (context, index) {
-                  return _SingleAddressView(
-                      shippingAddress: addresses[index],
-                      deleteHandler: () => shippingDetailsController.deleteAddressHandler(index));
-                },
+      child: Obx(() {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            for (int i = 0; i < addresses.length; i++) ...[
+              _SingleAddressView(
+                  shippingAddress: addresses[i],
+                  deleteHandler: () => shippingDetailsController.deleteAddressHandler(i)),
+              const SizedBox(
+                height: 24,
               ),
+            ],
+            const SizedBox(
+              height: 10,
             ),
-          ),
-        ],
-      ),
+            ElevatedButton(
+              onPressed: () => Get.toNamed(RouteHelper.editShippingAddressScreen),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Get.theme.highlightColor,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14)),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.add_outlined),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    "Add Address",
+                    style: Get.textTheme.labelMedium
+                        ?.copyWith(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+                  )
+                ],
+              ),
+            )
+          ],
+        );
+      }),
     );
   }
 }

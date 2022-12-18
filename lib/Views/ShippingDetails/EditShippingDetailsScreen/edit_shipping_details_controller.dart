@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
@@ -14,6 +12,9 @@ class EditShippingDetailsController extends GetxController {
   final TextEditingController recipentNameTextController = TextEditingController();
   final TextEditingController pinCodeTextController = TextEditingController();
   final TextEditingController landmarkTextController = TextEditingController();
+  late String addressType;
+
+  set setAddressType(String val) => addressType = val;
 
   //states
   var isLoading = false.obs;
