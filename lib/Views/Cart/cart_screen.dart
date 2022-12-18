@@ -10,51 +10,49 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cartController = Get.find<CartController>();
-    return Obx(() => cartController.isGeneratingBill.isFalse
-        ? Scaffold(
-            appBar: AppBar(
-                leading: const BackButton(
-                  color: Colors.black,
-                ),
-                title: Text(
-                  "Your Cart",
-                  style: Get.theme.textTheme.labelMedium?.copyWith(
-                    fontSize: 18,
-                  ),
-                ),
-                backgroundColor: Get.theme.scaffoldBackgroundColor,
-                elevation: 0,
-                actions: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 18),
-                    child: const Icon(
-                      Icons.account_circle_outlined,
-                      color: Colors.black,
-                    ),
-                  )
-                ]),
-            body: Container(
-              margin: const EdgeInsets.only(left: 16, right: 16),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const _ProductItemList(),
-                    _ApplyCoupon(),
-                    _Subtotal(),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    _DeliveryAddress(),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    _CancellationPolicy(),
-                  ],
-                ),
-              ),
+    return Scaffold(
+      appBar: AppBar(
+          leading: const BackButton(
+            color: Colors.black,
+          ),
+          title: Text(
+            "Your Cart",
+            style: Get.theme.textTheme.labelMedium?.copyWith(
+              fontSize: 18,
             ),
-          )
-        : const ProgressScreen());
+          ),
+          backgroundColor: Get.theme.scaffoldBackgroundColor,
+          elevation: 0,
+          actions: [
+            Container(
+              margin: const EdgeInsets.only(right: 18),
+              child: const Icon(
+                Icons.account_circle_outlined,
+                color: Colors.black,
+              ),
+            )
+          ]),
+      body: Container(
+        margin: const EdgeInsets.only(left: 16, right: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const _ProductItemList(),
+              _ApplyCoupon(),
+              _Subtotal(),
+              const SizedBox(
+                height: 8,
+              ),
+              _DeliveryAddress(),
+              const SizedBox(
+                height: 8,
+              ),
+              _CancellationPolicy(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -87,90 +85,95 @@ class _Subtotal extends StatelessWidget {
   Widget build(BuildContext context) {
     var cartController = Get.find<CartController>();
     return Container(
-        height: 148,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
-        child: Obx(
-          () => cartController.isGeneratingBill.isFalse
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.shopping_basket_outlined,
-                                  ),
-                                  Container(
-                                      margin: const EdgeInsets.only(left: 13),
-                                      child:
-                                          Text("Subtotal", style: Get.theme.textTheme.labelMedium)),
-                                ],
-                              ),
-                              Text(
-                                "₹388",
-                                style: Get.theme.textTheme.labelMedium,
-                              ),
-                            ],
-                          ),
+      height: 148,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+      width: double.infinity,
+      decoration: const BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
+      child: Obx(
+        () => !cartController.isGeneratingBill.value
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.shopping_basket_outlined,
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 13),
+                                    child:
+                                        Text("Subtotal", style: Get.theme.textTheme.labelMedium)),
+                              ],
+                            ),
+                            Text(
+                              "₹${cartController.totalPrice().toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
+                              style: Get.theme.textTheme.labelMedium,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "GST & charges",
-                          style: Get.theme.textTheme.labelSmall,
-                        ),
-                        Text("₹19.4", style: Get.theme.textTheme.labelSmall)
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Delivery fee for partner",
-                          style: Get.theme.textTheme.labelSmall,
-                        ),
-                        Text(
-                          "₹40",
-                          style: Get.theme.textTheme.labelSmall,
-                        )
-                      ],
-                    ),
-                    Text(
-                      "Fully goes to them for their time and effort",
-                      style: Get.theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
-                    ),
-                    const Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Grand Total",
-                          style: Get.theme.textTheme.labelMedium,
-                        ),
-                        Text(
-                          "₹447.4",
-                          style: Get.theme.textTheme.labelMedium,
-                        )
-                      ],
-                    )
-                  ],
-                )
-              : const Center(
-                  child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "GST & charges",
+                        style: Get.theme.textTheme.labelSmall,
+                      ),
+                      Text(
+                          "₹${cartController.tax.toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
+                          style: Get.theme.textTheme.labelSmall)
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Delivery fee for partner",
+                        style: Get.theme.textTheme.labelSmall,
+                      ),
+                      Text(
+                        "₹${cartController.deliveryPartnerFee.toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
+                        style: Get.theme.textTheme.labelSmall,
+                      )
+                    ],
+                  ),
+                  Text(
+                    "Fully goes to them for their time and effort",
+                    style: Get.theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
+                  ),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Grand Total",
+                        style: Get.theme.textTheme.labelMedium,
+                      ),
+                      Text(
+                        "₹${cartController.totalAmount.toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
+                        style: Get.theme.textTheme.labelMedium,
+                      )
+                    ],
+                  )
+                ],
+              )
+            : Center(
+                child: CircularProgressIndicator(
+                  color: Get.theme.highlightColor,
                 ),
-        ));
+              ),
+      ),
+    );
   }
 }
 
@@ -333,10 +336,19 @@ class _CartListItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(
-                          "₹${(cartItem.count * cartItem.productPrice).toInt()}",
-                          style: Get.theme.textTheme.labelLarge,
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              "₹${(cartItem.count * cartItem.productPrice).toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
+                              style: Get.theme.textTheme.labelLarge,
+                            ),
+                          ),
                         ),
+                      ),
+                      const SizedBox(
+                        width: 10,
                       ),
                       ProductItemButton(
                           onDecrese: () {
@@ -344,9 +356,11 @@ class _CartListItem extends StatelessWidget {
                               Get.back();
                             }
                             cartController.decreaseItemInCart(cartItem.product);
+                            if (cartController.cart.isNotEmpty) cartController.generateBill();
                           },
                           onIncrease: () {
                             cartController.addItemToCart(cartItem.product);
+                            cartController.generateBill();
                           },
                           currentValue: cartItem.count)
                     ],

@@ -10,22 +10,25 @@ class CartController extends GetxController {
 
   double totalAmount = 0;
   double tax = 0;
+  double deliveryPartnerFee = 0;
   double couponDiscountApplied = 0;
 
   @override
   void onInit() {
-    generateBill();
+    if (cart.isNotEmpty) generateBill();
     super.onInit();
   }
 
   void generateBill() async {
     isGeneratingBill.value = true;
     var cartJson = cart.map((item) => {"productId": item.product.id, "count": item.count}).toList();
-    var result = await GraphqlActions.mutate(
-        api: CartApi.generateBillApi, variables: {"cartData": cartJson});
-    totalAmount = result?["totalAmount"];
-    tax = result?["tax"];
-    couponDiscountApplied = result?["couponDiscount"];
+    var result = await GraphqlActions.mutate(api: CartApi.generateBillApi, variables: {
+      "cartData": {"cart": cartJson}
+    });
+    totalAmount = result?["generateBill"]["totalAmount"].toDouble();
+    tax = result?["generateBill"]["tax"].toDouble();
+    couponDiscountApplied = result?["generateBill"]["couponDiscount"].toDouble();
+    deliveryPartnerFee = result?["generateBill"]["deliveryPartnerFee"].toDouble();
     isGeneratingBill.value = false;
   }
 
@@ -39,7 +42,6 @@ class CartController extends GetxController {
       cart.add(CartItem(product: product, count: 1));
       cart.refresh();
     }
-    generateBill();
   }
 
   void decreaseItemInCart(Product product) {
@@ -52,15 +54,14 @@ class CartController extends GetxController {
       cart.removeAt(index);
       cart.refresh();
     }
-    if (cart.isNotEmpty) generateBill();
   }
 
-  int totalPrice() {
+  double totalPrice() {
     double totalPrice = 0;
     for (var item in cart) {
       totalPrice += item.count * item.productPrice!;
     }
-    return totalPrice.ceil();
+    return totalPrice;
   }
 
   int totalItemCount() {
@@ -77,7 +78,7 @@ class CartItem {
   int count;
 
   get productPrice => product.discount != null
-      ? (product.price! - (product.price! * (product.discount! / 100))).ceil()
+      ? product.price! - (product.price! * (product.discount! / 100))
       : product.price!;
 
   CartItem({required this.product, required this.count});

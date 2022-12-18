@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class CartOverlay extends StatelessWidget {
   final String label;
   final int itemCount;
-  final int totalPrice;
+  final double totalPrice;
   final VoidCallback onProceed;
 
   const CartOverlay(
@@ -31,7 +31,7 @@ class CartOverlay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 173,
+            width: 182,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 19),
             decoration: const BoxDecoration(
                 color: Colors.white,
@@ -43,7 +43,7 @@ class CartOverlay extends StatelessWidget {
               children: [
                 const Icon(Icons.sentiment_very_satisfied_outlined),
                 Text(
-                  "$itemCount Items | ₹$totalPrice",
+                  "$itemCount Items | ₹${totalPrice.toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
                   style: Get.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w700),
                 )
               ],

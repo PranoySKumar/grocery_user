@@ -5,6 +5,7 @@ class CartApi {
     totalAmount
     tax
     couponDiscount
+    deliveryPartnerFee
   }
 }""";
 }

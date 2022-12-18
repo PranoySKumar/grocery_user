@@ -65,8 +65,10 @@ class ProductItemButton extends StatelessWidget {
         children: [
           InkWell(
             onTap: onDecrese,
+            radius: 30,
             child: SizedBox(
-              height: double.infinity,
+              height: 30,
+              width: 15,
               child: Center(
                 child: Text("-",
                     style: Get.theme.textTheme.labelSmall
@@ -81,8 +83,10 @@ class ProductItemButton extends StatelessWidget {
           ),
           InkWell(
             onTap: onIncrease,
+            radius: 30,
             child: SizedBox(
-              height: double.infinity,
+              height: 30,
+              width: 15,
               child: Center(
                 child: Text("+",
                     style: Get.theme.textTheme.labelSmall

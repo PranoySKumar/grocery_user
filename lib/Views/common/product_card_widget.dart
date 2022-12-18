@@ -120,7 +120,7 @@ class DiscountedPriceTag extends StatelessWidget {
                   ?.copyWith(fontSize: 10, color: Get.theme.highlightColor),
             ),
           Text(
-            "₹${finalPrice.ceil().toInt()}",
+            "₹${finalPrice.toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
             style: Get.theme.textTheme.titleMedium,
           )
         ],
