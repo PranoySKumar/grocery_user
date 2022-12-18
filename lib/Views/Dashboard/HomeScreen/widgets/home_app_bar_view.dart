@@ -31,18 +31,28 @@ class HomeAppbarView extends StatelessWidget {
                   GetBuilder<HomeScreenController>(
                     builder: ((controller) {
                       var address = controller.selectedAddress.value;
+                      var addressTitle = address.split(",");
+                      addressTitle.removeAt(0);
+                      var newTitle = addressTitle.join(",").trimLeft();
                       return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            address.split(",")[0],
-                            style: Get.theme.textTheme.labelMedium
-                                ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                address.split(",")[0],
+                                style: Get.theme.textTheme.labelMedium
+                                    ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                              const Icon(Icons.arrow_drop_down_rounded, size: 21)
+                            ],
                           ),
                           if (address.split(",").length > 1)
                             Text(
-                              address.split(",")[1].trimLeft(),
+                              newTitle,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Get.theme.textTheme.labelMedium
