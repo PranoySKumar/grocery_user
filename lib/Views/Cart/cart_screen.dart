@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Views/Cart/cart_controller.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Views/common/product_item_button.dart';
 import 'package:grocery_user/Views/common/progress_screen.dart';
 
@@ -180,6 +181,7 @@ class _Subtotal extends StatelessWidget {
 class _DeliveryAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var homescreenController = Get.find<HomeScreenController>();
     return Container(
       height: 56,
       width: double.infinity,
@@ -195,30 +197,32 @@ class _DeliveryAddress extends StatelessWidget {
                 const Icon(Icons.circle_outlined),
                 Expanded(
                   child: Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(left: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text.rich(
-                          TextSpan(
-                            text: "Delivery at ",
-                            style:
-                                Get.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
-                            children: [
-                              TextSpan(text: "Home", style: Get.textTheme.labelMedium),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          "TMRA D3, Ambady Lane, Chavadimukku dsdk kjfhsi dsjfh js",
-                          style: Get.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.normal),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      ],
-                    ),
-                  ),
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(left: 12),
+                      child: Obx(() {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text.rich(
+                              TextSpan(
+                                text: "Delivery at ",
+                                style: Get.textTheme.labelMedium
+                                    ?.copyWith(fontWeight: FontWeight.normal),
+                                children: [
+                                  TextSpan(text: "Home", style: Get.textTheme.labelMedium),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              homescreenController.selectedAddress.value,
+                              style:
+                                  Get.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.normal),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
+                        );
+                      })),
                 )
               ],
             ),
