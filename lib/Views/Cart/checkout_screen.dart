@@ -288,7 +288,7 @@ class _PaymentMethod extends StatelessWidget {
           ),
           if (paymentMethodId == cartController.paymentMethod.value)
             ElevatedButton(
-              onPressed: () {},
+              onPressed: cartController.checkout,
               style: ElevatedButton.styleFrom(
                   fixedSize: const Size(251, 39),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),

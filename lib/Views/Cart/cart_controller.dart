@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/APIs/cart_api.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 
 import '../../Model/Order/order_model.dart';
 
@@ -16,10 +18,23 @@ class CartController extends GetxController {
   double deliveryPartnerFee = 0;
   double couponDiscountApplied = 0;
 
+// contollers
+  var homeController = Get.find<HomeScreenController>();
+
   @override
   void onInit() {
     if (cart.isNotEmpty) generateBill();
     super.onInit();
+  }
+
+  void checkout() async {
+    var cartJson = cart.map((item) => item.toJson);
+    var userId = homeController.user.value.id;
+    var variables = {
+      "cart": cartJson,
+      "userId": userId,
+    };
+    await GraphqlActions.mutate(api: CartApi.generateBillApi, variables: variables);
   }
 
   void generateBill() async {

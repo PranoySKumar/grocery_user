@@ -7,4 +7,5 @@ class AssetRoute {
   static const masterCardLogo = "assets/logos/mastercard_logo.svg";
   static const phonepeLogo = "assets/logos/phonepe_logo.svg";
   static const cashOnDelivery = "assets/logos/cash_on_delivery_logo.svg";
+  static const confetti = "assets/logos/confetti.svg";
 }

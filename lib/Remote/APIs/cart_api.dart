@@ -8,4 +8,9 @@ class CartApi {
     deliveryPartnerFee
   }
 }""";
+  static const String addOrder = """
+mutation AddOrder(\$cartData:AddOrderInputType!) {
+    addOrder(cartData:\$cartData)
+}
+""";
 }
