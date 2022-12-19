@@ -33,7 +33,7 @@ class ShippingAddress {
   String? recipientName;
   int? pincode;
   String? landmark;
-
+  String? type;
   ShippingAddress({this.address, this.recipientName, this.landmark, this.pincode});
   factory ShippingAddress.fromJson(Map<String, dynamic> json) => _$ShippingAddressFromJson(json);
   Map<String, dynamic> get toJson => _$ShippingAddressToJson(this);

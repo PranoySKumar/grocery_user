@@ -34,7 +34,7 @@ ShippingAddress _$ShippingAddressFromJson(Map<String, dynamic> json) =>
       recipientName: json['recipientName'] as String?,
       landmark: json['landmark'] as String?,
       pincode: json['pincode'] as int?,
-    );
+    )..type = json['type'] as String?;
 
 Map<String, dynamic> _$ShippingAddressToJson(ShippingAddress instance) =>
     <String, dynamic>{
@@ -42,4 +42,5 @@ Map<String, dynamic> _$ShippingAddressToJson(ShippingAddress instance) =>
       'recipientName': instance.recipientName,
       'pincode': instance.pincode,
       'landmark': instance.landmark,
+      'type': instance.type,
     };

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Routes/asset_routes.dart';
+import 'package:grocery_user/Views/Cart/cart_controller.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
@@ -10,6 +12,7 @@ class CheckoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          leading: const BackButton(color: Colors.black),
           title: Text(
             "Your Cart",
             style: Get.theme.textTheme.labelMedium?.copyWith(
@@ -36,7 +39,7 @@ class CheckoutScreen extends StatelessWidget {
               const SizedBox(
                 height: 18,
               ),
-              const _PaymentMethodList()
+              _PaymentMethodList()
             ],
           ),
         ),
@@ -46,6 +49,8 @@ class CheckoutScreen extends StatelessWidget {
 }
 
 class _Subtotal extends StatelessWidget {
+  final cartController = Get.find<CartController>();
+  final homeController = Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,7 +88,7 @@ class _Subtotal extends StatelessWidget {
                     height: 11,
                   ),
                   Text(
-                    "Total Items: 2",
+                    "Total Items: ${cartController.totalItemCount()}",
                     style: Get.theme.textTheme.labelSmall,
                   ),
                   const SizedBox(
@@ -94,7 +99,7 @@ class _Subtotal extends StatelessWidget {
                     style: Get.theme.textTheme.labelSmall,
                   ),
                   Text(
-                    "TMRA D3, Ambady Lane, Chavadimukku...",
+                    homeController.selectedAddress.value,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style:
@@ -134,7 +139,7 @@ class _Subtotal extends StatelessWidget {
                   style: Get.theme.textTheme.labelMedium,
                 ),
                 Text(
-                  "₹447.4",
+                  "₹${cartController.totalPrice()}",
                   style: Get.theme.textTheme.labelMedium,
                 )
               ],
@@ -147,7 +152,8 @@ class _Subtotal extends StatelessWidget {
 }
 
 class _PaymentMethodList extends StatelessWidget {
-  const _PaymentMethodList({super.key});
+  _PaymentMethodList({super.key});
+  final cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -160,8 +166,8 @@ class _PaymentMethodList extends StatelessWidget {
           Radius.circular(8),
         ),
       ),
-      child: SingleChildScrollView(
-        child: Column(
+      child: SingleChildScrollView(child: Obx(() {
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -172,14 +178,15 @@ class _PaymentMethodList extends StatelessWidget {
               height: 18,
             ),
             _PaymentMethod(
+              paymentMethodId: PaymentMethods.googlepay,
               paymentName: "Google Pay",
               iconUrl: AssetRoute.googlePayLogo,
-              onContinue: () {},
             ),
             const SizedBox(
               height: 18,
             ),
-            const _PaymentMethod(
+            _PaymentMethod(
+              paymentMethodId: PaymentMethods.phonepe,
               paymentName: "PhonePe",
               iconHeight: 10,
               iconWidth: 10,
@@ -188,7 +195,8 @@ class _PaymentMethodList extends StatelessWidget {
             const SizedBox(
               height: 18,
             ),
-            const _PaymentMethod(
+            _PaymentMethod(
+              paymentMethodId: PaymentMethods.paytm,
               iconHeight: 14,
               iconWidth: 14,
               paymentName: "Paytm",
@@ -197,102 +205,110 @@ class _PaymentMethodList extends StatelessWidget {
             const SizedBox(
               height: 18,
             ),
-            const _PaymentMethod(
+            _PaymentMethod(
+              paymentMethodId: PaymentMethods.mastercard,
               paymentName: "Master Card",
               iconUrl: AssetRoute.masterCardLogo,
             ),
             const SizedBox(
               height: 18,
             ),
-            const _PaymentMethod(
+            _PaymentMethod(
+              paymentMethodId: PaymentMethods.cashondelivery,
               paymentName: "Cash On Delivery",
               iconUrl: AssetRoute.cashOnDelivery,
             ),
           ],
-        ),
-      ),
+        );
+      })),
     );
   }
 }
 
 class _PaymentMethod extends StatelessWidget {
   final String iconUrl;
-  final VoidCallback? onContinue;
   final String paymentName;
   final double? iconWidth;
   final double? iconHeight;
+  final PaymentMethods paymentMethodId;
+  final CartController cartController = Get.find<CartController>();
 
-  const _PaymentMethod(
+  _PaymentMethod(
       {super.key,
       required this.iconUrl,
-      this.onContinue,
       required this.paymentName,
       this.iconHeight = 36,
-      this.iconWidth = 36});
+      this.iconWidth = 36,
+      required this.paymentMethodId});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  iconUrl,
-                  height: iconHeight,
-                  width: iconWidth,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  paymentName,
-                  style: Get.theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            if (onContinue == null)
-              Icon(
-                Icons.circle_outlined,
-                color: Get.theme.highlightColor,
-                size: 18,
-              )
-            else
-              Icon(
-                Icons.check_circle,
-                color: Get.theme.highlightColor,
-                size: 18,
-              )
-          ],
-        ),
-        const SizedBox(
-          height: 21,
-        ),
-        if (onContinue != null)
-          ElevatedButton(
-            onPressed: onContinue,
-            style: ElevatedButton.styleFrom(
-                fixedSize: const Size(251, 39),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
-                backgroundColor: Get.theme.highlightColor),
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 9),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+    return GestureDetector(
+      onTap: () {
+        cartController.paymentMethod.value = paymentMethodId;
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
+                  SvgPicture.asset(
+                    iconUrl,
+                    height: iconHeight,
+                    width: iconWidth,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
                   Text(
-                    "Continue",
-                    style: Get.theme.textTheme.labelMedium?.copyWith(color: Colors.white),
+                    paymentName,
+                    style: Get.theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
-            ),
-          )
-      ],
+              if (paymentMethodId != cartController.paymentMethod.value)
+                Icon(
+                  Icons.circle_outlined,
+                  color: Get.theme.highlightColor,
+                  size: 25,
+                )
+              else
+                Icon(
+                  Icons.check_circle,
+                  color: Get.theme.highlightColor,
+                  size: 25,
+                )
+            ],
+          ),
+          const SizedBox(
+            height: 21,
+          ),
+          if (paymentMethodId == cartController.paymentMethod.value)
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(251, 39),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+                  backgroundColor: Get.theme.highlightColor),
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 9),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Continue",
+                      style: Get.theme.textTheme.labelMedium?.copyWith(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            )
+        ],
+      ),
     );
   }
 }

@@ -150,7 +150,10 @@ class _SingleAddressView extends StatelessWidget {
                           text: "Delivery at ",
                           style: Get.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.normal),
                           children: [
-                            TextSpan(text: "Home", style: Get.textTheme.labelMedium),
+                            TextSpan(
+                                text: shippingAddress.type![0].toUpperCase() +
+                                    shippingAddress.type!.substring(1).toLowerCase(),
+                                style: Get.textTheme.labelMedium),
                           ],
                         ),
                       ),

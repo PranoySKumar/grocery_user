@@ -60,7 +60,7 @@ class CartOverlay extends StatelessWidget {
                         topRight: Radius.circular(8), bottomRight: Radius.circular(8))),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       label,

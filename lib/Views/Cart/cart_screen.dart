@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Views/Cart/cart_controller.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
+import 'package:grocery_user/Views/common/cart_overlay.dart';
 import 'package:grocery_user/Views/common/product_item_button.dart';
-import 'package:grocery_user/Views/common/progress_screen.dart';
+
+import '../../Model/Order/order_model.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -11,6 +14,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cartController = Get.find<CartController>();
+    cartController.generateBill();
     return Scaffold(
       appBar: AppBar(
           leading: const BackButton(
@@ -33,26 +37,41 @@ class CartScreen extends StatelessWidget {
               ),
             )
           ]),
-      body: Container(
-        margin: const EdgeInsets.only(left: 16, right: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const _ProductItemList(),
-              _ApplyCoupon(),
-              _Subtotal(),
-              const SizedBox(
-                height: 8,
-              ),
-              _DeliveryAddress(),
-              const SizedBox(
-                height: 8,
-              ),
-              _CancellationPolicy(),
-            ],
+      body: Stack(alignment: Alignment.center, fit: StackFit.expand, children: [
+        Container(
+          margin: const EdgeInsets.only(left: 16, right: 16),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const _ProductItemList(),
+                // _ApplyCoupon(),
+                _Subtotal(),
+                const SizedBox(
+                  height: 8,
+                ),
+                _DeliveryAddress(),
+                const SizedBox(
+                  height: 8,
+                ),
+                _CancellationPolicy(),
+              ],
+            ),
           ),
         ),
-      ),
+        Positioned(
+          bottom: 65,
+          child: GetBuilder<CartController>(
+            builder: (controller) {
+              return CartOverlay(
+                onProceed: (() => Get.toNamed(RouteHelper.checkoutScreen)),
+                itemCount: cartController.totalItemCount(),
+                totalPrice: cartController.totalPrice(),
+                label: "To Checkout",
+              );
+            },
+          ),
+        )
+      ]),
     );
   }
 }
@@ -200,6 +219,10 @@ class _DeliveryAddress extends StatelessWidget {
                       width: double.infinity,
                       margin: const EdgeInsets.only(left: 12),
                       child: Obx(() {
+                        var shippingAddress =
+                            homescreenController.user.value.shippingAddresses!.firstWhere(
+                          (item) => item.address == homescreenController.selectedAddress.value,
+                        );
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -209,12 +232,15 @@ class _DeliveryAddress extends StatelessWidget {
                                 style: Get.textTheme.labelMedium
                                     ?.copyWith(fontWeight: FontWeight.normal),
                                 children: [
-                                  TextSpan(text: "Home", style: Get.textTheme.labelMedium),
+                                  TextSpan(
+                                      text: shippingAddress.type![0].toUpperCase() +
+                                          shippingAddress.type!.substring(1).toLowerCase(),
+                                      style: Get.textTheme.labelMedium),
                                 ],
                               ),
                             ),
                             Text(
-                              homescreenController.selectedAddress.value,
+                              shippingAddress.address!,
                               style:
                                   Get.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.normal),
                               maxLines: 1,
@@ -227,10 +253,13 @@ class _DeliveryAddress extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            "Change",
-            style: Get.theme.textTheme.labelMedium
-                ?.copyWith(color: Colors.grey, fontWeight: FontWeight.normal),
+          GestureDetector(
+            onTap: () => Get.toNamed(RouteHelper.shippingDetailsScreen),
+            child: Text(
+              "Change",
+              style: Get.theme.textTheme.labelMedium
+                  ?.copyWith(color: Colors.grey, fontWeight: FontWeight.normal),
+            ),
           ),
         ],
       ),

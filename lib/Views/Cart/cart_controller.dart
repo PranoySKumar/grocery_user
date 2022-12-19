@@ -3,8 +3,11 @@ import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/APIs/cart_api.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
 
+import '../../Model/Order/order_model.dart';
+
 class CartController extends GetxController {
   RxList<CartItem> cart = <CartItem>[].obs;
+  var paymentMethod = PaymentMethods.googlepay.obs;
 
   var isGeneratingBill = false.obs;
 
@@ -30,6 +33,7 @@ class CartController extends GetxController {
     couponDiscountApplied = result?["generateBill"]["couponDiscount"].toDouble();
     deliveryPartnerFee = result?["generateBill"]["deliveryPartnerFee"].toDouble();
     isGeneratingBill.value = false;
+    update();
   }
 
   void addItemToCart(Product product) {
@@ -73,13 +77,4 @@ class CartController extends GetxController {
   }
 }
 
-class CartItem {
-  final Product product;
-  int count;
-
-  get productPrice => product.discount != null
-      ? product.price! - (product.price! * (product.discount! / 100))
-      : product.price!;
-
-  CartItem({required this.product, required this.count});
-}
+enum PaymentMethods { googlepay, phonepe, mastercard, paytm, cashondelivery }

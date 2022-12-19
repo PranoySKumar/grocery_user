@@ -204,14 +204,24 @@ class _SelectAddressTypeField extends StatelessWidget {
   }) : super(key: key);
 
   final editShippingController = Get.find<EditShippingDetailsController>();
-  final _dropdownItems =
-      ["Home", "Work", "Other"].map((e) => DropdownMenuItem(child: Text(e))).toList();
+  final _dropdownValues = ["Home", "Work", "Other"];
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-        value: "Home",
-        items: _dropdownItems,
-        onChanged: ((value) => editShippingController.setAddressType = value));
+    return Row(
+      children: [
+        Text(
+          "select address type",
+          style: Get.textTheme.labelMedium?.copyWith(color: Colors.grey),
+        ),
+        SizedBox(width: 30),
+        DropdownButton(
+            value: _dropdownValues.first,
+            items: _dropdownValues
+                .map((value) => DropdownMenuItem(value: value, child: Text(value)))
+                .toList(),
+            onChanged: ((value) => editShippingController.setAddressType = value!)),
+      ],
+    );
   }
 }
 

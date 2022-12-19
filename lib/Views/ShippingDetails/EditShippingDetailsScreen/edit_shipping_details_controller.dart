@@ -12,7 +12,7 @@ class EditShippingDetailsController extends GetxController {
   final TextEditingController recipentNameTextController = TextEditingController();
   final TextEditingController pinCodeTextController = TextEditingController();
   final TextEditingController landmarkTextController = TextEditingController();
-  late String addressType;
+  late String addressType = "Home";
 
   set setAddressType(String val) => addressType = val;
 
@@ -116,6 +116,7 @@ class EditShippingDetailsController extends GetxController {
       "address": address,
       "recipientName": recipientName,
       "pincode": int.parse(pincode),
+      "type": addressType
     };
     if (landmarkTextController.text.isNotEmpty) {
       newShippingAddress["address"] = landmark;

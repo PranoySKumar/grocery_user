@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:grocery_user/Views/Cart/cart_screen.dart';
+import 'package:grocery_user/Views/Cart/checkout_screen.dart';
 import 'package:grocery_user/Views/Categories/category_screen.dart';
 import 'package:grocery_user/Views/Categories/category_screen_binding.dart';
 import 'package:grocery_user/Views/Dashboard/dashboard_binding.dart';
@@ -36,6 +37,7 @@ class RouteHelper {
   static const shippingDetailsScreen = "/shipping-details";
   static const editShippingAddressScreen = "/edit-address-details";
   static const cartScreen = "/cart";
+  static const checkoutScreen = "/check-out";
 
   static getAppRoutes() => [
         GetPage(
@@ -104,5 +106,10 @@ class RouteHelper {
           page: () => const CartScreen(),
           transition: Transition.rightToLeftWithFade,
         ),
+        GetPage(
+          name: checkoutScreen,
+          page: () => const CheckoutScreen(),
+          transition: Transition.rightToLeftWithFade,
+        )
       ];
 }
