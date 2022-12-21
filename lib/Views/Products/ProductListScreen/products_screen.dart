@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:grocery_user/Views/Products/products_controller.dart';
+import 'package:grocery_user/Views/Products/ProductListScreen/products_controller.dart';
 import 'package:grocery_user/Views/common/product_card_widget.dart';
 import 'package:grocery_user/Views/common/progress_screen.dart';
 
-import '../../Model/Product/product_model.dart';
+import '../../../Model/Product/product_model.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:grocery_user/Views/Cart/cart_screen.dart';
 import 'package:grocery_user/Views/Cart/checkout_screen.dart';
+import 'package:grocery_user/Views/Cart/order_status_screen.dart';
 import 'package:grocery_user/Views/Categories/category_screen.dart';
 import 'package:grocery_user/Views/Categories/category_screen_binding.dart';
 import 'package:grocery_user/Views/Dashboard/dashboard_binding.dart';
@@ -9,8 +10,8 @@ import 'package:grocery_user/Views/Login/EnterLocationScreen/enter_location_bind
 import 'package:grocery_user/Views/Login/EnterUserNameScreen/enter_username_binding.dart';
 import 'package:grocery_user/Views/Login/WelcomeScreen/welcome_binding.dart';
 import 'package:grocery_user/Views/Login/WelcomeScreen/welcome_screen.dart';
-import 'package:grocery_user/Views/Products/products_binding.dart';
-import 'package:grocery_user/Views/Products/products_screen.dart';
+import 'package:grocery_user/Views/Products/ProductDetailsScreen/product_details_controller.dart';
+import 'package:grocery_user/Views/Products/ProductDetailsScreen/product_details_screen.dart';
 import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_controller.dart';
 import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_screen.dart';
 
@@ -21,6 +22,8 @@ import '../Views/Login/EnterUserNameScreen/enter_username_screen.dart';
 import '../Views/Login/IntroScreen/intro_screen.dart';
 import '../Views/Login/OtpVerificationScreen/verify_otp_binding.dart';
 import '../Views/Login/OtpVerificationScreen/verify_otp_screen.dart';
+import '../Views/Products/ProductListScreen/products_binding.dart';
+import '../Views/Products/ProductListScreen/products_screen.dart';
 import '../Views/ShippingDetails/ShippingDetailsScreen/shipping_details_binding.dart';
 import '../Views/ShippingDetails/ShippingDetailsScreen/shipping_details_screen.dart';
 
@@ -34,10 +37,12 @@ class RouteHelper {
   static const dashboardScreen = "/dashboard";
   static const categoriesScreen = "/categories";
   static const productsScreen = "/products";
+  static const productDetailsScreen = "/product-details";
   static const shippingDetailsScreen = "/shipping-details";
   static const editShippingAddressScreen = "/edit-address-details";
   static const cartScreen = "/cart";
   static const checkoutScreen = "/check-out";
+  static const orderStatusScreen = "/order-status";
 
   static getAppRoutes() => [
         GetPage(
@@ -90,8 +95,14 @@ class RouteHelper {
           transition: Transition.rightToLeftWithFade,
         ),
         GetPage(
+          name: productDetailsScreen,
+          page: () => ProductDetailsScreen(),
+          binding: BindingsBuilder(() => Get.lazyPut(() => ProductDetialsController())),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
           name: shippingDetailsScreen,
-          page: () => ShippingDetailsScreen(),
+          page: () => const ShippingDetailsScreen(),
           binding: ShippingDetailsBinding(),
           transition: Transition.rightToLeftWithFade,
         ),
@@ -109,6 +120,11 @@ class RouteHelper {
         GetPage(
           name: checkoutScreen,
           page: () => const CheckoutScreen(),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: orderStatusScreen,
+          page: () => const OrderStatusScreen(),
           transition: Transition.rightToLeftWithFade,
         )
       ];

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/APIs/products_screen_api.dart';
-import 'package:grocery_user/Remote/Providers/products_provider.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 

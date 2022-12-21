@@ -166,61 +166,60 @@ class _PaymentMethodList extends StatelessWidget {
           Radius.circular(8),
         ),
       ),
-      child: SingleChildScrollView(child: Obx(() {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Preferred Mode",
-              style: Get.textTheme.labelMedium,
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            _PaymentMethod(
-              paymentMethodId: PaymentMethods.googlepay,
-              paymentName: "Google Pay",
-              iconUrl: AssetRoute.googlePayLogo,
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            _PaymentMethod(
-              paymentMethodId: PaymentMethods.phonepe,
-              paymentName: "PhonePe",
-              iconHeight: 10,
-              iconWidth: 10,
-              iconUrl: AssetRoute.phonepeLogo,
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            _PaymentMethod(
-              paymentMethodId: PaymentMethods.paytm,
-              iconHeight: 14,
-              iconWidth: 14,
-              paymentName: "Paytm",
-              iconUrl: AssetRoute.paytmlogo,
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            _PaymentMethod(
-              paymentMethodId: PaymentMethods.mastercard,
-              paymentName: "Master Card",
-              iconUrl: AssetRoute.masterCardLogo,
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            _PaymentMethod(
-              paymentMethodId: PaymentMethods.cashondelivery,
-              paymentName: "Cash On Delivery",
-              iconUrl: AssetRoute.cashOnDelivery,
-            ),
-          ],
-        );
-      })),
+      child: SingleChildScrollView(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Preferred Mode",
+            style: Get.textTheme.labelMedium,
+          ),
+          const SizedBox(
+            height: 18,
+          ),
+          _PaymentMethod(
+            paymentMethodId: PaymentMethods.googlepay,
+            paymentName: "Google Pay",
+            iconUrl: AssetRoute.googlePayLogo,
+          ),
+          const SizedBox(
+            height: 18,
+          ),
+          _PaymentMethod(
+            paymentMethodId: PaymentMethods.phonepe,
+            paymentName: "PhonePe",
+            iconHeight: 10,
+            iconWidth: 10,
+            iconUrl: AssetRoute.phonepeLogo,
+          ),
+          const SizedBox(
+            height: 18,
+          ),
+          _PaymentMethod(
+            paymentMethodId: PaymentMethods.paytm,
+            iconHeight: 14,
+            iconWidth: 14,
+            paymentName: "Paytm",
+            iconUrl: AssetRoute.paytmlogo,
+          ),
+          const SizedBox(
+            height: 18,
+          ),
+          _PaymentMethod(
+            paymentMethodId: PaymentMethods.mastercard,
+            paymentName: "Master Card",
+            iconUrl: AssetRoute.masterCardLogo,
+          ),
+          const SizedBox(
+            height: 18,
+          ),
+          _PaymentMethod(
+            paymentMethodId: PaymentMethods.cashondelivery,
+            paymentName: "Cash On Delivery",
+            iconUrl: AssetRoute.cashOnDelivery,
+          ),
+        ],
+      )),
     );
   }
 }
@@ -247,67 +246,72 @@ class _PaymentMethod extends StatelessWidget {
       onTap: () {
         cartController.paymentMethod.value = paymentMethodId;
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Obx(
+        (() {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset(
-                    iconUrl,
-                    height: iconHeight,
-                    width: iconWidth,
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        iconUrl,
+                        height: iconHeight,
+                        width: iconWidth,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        paymentName,
+                        style:
+                            Get.theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    paymentName,
-                    style: Get.theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w500),
-                  ),
+                  if (paymentMethodId != cartController.paymentMethod.value)
+                    Icon(
+                      Icons.circle_outlined,
+                      color: Get.theme.highlightColor,
+                      size: 25,
+                    )
+                  else
+                    Icon(
+                      Icons.check_circle,
+                      color: Get.theme.highlightColor,
+                      size: 25,
+                    )
                 ],
               ),
-              if (paymentMethodId != cartController.paymentMethod.value)
-                Icon(
-                  Icons.circle_outlined,
-                  color: Get.theme.highlightColor,
-                  size: 25,
-                )
-              else
-                Icon(
-                  Icons.check_circle,
-                  color: Get.theme.highlightColor,
-                  size: 25,
+              const SizedBox(
+                height: 21,
+              ),
+              if (paymentMethodId == cartController.paymentMethod.value)
+                ElevatedButton(
+                  onPressed: cartController.checkout,
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(251, 39),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+                      backgroundColor: Get.theme.highlightColor),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 9),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Continue",
+                          style: Get.theme.textTheme.labelMedium?.copyWith(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
                 )
             ],
-          ),
-          const SizedBox(
-            height: 21,
-          ),
-          if (paymentMethodId == cartController.paymentMethod.value)
-            ElevatedButton(
-              onPressed: cartController.checkout,
-              style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(251, 39),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
-                  backgroundColor: Get.theme.highlightColor),
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 9),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Continue",
-                      style: Get.theme.textTheme.labelMedium?.copyWith(color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-            )
-        ],
+          );
+        }),
       ),
     );
   }

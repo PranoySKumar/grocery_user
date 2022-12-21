@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
-import 'package:graphql/client.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/APIs/cart_api.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
+import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
-
 import '../../Model/Order/order_model.dart';
 
 class CartController extends GetxController {
@@ -16,7 +15,7 @@ class CartController extends GetxController {
   double totalAmount = 0;
   double tax = 0;
   double deliveryPartnerFee = 0;
-  double couponDiscountApplied = 0;
+  double couponDiscountApplied = 0; //will implement coupon later.
 
 // contollers
   var homeController = Get.find<HomeScreenController>();
@@ -28,13 +27,26 @@ class CartController extends GetxController {
   }
 
   void checkout() async {
-    var cartJson = cart.map((item) => item.toJson);
+    var cartJson = cart.map((item) => {"productId": item.product.id, "count": item.count}).toList();
     var userId = homeController.user.value.id;
+    var addressJson = homeController.user.value.shippingAddresses
+        ?.firstWhere((item) => item.address == homeController.selectedAddress.value)
+        .toJson;
+
     var variables = {
-      "cart": cartJson,
-      "userId": userId,
+      "cartData": {"cart": cartJson, "userId": userId, "shippingAddress": addressJson}
     };
-    await GraphqlActions.mutate(api: CartApi.generateBillApi, variables: variables);
+    await GraphqlActions.mutate(api: CartApi.addOrder, variables: variables);
+
+    //reseting cart.
+    cart.value = [];
+    totalAmount = 0;
+    tax = 0;
+    deliveryPartnerFee = 0;
+    couponDiscountApplied = 0;
+
+    Get.offNamedUntil(RouteHelper.orderStatusScreen,
+        (route) => route.settings.name == RouteHelper.dashboardScreen);
   }
 
   void generateBill() async {

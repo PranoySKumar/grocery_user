@@ -1,3 +1,4 @@
+import 'package:grocery_user/Model/User/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../Product/product_model.dart';
@@ -10,8 +11,9 @@ class Order {
   double? transactionAmount;
   double? tax;
   List<CartItem>? cartItems;
+  ShippingAddress? shippingAddress;
 
-  Order({this.cartItems, this.id, this.tax, this.transactionAmount});
+  Order({this.cartItems, this.id, this.tax, this.shippingAddress, this.transactionAmount});
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
   Map<String, dynamic> get toJson => _$OrderToJson(this);
 }

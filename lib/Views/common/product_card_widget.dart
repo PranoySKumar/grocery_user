@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
+import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Views/Cart/cart_controller.dart';
 import 'package:grocery_user/Views/common/product_item_button.dart';
 
@@ -15,86 +16,89 @@ class ProductCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(12))),
-      width: width ?? 250,
-      child: Column(
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-              child: Image.network(
-                alignment: Alignment.topCenter,
-                product.imageUrl!,
-                fit: BoxFit.fill,
-                width: double.infinity,
-                height: 120,
+    return GestureDetector(
+      onTap: () => Get.toNamed(RouteHelper.productDetailsScreen, arguments: {"product": product}),
+      child: Container(
+        decoration: const BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(12))),
+        width: width ?? 250,
+        child: Column(
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                child: Image.network(
+                  alignment: Alignment.topCenter,
+                  product.imageUrl!,
+                  fit: BoxFit.fill,
+                  width: double.infinity,
+                  height: 120,
+                ),
               ),
             ),
-          ),
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              product.name!,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              style: titleStyle ?? Get.theme.textTheme.titleMedium,
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                product.name!,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: titleStyle ?? Get.theme.textTheme.titleMedium,
+              ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                    "Net: ${product.quantity?.value?.toInt()}${product.quantity?.type == QuantityType.wgt ? "g" : "nos"}",
-                    style: Get.theme.textTheme.labelSmall),
-                if (product.discount != null)
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   Text(
-                    "₹${product.price?.toInt()}",
-                    style: Get.textTheme.labelSmall?.copyWith(
-                      decorationThickness: 2,
-                      decorationColor: Colors.black,
-                      decoration: TextDecoration.lineThrough,
-                      color: Get.theme.primaryColorLight,
-                    ),
-                  )
+                      "Net: ${product.quantity?.value?.toInt()}${product.quantity?.type == QuantityType.wgt ? "g" : "nos"}",
+                      style: Get.theme.textTheme.labelSmall),
+                  if (product.discount != null)
+                    Text(
+                      "₹${product.price?.toInt()}",
+                      style: Get.textTheme.labelSmall?.copyWith(
+                        decorationThickness: 2,
+                        decorationColor: Colors.black,
+                        decoration: TextDecoration.lineThrough,
+                        color: Get.theme.primaryColorLight,
+                      ),
+                    )
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const _DeliveryTimeTag(timeToDeliver: "10AM - 12PM"),
+                DiscountedPriceTag(discount: product.discount, price: product.price!.toInt())
               ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const _DeliveryTimeTag(timeToDeliver: "10AM - 12PM"),
-              DiscountedPriceTag(discount: product.discount, price: product.price!.toInt())
-            ],
-          ),
-          Obx(() {
-            var cartItem =
-                cartController.cart.firstWhereOrNull((item) => item.product.id == product.id);
-            var currentItemAmount = 0;
-            if (cartItem != null) {
-              currentItemAmount = cartItem.count;
-            }
-            return ProductItemButton(
-              onDecrese: () {
-                cartController.decreaseItemInCart(product);
-              },
-              onIncrease: () {
-                cartController.addItemToCart(product);
-              },
-              currentValue: currentItemAmount,
-              width: double.infinity,
-              margin: const EdgeInsets.only(top: 5, left: 12, right: 12, bottom: 9),
-            );
-          }),
-          const SizedBox(
-            height: 3,
-          )
-        ],
+            Obx(() {
+              var cartItem =
+                  cartController.cart.firstWhereOrNull((item) => item.product.id == product.id);
+              var currentItemAmount = 0;
+              if (cartItem != null) {
+                currentItemAmount = cartItem.count;
+              }
+              return ProductItemButton(
+                onDecrese: () {
+                  cartController.decreaseItemInCart(product);
+                },
+                onIncrease: () {
+                  cartController.addItemToCart(product);
+                },
+                currentValue: currentItemAmount,
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 5, left: 12, right: 12, bottom: 9),
+              );
+            }),
+            const SizedBox(
+              height: 3,
+            )
+          ],
+        ),
       ),
     );
   }

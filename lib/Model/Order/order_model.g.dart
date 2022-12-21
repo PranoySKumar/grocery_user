@@ -12,6 +12,10 @@ Order _$OrderFromJson(Map<String, dynamic> json) => Order(
           .toList(),
       id: json['id'] as String?,
       tax: (json['tax'] as num?)?.toDouble(),
+      shippingAddress: json['shippingAddress'] == null
+          ? null
+          : ShippingAddress.fromJson(
+              json['shippingAddress'] as Map<String, dynamic>),
       transactionAmount: (json['transactionAmount'] as num?)?.toDouble(),
     );
 
@@ -20,6 +24,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'transactionAmount': instance.transactionAmount,
       'tax': instance.tax,
       'cartItems': instance.cartItems,
+      'shippingAddress': instance.shippingAddress,
     };
 
 CartItem _$CartItemFromJson(Map<String, dynamic> json) => CartItem(
