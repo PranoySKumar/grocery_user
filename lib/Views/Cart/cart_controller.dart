@@ -34,7 +34,12 @@ class CartController extends GetxController {
         .toJson;
 
     var variables = {
-      "cartData": {"cart": cartJson, "userId": userId, "shippingAddress": addressJson}
+      "cartData": {
+        "cart": cartJson,
+        "userId": userId,
+        "shippingAddress": addressJson,
+        "paymentMethod": paymentMethod.value.toString()
+      }
     };
     await GraphqlActions.mutate(api: CartApi.addOrder, variables: variables);
 

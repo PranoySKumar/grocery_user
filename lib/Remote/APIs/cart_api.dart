@@ -6,6 +6,7 @@ class CartApi {
     tax
     couponDiscount
     deliveryPartnerFee
+    paymentMethod
   }
 }""";
   static const String addOrder = """
