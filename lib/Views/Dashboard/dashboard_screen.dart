@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Views/Cart/order_status_screen.dart';
+import 'package:grocery_user/Views/Orders/orders_list_screen.dart';
 
 import 'HomeScreen/home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final _index = 0.obs;
-  final _screens = [const HomeScreen(), const OrderStatusScreen()];
+  final _screens = [const HomeScreen(), OrdersListScreen()];
   DashboardScreen({super.key});
 
 //sets the index of the selected screen.

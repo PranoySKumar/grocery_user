@@ -10,10 +10,30 @@ class Order {
   String? id;
   double? transactionAmount;
   double? tax;
-  List<CartItem>? cartItems;
+  List<CartItem>? cart;
   ShippingAddress? shippingAddress;
+  String? paymentMethod;
+  String? status;
+  int? orderNo;
+  String? createdAt;
 
-  Order({this.cartItems, this.id, this.tax, this.shippingAddress, this.transactionAmount});
+  int totalItemCount() {
+    int itemCount = 0;
+    for (var item in cart!) {
+      itemCount += item.count;
+    }
+    return itemCount;
+  }
+
+  Order(
+      {this.orderNo,
+      this.status,
+      this.cart,
+      this.id,
+      this.tax,
+      this.shippingAddress,
+      this.transactionAmount,
+      this.createdAt});
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
   Map<String, dynamic> get toJson => _$OrderToJson(this);
 }

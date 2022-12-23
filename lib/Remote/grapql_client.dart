@@ -10,6 +10,8 @@ setupGraphql() async {
     'http://192.168.43.39:4000/graphql',
   );
 
+  final defaultPolicies = Policies(fetch: FetchPolicy.networkOnly);
+
   final AuthLink authLink =
       AuthLink(getToken: () => 'Bearer ${GetStorage().read("token")}', headerKey: "Authorization");
 
@@ -19,6 +21,8 @@ setupGraphql() async {
     GraphQLClient(
       link: link,
       cache: GraphQLCache(store: HiveStore()),
+      defaultPolicies: DefaultPolicies(
+          mutate: defaultPolicies, watchQuery: defaultPolicies, query: defaultPolicies),
     ),
   ).value;
 }

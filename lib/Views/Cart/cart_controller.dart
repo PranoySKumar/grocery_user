@@ -32,13 +32,12 @@ class CartController extends GetxController {
     var addressJson = homeController.user.value.shippingAddresses
         ?.firstWhere((item) => item.address == homeController.selectedAddress.value)
         .toJson;
-
     var variables = {
       "cartData": {
         "cart": cartJson,
         "userId": userId,
         "shippingAddress": addressJson,
-        "paymentMethod": paymentMethod.value.toString()
+        "paymentMethod": paymentMethod.value.name
       }
     };
     await GraphqlActions.mutate(api: CartApi.addOrder, variables: variables);

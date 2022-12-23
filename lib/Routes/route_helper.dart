@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:grocery_user/Views/Cart/cart_controller.dart';
 import 'package:grocery_user/Views/Cart/cart_screen.dart';
 import 'package:grocery_user/Views/Cart/checkout_screen.dart';
 import 'package:grocery_user/Views/Cart/order_status_screen.dart';
@@ -10,8 +11,11 @@ import 'package:grocery_user/Views/Login/EnterLocationScreen/enter_location_bind
 import 'package:grocery_user/Views/Login/EnterUserNameScreen/enter_username_binding.dart';
 import 'package:grocery_user/Views/Login/WelcomeScreen/welcome_binding.dart';
 import 'package:grocery_user/Views/Login/WelcomeScreen/welcome_screen.dart';
+import 'package:grocery_user/Views/Orders/orders_controller.dart';
+import 'package:grocery_user/Views/Orders/orders_list_screen.dart';
 import 'package:grocery_user/Views/Products/ProductDetailsScreen/product_details_controller.dart';
 import 'package:grocery_user/Views/Products/ProductDetailsScreen/product_details_screen.dart';
+import 'package:grocery_user/Views/Profile/profile_screen.dart';
 import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_controller.dart';
 import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_screen.dart';
 
@@ -43,6 +47,8 @@ class RouteHelper {
   static const cartScreen = "/cart";
   static const checkoutScreen = "/check-out";
   static const orderStatusScreen = "/order-status";
+  static const orderListScreen = "/order-list";
+  static const profileScreen = "/profile";
 
   static getAppRoutes() => [
         GetPage(
@@ -125,6 +131,22 @@ class RouteHelper {
         GetPage(
           name: orderStatusScreen,
           page: () => const OrderStatusScreen(),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: orderListScreen,
+          page: () => const OrdersListScreen(),
+          binding: BindingsBuilder(
+            (() => Get.lazyPut(() => OrdersController())),
+          ),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: profileScreen,
+          page: () => const ProfileScreen(),
+          binding: BindingsBuilder(
+            (() => Get.lazyPut(() => CartController())),
+          ),
           transition: Transition.rightToLeftWithFade,
         )
       ];

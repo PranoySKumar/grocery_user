@@ -112,15 +112,16 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                    bottom: 20,
-                    left: 50,
-                    right: 50,
-                    child: Container(
-                      height: 5,
-                      width: 200,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10), color: Colors.grey),
-                    ))
+                  bottom: 20,
+                  left: 50,
+                  right: 50,
+                  child: Container(
+                    height: 5,
+                    width: 200,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey),
+                  ),
+                )
               ],
             ),
           ),

@@ -7,7 +7,9 @@ part of 'order_model.dart';
 // **************************************************************************
 
 Order _$OrderFromJson(Map<String, dynamic> json) => Order(
-      cartItems: (json['cartItems'] as List<dynamic>?)
+      orderNo: json['orderNo'] as int?,
+      status: json['status'] as String?,
+      cart: (json['cart'] as List<dynamic>?)
           ?.map((e) => CartItem.fromJson(e as Map<String, dynamic>))
           .toList(),
       id: json['id'] as String?,
@@ -17,14 +19,19 @@ Order _$OrderFromJson(Map<String, dynamic> json) => Order(
           : ShippingAddress.fromJson(
               json['shippingAddress'] as Map<String, dynamic>),
       transactionAmount: (json['transactionAmount'] as num?)?.toDouble(),
-    );
+      createdAt: json['createdAt'] as String?,
+    )..paymentMethod = json['paymentMethod'] as String?;
 
 Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'id': instance.id,
       'transactionAmount': instance.transactionAmount,
       'tax': instance.tax,
-      'cartItems': instance.cartItems,
+      'cart': instance.cart,
       'shippingAddress': instance.shippingAddress,
+      'paymentMethod': instance.paymentMethod,
+      'status': instance.status,
+      'orderNo': instance.orderNo,
+      'createdAt': instance.createdAt,
     };
 
 CartItem _$CartItemFromJson(Map<String, dynamic> json) => CartItem(

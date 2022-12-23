@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Views/common/custom_text_field.dart';
 
@@ -75,10 +76,13 @@ class HomeAppbarView extends StatelessWidget {
       actions: [
         Container(
           margin: const EdgeInsets.only(right: 12, bottom: 10),
-          child: const Icon(
-            Icons.account_circle_outlined,
-            color: Colors.black,
-            size: 24,
+          child: InkWell(
+            onTap: () => Get.toNamed(RouteHelper.profileScreen),
+            child: const Icon(
+              Icons.account_circle_outlined,
+              color: Colors.black,
+              size: 24,
+            ),
           ),
         )
       ],
