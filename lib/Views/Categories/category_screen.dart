@@ -47,9 +47,14 @@ class CategoriesScreen extends StatelessWidget {
                         childAspectRatio: 1,
                       ),
                       itemBuilder: (BuildContext context, int index) {
-                        return CategoryListItemWidget(
-                            imageUrl: categoriesController.getCategories[index].imageUrl!,
-                            title: categoriesController.getCategories[index].name!);
+                        var categories = categoriesController.getCategories;
+                        return GestureDetector(
+                          onTap: (() =>
+                              categoriesController.navigateToProducts(categories[index].id!)),
+                          child: CategoryListItemWidget(
+                              imageUrl: categories[index].imageUrl!,
+                              title: categories[index].name!),
+                        );
                       },
                       itemCount: categoriesController.getCategories.length,
                     ),
