@@ -20,44 +20,7 @@ class ProductsListSectionWidget extends StatelessWidget {
       this.itemWidth,
       this.itemHeight,
       required this.onTapViewAllHandler});
-  // final List<Product> testProducts = [
-  //   Product(
-  //       description: "some description",
-  //       discount: 22,
-  //       id: "1",
-  //       name: "Sail Fish/ Ola Meen - Fillet (250g pack)",
-  //       price: 269,
-  //       quantity: Quantity(totalQuantity: 500, type: QuantityType.wgt, value: 250),
-  //       imageUrl:
-  //           "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"),
-  //   Product(
-  //       description: "some description",
-  //       discount: 22,
-  //       id: "1",
-  //       name: "Sail Fish/ Ola Meen - Fillet (250g pack)",
-  //       price: 269,
-  //       quantity: Quantity(totalQuantity: 500, type: QuantityType.wgt, value: 250),
-  //       imageUrl:
-  //           "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"),
-  //   Product(
-  //       description: "some description",
-  //       discount: 22,
-  //       id: "1",
-  //       name: "Sail Fish/ Ola Meen - Fillet (250g pack)",
-  //       price: 269,
-  //       quantity: Quantity(totalQuantity: 500, type: QuantityType.wgt, value: 250),
-  //       imageUrl:
-  //           "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"),
-  //   Product(
-  //       description: "some description",
-  //       discount: 22,
-  //       id: "1",
-  //       name: "Sail Fish/ Ola Meen - Fillet (250g pack)",
-  //       price: 269,
-  //       quantity: Quantity(totalQuantity: 500, type: QuantityType.wgt, value: 250),
-  //       imageUrl:
-  //           "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80")
-  // ];
+
   @override
   Widget build(BuildContext context) {
     return MultiSliver(

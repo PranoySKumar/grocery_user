@@ -15,6 +15,7 @@ import 'package:grocery_user/Views/Orders/orders_controller.dart';
 import 'package:grocery_user/Views/Orders/orders_list_screen.dart';
 import 'package:grocery_user/Views/Products/ProductDetailsScreen/product_details_controller.dart';
 import 'package:grocery_user/Views/Products/ProductDetailsScreen/product_details_screen.dart';
+import 'package:grocery_user/Views/Profile/profile_controller.dart';
 import 'package:grocery_user/Views/Profile/profile_screen.dart';
 import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_controller.dart';
 import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_screen.dart';
@@ -145,7 +146,7 @@ class RouteHelper {
           name: profileScreen,
           page: () => const ProfileScreen(),
           binding: BindingsBuilder(
-            (() => Get.lazyPut(() => CartController())),
+            (() => Get.lazyPut(() => ProfileController())),
           ),
           transition: Transition.rightToLeftWithFade,
         )

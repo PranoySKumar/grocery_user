@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../LatLng/latlng_model.dart';
+import '../Product/product_model.dart';
 
 part 'user_model.g.dart';
 
@@ -10,18 +11,19 @@ class User {
   String? userName;
   LatLng? location;
   List<ShippingAddress>? shippingAddresses;
+  List<Product>? favourites;
 
   int? pincode;
   String? profileImageUrl;
 
-  User({
-    this.id,
-    this.userName,
-    this.location,
-    this.shippingAddresses,
-    this.pincode,
-    this.profileImageUrl,
-  });
+  User(
+      {this.id,
+      this.userName,
+      this.location,
+      this.shippingAddresses,
+      this.pincode,
+      this.profileImageUrl,
+      this.favourites});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> get toJson => _$UserToJson(this);

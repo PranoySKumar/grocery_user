@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:grocery_user/Views/Products/ProductListScreen/products_controller.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Views/common/product_card_widget.dart';
-import 'package:grocery_user/Views/common/progress_screen.dart';
 
 import '../../../Model/Product/product_model.dart';
+import '../../common/progress_screen.dart';
 
-class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({super.key});
+class FavouritesScreen extends StatelessWidget {
+  const FavouritesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final productsController = Get.find<ProductsController>();
-
+    var homeController = Get.find<HomeScreenController>();
     return Obx(
-      (() => productsController.isLoading.isTrue
+      (() => homeController.isLoading.isTrue
           ? const ProgressScreen()
           : Scaffold(
               appBar: AppBar(
-                  leading: const BackButton(
-                    color: Colors.black,
-                  ),
                   centerTitle: true,
                   elevation: 0,
                   title: Text(
-                    "Products",
+                    "Favourites",
                     style: Get.theme.textTheme.titleMedium,
                   ),
                   backgroundColor: Get.theme.scaffoldBackgroundColor),
-              body: productsController
-                      .getProducts.isEmpty // If products are empty return out put a message.
-                  ? Center(
-                      child: Text(
-                      "No products available",
-                      style: Get.theme.textTheme.titleMedium,
-                    ))
-                  : _ProductList(productsController.getProducts),
+              body: GetBuilder<HomeScreenController>(
+                builder: ((controller) => controller.user.value.favourites != null &&
+                        controller.user.value.favourites!
+                            .isEmpty // If products are empty return out put a message.
+                    ? Center(
+                        child: Text(
+                        "No Favourites Available",
+                        style: Get.theme.textTheme.titleMedium,
+                      ))
+                    : _ProductList(controller.user.value.favourites!)),
+              ),
             )),
     );
   }

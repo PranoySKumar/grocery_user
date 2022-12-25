@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Views/Cart/cart_controller.dart';
 import 'package:grocery_user/Views/Products/ProductDetailsScreen/product_details_controller.dart';
 import 'package:grocery_user/Views/common/progress_screen.dart';
@@ -28,100 +29,11 @@ class ProductDetailsScreen extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
                 const _BackButton(),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(top: 280),
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(50, 0, 0, 0),
-                          blurRadius: 8,
-                          offset: Offset(0, 4),
-                        )
-                      ],
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.name!,
-                        textAlign: TextAlign.left,
-                        style: Get.textTheme.labelMedium,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "${product.quantity!.value!.toInt()}g",
-                        textAlign: TextAlign.justify,
-                        style: Get.textTheme.labelSmall?.copyWith(color: Colors.grey),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _AddToCart(),
-                          _DiscountedPriceTag(
-                              discount: product.discount, price: product.price!.toInt())
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      //description
-                      Text(
-                        "Description",
-                        style: Get.textTheme.labelMedium,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        product.description!,
-                        textAlign: TextAlign.justify,
-                        style: Get.textTheme.labelSmall?.copyWith(color: Colors.grey),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () =>
-                              _cartController.addItemToCart(productDetailsController.product),
-                          style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.all(15),
-                              shape:
-                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                              backgroundColor: Colors.green.shade400),
-                          child: Center(
-                            child: Text(
-                              "Add To Cart",
-                              style: Get.textTheme.labelMedium?.copyWith(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  left: 50,
-                  right: 50,
-                  child: Container(
-                    height: 5,
-                    width: 200,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey),
-                  ),
-                )
+                _ProductDetailsContent(
+                    product: product,
+                    cartController: _cartController,
+                    productDetailsController: productDetailsController),
+                const _BottomUnderline()
               ],
             ),
           ),
@@ -131,6 +43,136 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 }
 
+class _BottomUnderline extends StatelessWidget {
+  const _BottomUnderline({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 20,
+      left: 50,
+      right: 50,
+      child: Container(
+        height: 5,
+        width: 200,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey),
+      ),
+    );
+  }
+}
+
+class _ProductDetailsContent extends StatelessWidget {
+  const _ProductDetailsContent({
+    Key? key,
+    required this.product,
+    required CartController cartController,
+    required this.productDetailsController,
+  })  : _cartController = cartController,
+        super(key: key);
+
+  final Product product;
+  final CartController _cartController;
+  final ProductDetialsController productDetailsController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 280),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(50, 0, 0, 0),
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            )
+          ],
+          borderRadius:
+              BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(right: 20),
+                  child: Text(
+                    product.name!,
+                    textAlign: TextAlign.left,
+                    style: Get.textTheme.labelMedium,
+                  ),
+                ),
+              ),
+              _FavouriteIcon(), // b // back button
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            "${product.quantity!.value!.toInt()}g",
+            textAlign: TextAlign.justify,
+            style: Get.textTheme.labelSmall?.copyWith(color: Colors.grey),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _AddToCart(),
+              _DiscountedPriceTag(discount: product.discount, price: product.price!.toInt())
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          //description
+          Text(
+            "Description",
+            style: Get.textTheme.labelMedium,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            product.description!,
+            textAlign: TextAlign.justify,
+            style: Get.textTheme.labelSmall?.copyWith(color: Colors.grey),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => _cartController.addItemToCart(productDetailsController.product),
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(15),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  backgroundColor: Colors.green.shade400),
+              child: Center(
+                child: Text(
+                  "Add To Cart",
+                  style: Get.textTheme.labelMedium?.copyWith(color: Colors.white),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+//Add to cart
 class _AddToCart extends StatelessWidget {
   _AddToCart({
     Key? key,
@@ -176,6 +218,34 @@ class _AddToCart extends StatelessWidget {
   }
 }
 
+//Favourites Icon
+class _FavouriteIcon extends StatelessWidget {
+  final _controller = Get.find<ProductDetialsController>();
+
+  _FavouriteIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _controller.toggleFavourite,
+      child: Obx(
+        () => _controller.isFavourite.isFalse
+            ? const Icon(
+                Icons.favorite_border_outlined,
+                size: 25,
+                color: Colors.black,
+              )
+            : Icon(
+                Icons.favorite,
+                size: 25,
+                color: Colors.red.shade400,
+              ),
+      ),
+    );
+  }
+}
+
+//Backbutton
 class _BackButton extends StatelessWidget {
   const _BackButton({
     Key? key,
@@ -187,7 +257,7 @@ class _BackButton extends StatelessWidget {
       onTap: () => Get.back(),
       child: Container(
         padding: const EdgeInsets.only(left: 5),
-        margin: const EdgeInsets.only(top: 40, left: 15),
+        margin: const EdgeInsets.only(top: 40, left: 15, right: 15),
         width: 35,
         height: 35,
         decoration: BoxDecoration(boxShadow: const [

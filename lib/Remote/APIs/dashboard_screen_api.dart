@@ -44,6 +44,16 @@ class DashboardScreenApi {
         }
         favourites{
           id
+          name
+          imageUrl
+          quantity{
+              totalQuantity
+              type
+              value
+          }
+          description
+          discount
+          price
         }
         shippingAddresses{
           recipientName

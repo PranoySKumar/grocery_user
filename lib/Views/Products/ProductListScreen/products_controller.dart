@@ -4,6 +4,7 @@ import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/APIs/products_screen_api.dart';
 import 'package:grocery_user/Remote/grapql_client.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 
 enum ProductScreenFilter { search, discounted, mostPopular, category }
 
@@ -12,6 +13,7 @@ class ProductsController extends GetxController {
   final isLoading = true.obs; // is loading variable to show loading circle.
 
   List<Product> get getProducts => _products; // gets current product list;
+  final _homeController = Get.find<HomeScreenController>();
 
   @override
   void onInit() async {

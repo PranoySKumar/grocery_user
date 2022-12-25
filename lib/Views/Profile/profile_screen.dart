@@ -1,8 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
+import 'package:grocery_user/Views/Profile/profile_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -32,9 +32,9 @@ class ProfileScreen extends StatelessWidget {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             child: ListView(
-              children: const [
+              children: [
                 _ProfileImage(),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 _ProfileList()
@@ -59,10 +59,11 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class _ProfileList extends StatelessWidget {
-  const _ProfileList({
+  _ProfileList({
     Key? key,
   }) : super(key: key);
 
+  final _profileController = Get.find<ProfileController>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -73,12 +74,6 @@ class _ProfileList extends StatelessWidget {
             Get.toNamed(RouteHelper.orderListScreen);
           },
           label: "Orders",
-        ),
-        const SizedBox(height: 4),
-        _ProfileListItem(
-          iconData: Icons.settings,
-          onTap: () {},
-          label: "Settings",
         ),
         const SizedBox(
           height: 4,
@@ -91,7 +86,7 @@ class _ProfileList extends StatelessWidget {
         const SizedBox(height: 4),
         _ProfileListItem(
           iconData: Icons.logout_outlined,
-          onTap: () {},
+          onTap: _profileController.logout,
           label: "Log out",
         ),
       ],
@@ -100,9 +95,10 @@ class _ProfileList extends StatelessWidget {
 }
 
 class _ProfileImage extends StatelessWidget {
-  const _ProfileImage({
+  _ProfileImage({
     Key? key,
   }) : super(key: key);
+  final _homescreenController = Get.find<HomeScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +121,7 @@ class _ProfileImage extends StatelessWidget {
           height: 2,
         ),
         Text(
-          "Akhil Pappachan",
+          _homescreenController.user.value.userName!,
           style: Get.textTheme.labelMedium,
         ),
         const SizedBox(height: 30),

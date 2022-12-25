@@ -17,6 +17,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           .toList(),
       pincode: json['pincode'] as int?,
       profileImageUrl: json['profileImageUrl'] as String?,
+      favourites: (json['favourites'] as List<dynamic>?)
+          ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -24,6 +27,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'userName': instance.userName,
       'location': instance.location,
       'shippingAddresses': instance.shippingAddresses,
+      'favourites': instance.favourites,
       'pincode': instance.pincode,
       'profileImageUrl': instance.profileImageUrl,
     };

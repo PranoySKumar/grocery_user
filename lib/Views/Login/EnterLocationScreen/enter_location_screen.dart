@@ -29,7 +29,7 @@ class EnterLocationScreen extends StatelessWidget {
                   Icons.near_me,
                   color: Colors.black,
                 ),
-                keyboardType: TextInputType.name,
+                keyboardType: TextInputType.number,
                 controller: controller.otpTextEditingController,
                 onChanged: (val) {},
                 hint: "Enter Pincode",
