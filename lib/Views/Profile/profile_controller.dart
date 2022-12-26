@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfileController extends GetxController {
+  //navigates to a browser to show the companies privacy policy page.
+  void navigateToPrivacyPolicyWebPage() async {
+    var url = "https://loremipsum.io/privacy-policy/";
+    var urllaunchable = await canLaunchUrlString(url);
+    if (urllaunchable) {
+      await launchUrlString(url); //launch is from url_launcher package to launch URL
+    } else {
+      print("URL can't be launched.");
+    }
+  }
+
   void logout() async {
     //handles logout
     void handleLogout() async {

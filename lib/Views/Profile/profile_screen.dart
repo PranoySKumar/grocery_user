@@ -80,7 +80,7 @@ class _ProfileList extends StatelessWidget {
         ),
         _ProfileListItem(
           iconData: Icons.privacy_tip_outlined,
-          onTap: () {},
+          onTap: _profileController.navigateToPrivacyPolicyWebPage,
           label: "Privacy Policy",
         ),
         const SizedBox(height: 4),
@@ -147,8 +147,7 @@ class _ProfileListItem extends StatelessWidget {
   final VoidCallback onTap;
   final String label;
 
-  const _ProfileListItem(
-      {super.key, required this.iconData, required this.onTap, required this.label});
+  const _ProfileListItem({required this.iconData, required this.onTap, required this.label});
 
   @override
   Widget build(BuildContext context) {

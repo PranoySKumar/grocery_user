@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:grocery_user/Views/Cart/cart_controller.dart';
 import 'package:grocery_user/Views/Cart/cart_screen.dart';
 import 'package:grocery_user/Views/Cart/checkout_screen.dart';
 import 'package:grocery_user/Views/Cart/order_status_screen.dart';
@@ -149,6 +148,6 @@ class RouteHelper {
             (() => Get.lazyPut(() => ProfileController())),
           ),
           transition: Transition.rightToLeftWithFade,
-        )
+        ),
       ];
 }
