@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Views/Cart/cart_controller.dart';
+import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Views/common/product_item_button.dart';
 
 class ProductCardWidget extends StatelessWidget {
@@ -71,7 +72,7 @@ class ProductCardWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const _DeliveryTimeTag(timeToDeliver: "10AM - 12PM"),
+                _DeliveryTimeTag(),
                 DiscountedPriceTag(discount: product.discount, price: product.price!.toInt())
               ],
             ),
@@ -134,11 +135,22 @@ class DiscountedPriceTag extends StatelessWidget {
 }
 
 class _DeliveryTimeTag extends StatelessWidget {
-  final String timeToDeliver;
-  const _DeliveryTimeTag({required this.timeToDeliver});
+  final homeController = Get.find<HomeScreenController>();
+
+  _DeliveryTimeTag();
+
+//checks for range
+  bool isValidTimeRange(TimeOfDay startTime, TimeOfDay endTime) {
+    TimeOfDay now = TimeOfDay.now();
+    return ((now.hour > startTime.hour) ||
+            (now.hour == startTime.hour && now.minute >= startTime.minute)) &&
+        ((now.hour < endTime.hour) || (now.hour == endTime.hour && now.minute <= endTime.minute));
+  }
 
   @override
   Widget build(BuildContext context) {
+    var isValid =
+        isValidTimeRange(homeController.store.getRange[0], homeController.store.getRange[1]);
     return Container(
       width: 96,
       height: 38,
@@ -167,7 +179,7 @@ class _DeliveryTimeTag extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Today",
+                isValid ? "Today" : "Tomorrow",
                 textAlign: TextAlign.center,
                 style: Get.theme.textTheme.labelSmall?.copyWith(
                   fontSize: 8,
@@ -175,7 +187,7 @@ class _DeliveryTimeTag extends StatelessWidget {
                 ),
               ),
               Text(
-                timeToDeliver,
+                homeController.store.timeInLocal(),
                 textAlign: TextAlign.center,
                 style: Get.theme.textTheme.labelSmall?.copyWith(
                   fontSize: 8,

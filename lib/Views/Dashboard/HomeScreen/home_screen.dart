@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var homeScreenController = Get.find<HomeScreenController>();
     var cartScreenController = Get.find<CartController>();
+
     return Obx(
       (() => homeScreenController.isLoading.isTrue
           ? const Center(
@@ -43,7 +44,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HomeScreenView extends StatelessWidget {
-  const _HomeScreenView({super.key});
+  const _HomeScreenView();
   @override
   Widget build(BuildContext context) {
     var homeScreenController = Get.find<HomeScreenController>();
@@ -63,7 +64,7 @@ class _HomeScreenView extends StatelessWidget {
             height: 12,
           ),
         ),
-        const _GreetingsWidget(),
+        _GreetingsWidget(),
         const SliverToBoxAdapter(
           child: SizedBox(
             height: 10,
@@ -106,7 +107,8 @@ class _HomeScreenView extends StatelessWidget {
 }
 
 class _GreetingsWidget extends StatelessWidget {
-  const _GreetingsWidget({super.key});
+  var homeController = Get.find<HomeScreenController>();
+  _GreetingsWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,8 @@ class _GreetingsWidget extends StatelessWidget {
           left: 12,
           right: 12,
         ),
-        child: Text("Hi Pranoy!", style: Get.theme.textTheme.labelLarge),
+        child: Text("Hi ${homeController.user.value.userName}!",
+            style: Get.theme.textTheme.labelLarge),
       ),
     );
   }

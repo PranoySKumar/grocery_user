@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/Order/order_model.dart';
 import 'package:grocery_user/Remote/APIs/orders_api.dart';
-import 'package:grocery_user/Remote/grapql_client.dart';
+import 'package:grocery_user/Remote/graphql_client.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 
 class OrdersController extends GetxController {

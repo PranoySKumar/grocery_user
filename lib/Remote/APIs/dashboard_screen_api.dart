@@ -1,6 +1,10 @@
 class DashboardScreenApi {
   static const String loadDataQuery = """
   query LoadDashBoardScreenData{
+      store{
+    
+        deliveryTime
+    }
   discountedProducts: products(options: {limit:6,discountFilter:true}) {
     id
     name

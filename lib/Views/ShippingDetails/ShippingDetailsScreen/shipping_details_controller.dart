@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
 import 'package:grocery_user/Remote/APIs/user_api.dart';
-import 'package:grocery_user/Remote/grapql_client.dart';
+import 'package:grocery_user/Remote/graphql_client.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 

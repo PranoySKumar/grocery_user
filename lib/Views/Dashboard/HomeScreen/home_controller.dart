@@ -5,10 +5,11 @@ import 'package:grocery_user/Model/Category/category_model.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Model/User/user_model.dart';
 import 'package:grocery_user/Remote/APIs/dashboard_screen_api.dart';
-import 'package:grocery_user/Remote/grapql_client.dart';
+import 'package:grocery_user/Remote/graphql_client.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
+import '../../../Model/Store/store_model.dart';
 import '../../Products/ProductListScreen/products_controller.dart';
 
 class HomeScreenController extends GetxController {
@@ -19,12 +20,14 @@ class HomeScreenController extends GetxController {
   final isLoading = true.obs; // is loading variable to show loading circle.
   final searchQuery = "".obs; // search string entered by the user.
   final categories = <Category>[].obs; // list of categories.
-
   final user = User().obs; // user details.
   final selectedAddress = "".obs;
 
-  // gets current popular product list;
+  late final Store _store;
+
+  //getters
   User get getUserDetails => user.value; // gets user details.
+  Store get store => _store;
 
   set setSearchQuery(String val) {
     searchQuery.value = val;
@@ -82,12 +85,14 @@ class HomeScreenController extends GetxController {
       List<dynamic> discountedProductsJson = resultData?["discountedProducts"];
       List<dynamic> mostPopularProductsJson = resultData?["popularProducts"];
       var userJson = resultData?["user"];
+      var storeJson = resultData?["store"];
 
       //setting data
       categories.assignAll(categoriesJson.map((cat) => Category.fromJson(cat)));
       discountedProducts.assignAll(discountedProductsJson.map((prod) => Product.fromJson(prod)));
       mostPopularProducts.assignAll(mostPopularProductsJson.map((prod) => Product.fromJson(prod)));
       user.value = User.fromJson(userJson);
+      _store = Store.fromJson(storeJson);
     } catch (e) {
       print(e);
       SnackBarDisplay.show(message: "couldn't load data");

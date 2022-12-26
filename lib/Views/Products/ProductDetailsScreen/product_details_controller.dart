@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:grocery_user/Remote/APIs/product_api.dart';
 import 'package:grocery_user/Remote/APIs/user_api.dart';
-import 'package:grocery_user/Remote/grapql_client.dart';
+import 'package:grocery_user/Remote/graphql_client.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 
 import '../../../Model/Product/product_model.dart';

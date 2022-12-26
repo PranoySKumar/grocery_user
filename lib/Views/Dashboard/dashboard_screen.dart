@@ -16,30 +16,31 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx((() => _screens[_index.value])),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.cottage_outlined),
-            label: '',
+    return Obx(() => Scaffold(
+          body: _screens[_index.value],
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.white,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.cottage_outlined),
+                label: '',
+              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.window_outlined),
+              //   label: '',
+              // ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite_outline_outlined),
+                label: '',
+              ),
+            ],
+            currentIndex: _index.value,
+            unselectedItemColor: Colors.grey,
+            selectedItemColor: Colors.yellowAccent[800],
+            onTap: _setIndex,
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.window_outlined),
-          //   label: '',
-          // ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_outline_outlined),
-            label: '',
-          ),
-        ],
-        currentIndex: _index.value,
-        selectedItemColor: Colors.amber[800],
-        onTap: _setIndex,
-      ),
-    );
+        ));
   }
 }
