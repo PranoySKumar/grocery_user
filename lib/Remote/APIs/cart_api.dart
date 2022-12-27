@@ -5,7 +5,7 @@ class CartApi {
     totalAmount
     tax
     couponDiscount
-    deliveryPartnerFee
+    shippingCharges
   }
 }""";
   static const String addOrder = """

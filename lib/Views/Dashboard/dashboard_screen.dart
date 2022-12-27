@@ -38,7 +38,7 @@ class DashboardScreen extends StatelessWidget {
             ],
             currentIndex: _index.value,
             unselectedItemColor: Colors.grey,
-            selectedItemColor: Colors.yellowAccent[800],
+            selectedItemColor: Colors.yellow[800],
             onTap: _setIndex,
           ),
         ));

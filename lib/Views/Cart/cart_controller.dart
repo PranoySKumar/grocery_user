@@ -4,6 +4,7 @@ import 'package:grocery_user/Remote/APIs/cart_api.dart';
 import 'package:grocery_user/Remote/graphql_client.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
+
 import '../../Model/Order/order_model.dart';
 
 class CartController extends GetxController {
@@ -14,7 +15,7 @@ class CartController extends GetxController {
 
   double totalAmount = 0;
   double tax = 0;
-  double deliveryPartnerFee = 0;
+  double shippingCharges = 0;
   double couponDiscountApplied = 0; //will implement coupon later.
 
 // contollers
@@ -46,7 +47,7 @@ class CartController extends GetxController {
     cart.value = [];
     totalAmount = 0;
     tax = 0;
-    deliveryPartnerFee = 0;
+    shippingCharges = 0;
     couponDiscountApplied = 0;
 
     Get.offNamedUntil(RouteHelper.orderStatusScreen,
@@ -62,7 +63,7 @@ class CartController extends GetxController {
     totalAmount = result?["generateBill"]["totalAmount"].toDouble();
     tax = result?["generateBill"]["tax"].toDouble();
     couponDiscountApplied = result?["generateBill"]["couponDiscount"].toDouble();
-    deliveryPartnerFee = result?["generateBill"]["deliveryPartnerFee"].toDouble();
+    shippingCharges = result?["generateBill"]["shippingCharges"].toDouble();
     isGeneratingBill.value = false;
     update();
   }

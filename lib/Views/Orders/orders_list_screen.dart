@@ -69,7 +69,8 @@ class OrdersListScreen extends StatelessWidget {
 
 class _OrderListItem extends StatelessWidget {
   final Order order;
-  const _OrderListItem({super.key, required this.order});
+  final _controller = Get.find<OrdersController>();
+  _OrderListItem({required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +128,9 @@ class _OrderListItem extends StatelessWidget {
                   style: Get.textTheme.labelSmall?.copyWith(color: Colors.grey, fontSize: 12),
                   children: [
                     TextSpan(
-                        text: order.totalItemCount().toString(),
-                        style: Get.textTheme.labelSmall?.copyWith(fontSize: 12))
+                      text: order.totalItemCount().toString(),
+                      style: Get.textTheme.labelSmall?.copyWith(fontSize: 12),
+                    )
                   ],
                 ),
               ),
@@ -151,15 +153,18 @@ class _OrderListItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black, width: 1)),
-                child: Text(
-                  "Details",
-                  style: Get.textTheme.labelMedium?.copyWith(fontSize: 12),
+              GestureDetector(
+                onTap: () => _controller.onSelectOrder(order.id!),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.black, width: 1)),
+                  child: Text(
+                    "Details",
+                    style: Get.textTheme.labelMedium?.copyWith(fontSize: 12),
+                  ),
                 ),
               ),
               Text(

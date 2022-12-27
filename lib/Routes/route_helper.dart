@@ -10,6 +10,7 @@ import 'package:grocery_user/Views/Login/EnterLocationScreen/enter_location_bind
 import 'package:grocery_user/Views/Login/EnterUserNameScreen/enter_username_binding.dart';
 import 'package:grocery_user/Views/Login/WelcomeScreen/welcome_binding.dart';
 import 'package:grocery_user/Views/Login/WelcomeScreen/welcome_screen.dart';
+import 'package:grocery_user/Views/Orders/order_details_controller.dart';
 import 'package:grocery_user/Views/Orders/orders_controller.dart';
 import 'package:grocery_user/Views/Orders/orders_list_screen.dart';
 import 'package:grocery_user/Views/Products/ProductDetailsScreen/product_details_controller.dart';
@@ -26,6 +27,7 @@ import '../Views/Login/EnterUserNameScreen/enter_username_screen.dart';
 import '../Views/Login/IntroScreen/intro_screen.dart';
 import '../Views/Login/OtpVerificationScreen/verify_otp_binding.dart';
 import '../Views/Login/OtpVerificationScreen/verify_otp_screen.dart';
+import '../Views/Orders/order_details_screen.dart';
 import '../Views/Products/ProductListScreen/products_binding.dart';
 import '../Views/Products/ProductListScreen/products_screen.dart';
 import '../Views/ShippingDetails/ShippingDetailsScreen/shipping_details_binding.dart';
@@ -48,6 +50,7 @@ class RouteHelper {
   static const checkoutScreen = "/check-out";
   static const orderStatusScreen = "/order-status";
   static const orderListScreen = "/order-list";
+  static const orderDetailsScreen = "/order-details";
   static const profileScreen = "/profile";
 
   static getAppRoutes() => [
@@ -146,6 +149,14 @@ class RouteHelper {
           page: () => const ProfileScreen(),
           binding: BindingsBuilder(
             (() => Get.lazyPut(() => ProfileController())),
+          ),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: orderDetailsScreen,
+          page: () => OrderDetailsScreen(),
+          binding: BindingsBuilder(
+            (() => Get.lazyPut(() => OrderDetailsController())),
           ),
           transition: Transition.rightToLeftWithFade,
         ),

@@ -16,6 +16,8 @@ class Order {
   String? status;
   int? orderNo;
   String? createdAt;
+  String? deliveredAt;
+  double? shippingCharges;
 
   int totalItemCount() {
     int itemCount = 0;
@@ -25,6 +27,15 @@ class Order {
     return itemCount;
   }
 
+  double get subTotalAmount =>
+      cart!.fold<double>(0.0, (prev, item) => (item.product.price! * item.count) + prev);
+
+  double get totalSaved => cart!.fold<double>(
+      0.0,
+      (prev, item) => item.product.discount != null
+          ? prev + ((item.product.discount! / 100) * item.product.price! * item.count)
+          : prev);
+
   Order(
       {this.orderNo,
       this.status,
@@ -33,6 +44,8 @@ class Order {
       this.tax,
       this.shippingAddress,
       this.transactionAmount,
+      this.deliveredAt,
+      this.shippingCharges,
       this.createdAt});
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
   Map<String, dynamic> get toJson => _$OrderToJson(this);

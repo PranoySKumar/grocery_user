@@ -20,4 +20,36 @@ transactionAmount
 }
 
 """;
+
+  static const String getSingleOrderDetails = """
+    query getOrders(\$id:String!) {
+      order(id:\$id){
+        cart{
+            count
+              product{
+                  name
+                  price
+                  discount
+                  quantity{
+                    value
+                  }
+              }  
+          }
+           shippingAddress{
+          address
+          recipientName
+          }
+          createdAt
+          id
+          orderNo
+          deliveredAt
+          paymentMethod
+          status
+            tax
+            transactionAmount
+            shippingCharges  
+
+      }
+}
+""";
 }

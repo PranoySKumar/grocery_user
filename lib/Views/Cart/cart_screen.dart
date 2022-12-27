@@ -77,7 +77,7 @@ class CartScreen extends StatelessWidget {
 }
 
 class _ProductItemList extends StatelessWidget {
-  const _ProductItemList({super.key});
+  const _ProductItemList();
 
   @override
   Widget build(BuildContext context) {
@@ -158,19 +158,19 @@ class _Subtotal extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Delivery fee for partner",
+                        "Shipping & Handling",
                         style: Get.theme.textTheme.labelSmall,
                       ),
                       Text(
-                        "₹${cartController.deliveryPartnerFee.toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
+                        "₹${cartController.shippingCharges.toStringAsFixed(1).replaceAll(RegExp(r'([.]*0)(?!.*\d)'), "")}",
                         style: Get.theme.textTheme.labelSmall,
                       )
                     ],
                   ),
-                  Text(
-                    "Fully goes to them for their time and effort",
-                    style: Get.theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
-                  ),
+                  //Text(
+                  //  "Fully goes to them for their time and effort",
+                  //  style: Get.theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
+                  //),
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -327,7 +327,7 @@ class _ApplyCoupon extends StatelessWidget {
 
 class _CartListItem extends StatelessWidget {
   final CartItem cartItem;
-  const _CartListItem({super.key, required this.cartItem});
+  const _CartListItem({required this.cartItem});
 
   @override
   Widget build(BuildContext context) {
