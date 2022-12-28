@@ -125,18 +125,18 @@ class _ProfileImage extends StatelessWidget {
           style: Get.textTheme.labelMedium,
         ),
         const SizedBox(height: 30),
-        Container(
-          width: 120,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: Get.theme.highlightColor),
-          child: Center(
-            child: Text(
-              "Edit Profile",
-              style: Get.textTheme.labelSmall?.copyWith(color: Colors.white),
-            ),
-          ),
-        )
+        //Container(
+        //  width: 120,
+        //  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        //  decoration: BoxDecoration(
+        //      borderRadius: BorderRadius.circular(20), color: Get.theme.highlightColor),
+        //  child: Center(
+        //    child: Text(
+        //      "Edit Profile",
+        //      style: Get.textTheme.labelSmall?.copyWith(color: Colors.white),
+        //    ),
+        //  ),
+        //)
       ],
     );
   }
