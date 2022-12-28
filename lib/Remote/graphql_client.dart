@@ -44,7 +44,7 @@ class GraphqlActions {
   static Future<Map<String, dynamic>?> mutate(
       {required String api, Map<String, dynamic>? variables}) async {
     var result = await graphqlClient.mutate(
-      MutationOptions(document: gql(api), variables: variables ?? {}),
+      MutationOptions(document: gql(api), variables: variables ?? {},),
     );
     if (result.hasException) {
       throw result.exception!;
@@ -56,7 +56,7 @@ class GraphqlActions {
   static Future<Map<String, dynamic>?> query(
       {required api, Map<String, dynamic>? variables}) async {
     var result = await graphqlClient.query(
-      QueryOptions(document: gql(api), variables: variables ?? {}),
+      QueryOptions(document: gql(api), variables: variables ?? {} ,  pollInterval: const Duration(seconds: 10),),
     );
     if (result.hasException) {
       throw result.exception!;

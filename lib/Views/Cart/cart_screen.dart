@@ -63,7 +63,7 @@ class CartScreen extends StatelessWidget {
           child: GetBuilder<CartController>(
             builder: (controller) {
               return CartOverlay(
-                onProceed: (() => Get.toNamed(RouteHelper.checkoutScreen)),
+                onProceed: cartController.checkforItemAvailability,
                 itemCount: cartController.totalItemCount(),
                 totalPrice: cartController.totalPrice(),
                 label: "To Checkout",
