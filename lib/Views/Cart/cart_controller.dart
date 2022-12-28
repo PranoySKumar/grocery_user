@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_user/Model/Product/product_model.dart';
@@ -30,21 +31,25 @@ class CartController extends GetxController {
   }
 
   void checkout() async {
-    if(_homeController.isGuest){
-      AlertMessage(title: "Alert",content: "You should be signed in to purchase products.").show();
+    if (_homeController.isGuest) {
+      AlertMessage(title: "Alert", content: "You should be signed in to purchase products.").show();
       return;
     }
 
     var cartJson = cart.map((item) => {"productId": item.product.id, "count": item.count}).toList();
     var userId = _homeController.user.value.id;
-    var addressJson = _homeController.user.value.shippingAddresses
-        ?.firstWhere((item) => item.address == _homeController.selectedAddress.value)
-        .toJson;
+    var shippingAddress = _homeController.user.value.shippingAddresses
+        ?.firstWhereOrNull((item) => item.address == _homeController.selectedAddress.value);
+      print(shippingAddress);
+    if (shippingAddress == null) {
+      AlertMessage(title: "Alert", content: "Please select an address before proceeding.").show();
+      return;
+    }
     var variables = {
       "cartData": {
         "cart": cartJson,
         "userId": userId,
-        "shippingAddress": addressJson,
+        "shippingAddress": shippingAddress.toJson,
         "paymentMethod": paymentMethod.value.name
       }
     };
@@ -76,80 +81,88 @@ class CartController extends GetxController {
   }
 
   void checkforItemAvailability() {
-    if(_homeController.isGuest){
-      AlertMessage(title: "Alert",content: "You should be signed in to purchase products.").show();
+
+    var shippingAddress = _homeController.user.value.shippingAddresses
+        ?.firstWhereOrNull((item) => item.address == _homeController.selectedAddress.value);
+    if (shippingAddress == null) {
+      AlertMessage(title: "Alert", content: "Please select an address before proceeding.").show();
+      return;
+    }
+    
+    if (_homeController.isGuest) {
+      AlertMessage(title: "Alert", content: "You should be signed in to purchase products.").show();
       return;
     }
     Get.showOverlay(
-        asyncFunction: () async {
-          var cartJson =
-              cart.map((item) => {"productId": item.product.id, "count": item.count}).toList();
+      asyncFunction: () async {
+        var cartJson =
+            cart.map((item) => {"productId": item.product.id, "count": item.count}).toList();
 
-          var resultData = await GraphqlActions.query(
-              api: CartApi.checkItemAvailability, variables: {"cartData": cartJson});
-          var resultJson = resultData!["checkProductAvailability"] as List<dynamic>;
+        var resultData = await GraphqlActions.query(
+            api: CartApi.checkItemAvailability, variables: {"cartData": cartJson});
+        var resultJson = resultData!["checkProductAvailability"] as List<dynamic>;
 
-          if (resultJson.isNotEmpty) {
+        if (resultJson.isNotEmpty) {
+          // Modifiy cart for based on the availability result.
+          for (var item in resultJson) {
+            String productId = item["productId"];
+            int unitsAvailable = item["unitsAvailable"];
+            bool isAvailable = item["isAvailable"];
 
-            // Modifiy cart for based on the availability result.
-            for (var item in resultJson) {
-              String productId = item["productId"];
-              int unitsAvailable = item["unitsAvailable"];
-              bool isAvailable = item["isAvailable"];
-
-              if (unitsAvailable == 0) {
-                cart.removeWhere((cartItem) => cartItem.product.id == productId);
-              } else if (unitsAvailable > 0) {
-                var cartItem = cart.firstWhere((item) => item.product.id == productId);
-                cartItem.count = unitsAvailable;
-              }
+            if (unitsAvailable == 0) {
+              cart.removeWhere((cartItem) => cartItem.product.id == productId);
+            } else if (unitsAvailable > 0) {
+              var cartItem = cart.firstWhere((item) => item.product.id == productId);
+              cartItem.count = unitsAvailable;
             }
-
-            cart.refresh(); // refresh the cart
-            
-
-            //if cart is empty navigate back to dashboard screen
-            if (cart.isEmpty) {
-              Get.back(); 
-            }
-
-            //shows a dialog let the user know why his cart was modified.
-            Get.defaultDialog(
-              title: "Alert",
-              contentPadding: EdgeInsets.all(10),
-              titleStyle: Get.textTheme.titleMedium?.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
-             
-              content: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "One or more items added to cart is not available.",
-                    style: Get.textTheme.labelSmall?.copyWith(fontSize: 12, color: Colors.grey),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "Cart has been modified!",
-                    style: Get.textTheme.labelSmall?.copyWith(fontSize: 12, color: Colors.grey),
-                  )
-                ],
-              ),
-            );
-          } else {
-            Get.toNamed(RouteHelper.checkoutScreen);
           }
-        },
-        loadingWidget: const Center(
-          child: SizedBox(
-            height: 50,
-            width: 50,
-            child: CircularProgressIndicator(color: Colors.black,),
+
+          cart.refresh(); // refresh the cart
+
+          //if cart is empty navigate back to dashboard screen
+          if (cart.isEmpty) {
+            Get.back();
+          }
+
+          //shows a dialog let the user know why his cart was modified.
+          Get.defaultDialog(
+            title: "Alert",
+            contentPadding: EdgeInsets.all(10),
+            titleStyle: Get.textTheme.titleMedium?.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "One or more items added to cart is not available.",
+                  style: Get.textTheme.labelSmall?.copyWith(fontSize: 12, color: Colors.grey),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Cart has been modified!",
+                  style: Get.textTheme.labelSmall?.copyWith(fontSize: 12, color: Colors.grey),
+                )
+              ],
+            ),
+          );
+        } else {
+          Get.toNamed(RouteHelper.checkoutScreen);
+        }
+      },
+      loadingWidget: const Center(
+        child: SizedBox(
+          height: 50,
+          width: 50,
+          child: CircularProgressIndicator(
+            color: Colors.black,
           ),
-        ),);
+        ),
+      ),
+    );
   }
 
   void addItemToCart(Product product) {

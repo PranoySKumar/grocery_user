@@ -221,13 +221,14 @@ class _DeliveryAddress extends StatelessWidget {
                       margin: const EdgeInsets.only(left: 12),
                       child: Obx(() {
                         var shippingAddress =
-                            homescreenController.user.value.shippingAddresses!.firstWhere(
+                            homescreenController.user.value.shippingAddresses!.firstWhereOrNull(
                           (item) => item.address == homescreenController.selectedAddress.value,
                         );
                         return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                           crossAxisAlignment: CrossAxisAlignment.start ,
+                           mainAxisAlignment:  shippingAddress !=null ? MainAxisAlignment.start: MainAxisAlignment.center,
                           children: [
-                            Text.rich(
+                          if(shippingAddress !=null)  Text.rich(
                               TextSpan(
                                 text: "Delivery at ",
                                 style: Get.textTheme.labelMedium
@@ -241,9 +242,9 @@ class _DeliveryAddress extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              shippingAddress.address!,
+                             shippingAddress==null?"Select an Address": shippingAddress.address!,
                               style:
-                                  Get.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.normal),
+                                shippingAddress==null? Get.textTheme.labelMedium :  Get.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.normal),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             )

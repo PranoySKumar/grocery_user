@@ -10,8 +10,8 @@ setupGraphql() async {
 
   final HttpLink httpLink = HttpLink(
     // set endpoint
-    //'https://grocery-backend.onrender.com/graphql',
-    'http://192.168.43.39:4000/graphql',
+    'https://grocery-backend.onrender.com/graphql',
+    //'http://192.168.43.39:4000/graphql',
   );
 
   final defaultPolicies = Policies(fetch: FetchPolicy.networkOnly); // defines networkpolicy
