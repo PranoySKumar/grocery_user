@@ -5,6 +5,7 @@ import 'package:grocery_user/Remote/graphql_client.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 
 import '../../../Model/Product/product_model.dart';
+import '../../../Utils/alert_message.dart';
 
 class ProductDetialsController extends GetxController {
   //states
@@ -19,7 +20,7 @@ class ProductDetialsController extends GetxController {
   RxBool get loadingDetails => _loadingDetails;
   RxBool get isFavourite => _isFavourite;
 
-  final _homecontroller = Get.find<HomeScreenController>();
+  final _homeController = Get.find<HomeScreenController>();
 
   @override
   void onInit() async {
@@ -28,7 +29,10 @@ class ProductDetialsController extends GetxController {
   }
 
   void _setIsFavourite() {
-    if (_homecontroller.user.value.favourites?.firstWhereOrNull((item) => item.id == _product.id) !=
+    if(_homeController.isGuest){
+      return;
+    }
+    if (_homeController.user.value.favourites?.firstWhereOrNull((item) => item.id == _product.id) !=
         null) {
       _isFavourite.value = true;
     }
@@ -49,8 +53,13 @@ class ProductDetialsController extends GetxController {
 
   //toggle favourite
   void toggleFavourite() async {
-    var listOfFavourites = _homecontroller.user.value.favourites != null
-        ? [..._homecontroller.user.value.favourites!]
+     if(_homeController.isGuest){
+      AlertMessage(title: "Alert",content: "You should be signed in to purchase products.").show();
+      return;
+    }
+
+    var listOfFavourites = _homeController.user.value.favourites != null
+        ? [..._homeController.user.value.favourites!]
         : [];
 
     switch (isFavourite.value) {
@@ -58,13 +67,13 @@ class ProductDetialsController extends GetxController {
         _isFavourite.value = true;
         listOfFavourites.add(Product(id: _product.id));
         var variables = {
-          "id": _homecontroller.user.value.id,
+          "id": _homeController.user.value.id,
           "data": {"favourites": listOfFavourites.map((item) => item.id).toList()},
         };
         try {
           await GraphqlActions.mutate(api: UserApi.updateUserMutation, variables: variables);
-          _homecontroller.user.value.favourites?.add(_product);
-          _homecontroller.update();
+          _homeController.user.value.favourites?.add(_product);
+          _homeController.update();
         } catch (e) {
           print(e);
           _isFavourite.value = false;
@@ -77,13 +86,13 @@ class ProductDetialsController extends GetxController {
         listOfFavourites.removeWhere((item) => item.id == _product.id);
 
         var variables = {
-          "id": _homecontroller.user.value.id,
+          "id": _homeController.user.value.id,
           "data": {"favourites": listOfFavourites.map((item) => item.id).toList()},
         };
         try {
           await GraphqlActions.mutate(api: UserApi.updateUserMutation, variables: variables);
-          _homecontroller.user.value.favourites?.removeWhere((item) => item.id == _product.id);
-          _homecontroller.update();
+          _homeController.user.value.favourites?.removeWhere((item) => item.id == _product.id);
+          _homeController.update();
         } catch (e) {
           print(e);
           _isFavourite.value = true;

@@ -4,6 +4,7 @@ import 'package:grocery_user/Model/Product/product_model.dart';
 import 'package:grocery_user/Remote/APIs/cart_api.dart';
 import 'package:grocery_user/Remote/graphql_client.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
+import 'package:grocery_user/Utils/alert_message.dart';
 import 'package:grocery_user/Views/Dashboard/HomeScreen/home_controller.dart';
 
 import '../../Model/Order/order_model.dart';
@@ -11,6 +12,7 @@ import '../../Model/Order/order_model.dart';
 class CartController extends GetxController {
   RxList<CartItem> cart = <CartItem>[].obs;
   var paymentMethod = PaymentMethods.googlepay.obs;
+  final _homeController = Get.find<HomeScreenController>();
 
   var isGeneratingBill = false.obs;
 
@@ -20,7 +22,6 @@ class CartController extends GetxController {
   double couponDiscountApplied = 0; //will implement coupon later.
 
 // contollers
-  var homeController = Get.find<HomeScreenController>();
 
   @override
   void onInit() {
@@ -29,10 +30,15 @@ class CartController extends GetxController {
   }
 
   void checkout() async {
+    if(_homeController.isGuest){
+      AlertMessage(title: "Alert",content: "You should be signed in to purchase products.").show();
+      return;
+    }
+
     var cartJson = cart.map((item) => {"productId": item.product.id, "count": item.count}).toList();
-    var userId = homeController.user.value.id;
-    var addressJson = homeController.user.value.shippingAddresses
-        ?.firstWhere((item) => item.address == homeController.selectedAddress.value)
+    var userId = _homeController.user.value.id;
+    var addressJson = _homeController.user.value.shippingAddresses
+        ?.firstWhere((item) => item.address == _homeController.selectedAddress.value)
         .toJson;
     var variables = {
       "cartData": {
@@ -70,6 +76,10 @@ class CartController extends GetxController {
   }
 
   void checkforItemAvailability() {
+    if(_homeController.isGuest){
+      AlertMessage(title: "Alert",content: "You should be signed in to purchase products.").show();
+      return;
+    }
     Get.showOverlay(
         asyncFunction: () async {
           var cartJson =

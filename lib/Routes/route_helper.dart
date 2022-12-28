@@ -123,7 +123,7 @@ class RouteHelper {
         ),
         GetPage(
           name: cartScreen,
-          page: () => const CartScreen(),
+          page: () =>  CartScreen(),
           transition: Transition.rightToLeftWithFade,
         ),
         GetPage(

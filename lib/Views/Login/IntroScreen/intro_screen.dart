@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Routes/asset_routes.dart';
 
 import '../../../Routes/route_helper.dart';
@@ -80,9 +79,12 @@ class LoginIntroSection extends StatelessWidget {
         ),
         FullLengthButton(
           text: "Continue as Guest",
+
           backgroundColor: Colors.white,
           textColor: Colors.black,
-          onPressed: () {},
+          onPressed: (){
+              Get.offAllNamed(RouteHelper.dashboardScreen);
+            },
         )
       ],
     );

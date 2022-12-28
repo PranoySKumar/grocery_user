@@ -40,10 +40,8 @@ class DashboardScreenApi {
     name
     imageUrl
     }
-
-
-
-    user{
+  
+  user{
         id
         userName
         pincode
@@ -79,4 +77,51 @@ class DashboardScreenApi {
       }
   }
 """;
+
+static const String loadDataForGuestQuery = """
+query LoadDashBoardScreenData{
+      store{
+    
+        deliveryTime
+    }
+  
+  discountedProducts: products(options: {limit:6,discountFilter:true}) {
+    id
+    name
+    imageUrl
+    quantity{
+        totalQuantity
+        type
+        value
+    }
+    isAvailable
+    discount
+    price
+  }
+  
+  popularProducts: products(options: {limit:6,popularFilter:true}) {
+    id
+    name
+    isAvailable
+    imageUrl
+    quantity{
+            totalQuantity
+            type
+            value
+         }
+    discount
+    price
+  }
+    
+
+    categories(limit:8){
+    id
+    name
+    imageUrl
+    }
+    }
+""";
+
 }
+
+

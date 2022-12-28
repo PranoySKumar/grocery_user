@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Routes/route_helper.dart';
+import 'package:grocery_user/Utils/snackbar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfileController extends GetxController {
@@ -12,8 +13,12 @@ class ProfileController extends GetxController {
     if (urllaunchable) {
       await launchUrlString(url); //launch is from url_launcher package to launch URL
     } else {
-      print("URL can't be launched.");
+      SnackBarDisplay.show(message: "Something went wrong");
     }
+  }
+
+  void login() {
+    Get.offAllNamed(RouteHelper.introScreen);
   }
 
   void logout() async {

@@ -47,67 +47,68 @@ class _HomeScreenView extends StatelessWidget {
   const _HomeScreenView();
   @override
   Widget build(BuildContext context) {
-    var homeScreenController = Get.find<HomeScreenController>();
-    return CustomScrollView(
-      slivers: [
-        const HomeAppbarView(),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 8,
+    return GetBuilder<HomeScreenController>(
+      builder: (homeScreenController) => CustomScrollView(
+        slivers: [
+          const HomeAppbarView(),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 8,
+            ),
           ),
-        ),
-        CategoriesListStripe(
-            onTapCategory: homeScreenController.navigateToCategoryProductsScreen,
-            categoryList: homeScreenController.categories),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 12,
+          CategoriesListStripe(
+              onTapCategory: homeScreenController.navigateToCategoryProductsScreen,
+              categoryList: homeScreenController.categories),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 12,
+            ),
           ),
-        ),
-        _GreetingsWidget(),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 10,
+          _GreetingsWidget(),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
+            ),
           ),
-        ),
-        ProductsListSectionWidget(
-          title: "Products On Sale!",
-          itemWidth: 200,
-          itemHeight: 240,
-          products: homeScreenController.discountedProducts,
-          onTapViewAllHandler: homeScreenController.navigateToAllDiscountedProductsScreen,
-        ),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 25,
+          ProductsListSectionWidget(
+            title: "Products On Sale!",
+            itemWidth: 200,
+            itemHeight: 240,
+            products: homeScreenController.discountedProducts,
+            onTapViewAllHandler: homeScreenController.navigateToAllDiscountedProductsScreen,
           ),
-        ),
-        ProductsListSectionWidget(
-          title: "Popular Products",
-          itemWidth: 165,
-          products: homeScreenController.mostPopularProducts,
-          onTapViewAllHandler: homeScreenController.navigateToMostPopularProductsScreen,
-        ),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 25,
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 25,
+            ),
           ),
-        ),
-        CategoryListView(
-          onTapCategoryHandler: homeScreenController.navigateToCategoryProductsScreen,
-          onTapViewAllHandler: homeScreenController.navigateToCategoriesScreen,
-          categoriesList: homeScreenController.categories,
-        ),
-        const SliverToBoxAdapter(
-          child: SizedBox(height: 100),
-        )
-      ],
+          ProductsListSectionWidget(
+            title: "Popular Products",
+            itemWidth: 165,
+            products: homeScreenController.mostPopularProducts,
+            onTapViewAllHandler: homeScreenController.navigateToMostPopularProductsScreen,
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 25,
+            ),
+          ),
+          CategoryListView(
+            onTapCategoryHandler: homeScreenController.navigateToCategoryProductsScreen,
+            onTapViewAllHandler: homeScreenController.navigateToCategoriesScreen,
+            categoriesList: homeScreenController.categories,
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 100),
+          )
+        ],
+      ),
     );
   }
 }
 
 class _GreetingsWidget extends StatelessWidget {
-  var homeController = Get.find<HomeScreenController>();
+  final _homeController = Get.find<HomeScreenController>();
   _GreetingsWidget();
 
   @override
@@ -118,7 +119,8 @@ class _GreetingsWidget extends StatelessWidget {
           left: 12,
           right: 12,
         ),
-        child: Text("Hi ${homeController.user.value.userName}!",
+        child: Text(
+            "Hi ${_homeController.isGuest ? "Guest" : _homeController.user.value.userName}!",
             style: Get.theme.textTheme.labelLarge),
       ),
     );

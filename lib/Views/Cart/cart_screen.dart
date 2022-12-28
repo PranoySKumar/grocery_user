@@ -9,7 +9,8 @@ import 'package:grocery_user/Views/common/product_item_button.dart';
 import '../../Model/Order/order_model.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+  final _homeController = Get.find<HomeScreenController>();
+  CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class CartScreen extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                _DeliveryAddress(),
+             if(!_homeController.isGuest)   _DeliveryAddress(),
                 const SizedBox(
                   height: 8,
                 ),

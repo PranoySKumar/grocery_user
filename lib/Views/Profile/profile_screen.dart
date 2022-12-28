@@ -64,17 +64,19 @@ class _ProfileList extends StatelessWidget {
   }) : super(key: key);
 
   final _profileController = Get.find<ProfileController>();
+  final _homeController = Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _ProfileListItem(
-          iconData: Icons.list_alt_rounded,
-          onTap: () {
-            Get.toNamed(RouteHelper.orderListScreen);
-          },
-          label: "Orders",
-        ),
+        if (!_homeController.isGuest)
+          _ProfileListItem(
+            iconData: Icons.list_alt_rounded,
+            onTap: () {
+              Get.toNamed(RouteHelper.orderListScreen);
+            },
+            label: "Orders",
+          ),
         const SizedBox(
           height: 4,
         ),
@@ -84,11 +86,20 @@ class _ProfileList extends StatelessWidget {
           label: "Privacy Policy",
         ),
         const SizedBox(height: 4),
-        _ProfileListItem(
-          iconData: Icons.logout_outlined,
-          onTap: _profileController.logout,
-          label: "Log out",
-        ),
+        !_homeController.isGuest
+            ? _ProfileListItem(
+                iconData: Icons.logout_outlined,
+                onTap: _profileController.logout,
+                color: Colors.red.shade700,
+                label: "Log out",
+              )
+            : _ProfileListItem(
+                iconData: Icons.login_rounded,
+                onTap: _profileController.login,
+                                color: Colors.green.shade600,
+
+                label: "Log In",
+              ),
       ],
     );
   }
@@ -121,7 +132,7 @@ class _ProfileImage extends StatelessWidget {
           height: 2,
         ),
         Text(
-          _homescreenController.user.value.userName!,
+         _homescreenController.isGuest? "Guest" :  _homescreenController.user.value.userName!,
           style: Get.textTheme.labelMedium,
         ),
         const SizedBox(height: 30),
@@ -146,8 +157,9 @@ class _ProfileListItem extends StatelessWidget {
   final IconData iconData;
   final VoidCallback onTap;
   final String label;
+  final Color? color;
 
-  const _ProfileListItem({required this.iconData, required this.onTap, required this.label});
+  const _ProfileListItem({required this.iconData, required this.onTap, required this.label, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +177,7 @@ class _ProfileListItem extends StatelessWidget {
               children: [
                 Icon(
                   iconData,
+                   color: color,
                   size: 18,
                 ),
                 const SizedBox(
@@ -173,14 +186,16 @@ class _ProfileListItem extends StatelessWidget {
                 Text(
                   label,
                   style: Get.textTheme.labelMedium?.copyWith(
-                    fontSize: 12,
+                    color: color,
+                    fontSize: 14,
                   ),
                 )
               ],
             ),
-            const Icon(
+            Icon(
               Icons.arrow_forward_ios_rounded,
               size: 18,
+              color: color,
             )
           ],
         ),

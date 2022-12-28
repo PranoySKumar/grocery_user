@@ -10,6 +10,7 @@ import 'package:grocery_user/Routes/route_helper.dart';
 import 'package:grocery_user/Utils/snackbar.dart';
 
 import '../../../Model/Store/store_model.dart';
+import '../../../Utils/alert_message.dart';
 import '../../Products/ProductListScreen/products_controller.dart';
 
 class HomeScreenController extends GetxController {
@@ -22,12 +23,13 @@ class HomeScreenController extends GetxController {
   final categories = <Category>[].obs; // list of categories.
   final user = User().obs; // user details.
   final selectedAddress = "".obs;
-
-   late Store _store;
+  late Store _store;
+  final _isGuest = GetStorage().read<String>("token") != null ? false : true;
 
   //getters
   User get getUserDetails => user.value; // gets user details.
   Store get store => _store;
+  bool get isGuest => _isGuest;
 
   set setSearchQuery(String val) {
     searchQuery.value = val;
@@ -55,6 +57,10 @@ class HomeScreenController extends GetxController {
 
   void setSeletedAddress() {
     String info = "";
+     if(_isGuest) {
+      selectedAddress.value = "Guest";
+      return;
+    }
     ShippingAddress? shippingAddress = user.value.shippingAddresses?.firstWhere(
       (item) => item.address == GetStorage().read("selected-address"),
       orElse: () => ShippingAddress(),
@@ -63,8 +69,6 @@ class HomeScreenController extends GetxController {
       info = shippingAddress.address as String;
     } else if (user.value.shippingAddresses!.isEmpty || user.value.shippingAddresses!.isNotEmpty) {
       info = "Set an Address";
-    } else {
-      info = "Guest";
     }
     selectedAddress.value = info;
     update();
@@ -79,20 +83,27 @@ class HomeScreenController extends GetxController {
   //loads discounted products data from network into _categories.
   Future<void> loadData() async {
     try {
-      var resultData = await GraphqlActions.mutate(api: DashboardScreenApi.loadDataQuery);
+      var resultData = await GraphqlActions.mutate(
+          api: _isGuest
+              ? DashboardScreenApi.loadDataForGuestQuery
+              : DashboardScreenApi.loadDataQuery);
 
       List<dynamic> categoriesJson = resultData?["categories"];
       List<dynamic> discountedProductsJson = resultData?["discountedProducts"];
       List<dynamic> mostPopularProductsJson = resultData?["popularProducts"];
-      var userJson = resultData?["user"];
       var storeJson = resultData?["store"];
-     
+
       //setting data
       categories.assignAll(categoriesJson.map((cat) => Category.fromJson(cat)));
       discountedProducts.assignAll(discountedProductsJson.map((prod) => Product.fromJson(prod)));
       mostPopularProducts.assignAll(mostPopularProductsJson.map((prod) => Product.fromJson(prod)));
-      user.value = User.fromJson(userJson);
       _store = Store.fromJson(storeJson);
+
+      if (!_isGuest) {
+        var userJson = resultData?["user"];
+        user.value = User.fromJson(userJson);
+      }
+      update();
     } catch (e) {
       print(e);
       SnackBarDisplay.show(message: "couldn't load data");
@@ -123,6 +134,11 @@ class HomeScreenController extends GetxController {
   }
 
   void navigateToShippingDetailsScreen() {
+    if (_isGuest) {
+      AlertMessage(title: "Alert", content: "You need to be signed in to view address details.")
+          .show();
+      return;
+    }
     Get.toNamed(RouteHelper.shippingDetailsScreen);
   }
 }

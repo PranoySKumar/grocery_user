@@ -21,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
             title: _controller.title,
             subtitle: _controller.subtitle,
             subtitleStyle: Get.theme.textTheme.labelLarge
-                ?.copyWith(color: const Color(0xff7C7C7C), fontSize: 46),
+                ?.copyWith(color: const Color(0xff7C7C7C), fontSize: 46 ,fontWeight: FontWeight.w400),
           ),
           TextButton(
             onPressed: _controller.skipHandler,

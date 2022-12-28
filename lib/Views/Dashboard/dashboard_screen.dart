@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Views/Dashboard/FavouritesScreen/favourites_screen.dart';
 
 import 'HomeScreen/home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final _index = 0.obs;
+  final _isGuest = GetStorage().read<String>("token") != null ? false : true;
   final _screens = [const HomeScreen(), const FavouritesScreen()];
   DashboardScreen({super.key});
 
@@ -16,6 +18,11 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if (_isGuest) {
+      return Scaffold(body: const HomeScreen());
+    }
+
     return Obx(() => Scaffold(
           body: _screens[_index.value],
           bottomNavigationBar: BottomNavigationBar(

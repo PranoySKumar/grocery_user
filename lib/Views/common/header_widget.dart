@@ -20,7 +20,7 @@ class Header extends StatelessWidget {
         const SizedBox(height: 48),
         Text(
           title,
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(color:Colors.black ),
         ),
         const SizedBox(
           height: 8,
@@ -30,8 +30,8 @@ class Header extends StatelessWidget {
           style: subtitleStyle ??
               Theme.of(context)
                   .textTheme
-                  .labelLarge
-                  ?.copyWith(color: Theme.of(context).primaryColorLight),
+                  .labelMedium
+                  ?.copyWith(color: Color(0xff7C7C7C) , fontWeight: FontWeight.normal),
         ),
       ],
     );
