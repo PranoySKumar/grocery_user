@@ -75,13 +75,13 @@ class HomeAppbarView extends StatelessWidget {
       ),
       actions: [
         Container(
-          margin: const EdgeInsets.only(right: 12, bottom: 10),
+          margin: const EdgeInsets.only(right: 12,),
           child: InkWell(
             onTap: () => Get.toNamed(RouteHelper.profileScreen),
             child: const Icon(
               Icons.account_circle_outlined,
               color: Colors.black,
-              size: 24,
+              size: 30,
             ),
           ),
         )

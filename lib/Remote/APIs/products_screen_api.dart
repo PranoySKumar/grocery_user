@@ -11,6 +11,7 @@ class ProductsScreenApi {
         value
     }
     discount
+    isAvailable
     price
    }
 }
@@ -29,6 +30,7 @@ query getAllProducts {
         value
     }
     discount
+    isAvailable
     price
    }
    }
@@ -45,6 +47,7 @@ query getAllDiscountedProducts {
         type
         value
     }
+    isAvailable
     discount
     price
    }
@@ -63,6 +66,7 @@ query getAllPopularProducts {
         value
     }
     discount
+    isAvailable
     price
    }
    }
@@ -78,6 +82,7 @@ query getSingleCategoryProducts(\$categoryId:String!) {
         type
         value
     }
+    isAvailable
     discount
     price
    }

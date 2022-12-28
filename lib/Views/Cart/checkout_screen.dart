@@ -12,30 +12,31 @@ class CheckoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: const BackButton(color: Colors.black),
-          title: Text(
-            "Your Cart",
-            style: Get.theme.textTheme.labelMedium?.copyWith(
-              fontSize: 18,
-            ),
+        leading: const BackButton(color: Colors.black),
+        title: Text(
+          "Your Cart",
+          style: Get.theme.textTheme.labelMedium?.copyWith(
+            fontSize: 18,
           ),
-          backgroundColor: Get.theme.scaffoldBackgroundColor,
-          elevation: 0,
-          actions: [
-            Container(
-              margin: const EdgeInsets.only(right: 18),
-              child: const Icon(
-                Icons.account_circle_outlined,
-                color: Colors.black,
-              ),
-            )
-          ]),
+        ),
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
+        elevation: 0,
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 18),
+            child: const Icon(
+              Icons.account_circle_outlined,
+              color: Colors.black,
+            ),
+          )
+        ],
+      ),
       body: Container(
         margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              _Subtotal(),
+              _OrderSummary(),
               const SizedBox(
                 height: 18,
               ),
@@ -48,13 +49,14 @@ class CheckoutScreen extends StatelessWidget {
   }
 }
 
-class _Subtotal extends StatelessWidget {
-  final cartController = Get.find<CartController>();
-  final homeController = Get.find<HomeScreenController>();
+class _OrderSummary extends StatelessWidget {
+  final _cartController = Get.find<CartController>();
+  final _homeController = Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
+    var isDeliveryPossible = _homeController.store.isDeliveryPossibleToday();
     return Container(
-      height: 148,
+      height: 160,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -88,7 +90,7 @@ class _Subtotal extends StatelessWidget {
                     height: 11,
                   ),
                   Text(
-                    "Total Items: ${cartController.totalItemCount()}",
+                    "Total Items: ${_cartController.totalItemCount()}",
                     style: Get.theme.textTheme.labelSmall,
                   ),
                   const SizedBox(
@@ -99,7 +101,7 @@ class _Subtotal extends StatelessWidget {
                     style: Get.theme.textTheme.labelSmall,
                   ),
                   Text(
-                    homeController.selectedAddress.value,
+                    _homeController.selectedAddress.value,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style:
@@ -117,10 +119,18 @@ class _Subtotal extends StatelessWidget {
                     Icons.local_shipping_outlined,
                     size: 36,
                   ),
-                  Text(
-                    "Today 10AM - 12PM",
-                    style: Get.theme.textTheme.labelSmall,
-                  ),
+                  Column(
+                    children: [
+                      Text(
+                        isDeliveryPossible ? "Today" : "Tomorrow",
+                        style: Get.theme.textTheme.labelSmall,
+                      ),
+                      Text(
+                        _homeController.store.getDeliveryTime(),
+                        style: Get.theme.textTheme.labelSmall,
+                      ),
+                    ],
+                  )
                 ],
               )
             ],
@@ -139,7 +149,7 @@ class _Subtotal extends StatelessWidget {
                   style: Get.theme.textTheme.labelMedium,
                 ),
                 Text(
-                  "₹${cartController.totalPrice()}",
+                  "₹${_cartController.totalAmount}",
                   style: Get.theme.textTheme.labelMedium,
                 )
               ],
@@ -152,7 +162,7 @@ class _Subtotal extends StatelessWidget {
 }
 
 class _PaymentMethodList extends StatelessWidget {
-  _PaymentMethodList({super.key});
+  _PaymentMethodList();
   final cartController = Get.find<CartController>();
 
   @override
@@ -233,8 +243,7 @@ class _PaymentMethod extends StatelessWidget {
   final CartController cartController = Get.find<CartController>();
 
   _PaymentMethod(
-      {super.key,
-      required this.iconUrl,
+      {required this.iconUrl,
       required this.paymentName,
       this.iconHeight = 36,
       this.iconWidth = 36,

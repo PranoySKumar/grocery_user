@@ -5,6 +5,7 @@ class DashboardScreenApi {
     
         deliveryTime
     }
+  
   discountedProducts: products(options: {limit:6,discountFilter:true}) {
     id
     name
@@ -14,12 +15,15 @@ class DashboardScreenApi {
         type
         value
     }
+    isAvailable
     discount
     price
   }
+  
   popularProducts: products(options: {limit:6,popularFilter:true}) {
     id
     name
+    isAvailable
     imageUrl
     quantity{
             totalQuantity
@@ -29,11 +33,16 @@ class DashboardScreenApi {
     discount
     price
   }
+    
+
     categories(limit:8){
     id
     name
     imageUrl
     }
+
+
+
     user{
         id
         userName
@@ -56,6 +65,7 @@ class DashboardScreenApi {
               value
           }
           description
+          isAvailable
           discount
           price
         }

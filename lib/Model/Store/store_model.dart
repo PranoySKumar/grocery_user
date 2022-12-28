@@ -15,7 +15,18 @@ class Store {
           TimeOfDay(hour: int.parse(item.split(":")[0]), minute: int.parse(item.split(":")[1])))
       .toList();
 
-  String timeInLocal() {
+   //checks for range
+  bool isDeliveryPossibleToday() {
+    var range = getRange;
+    TimeOfDay startTime = range[0]; 
+    TimeOfDay endTime = range[1];
+    TimeOfDay now = TimeOfDay.now();
+    return ((now.hour > startTime.hour) ||
+            (now.hour == startTime.hour && now.minute >= startTime.minute)) &&
+        ((now.hour < endTime.hour) || (now.hour == endTime.hour && now.minute <= endTime.minute));
+  }   
+
+  String getDeliveryTime() {
     final now = DateTime.now();
     final startDt = DateTime(now.year, now.month, now.day, getRange[0].hour, getRange[0].minute);
     final endDt = DateTime(now.year, now.month, now.day, getRange[1].hour, getRange[1].minute);

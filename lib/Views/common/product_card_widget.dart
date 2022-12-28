@@ -83,7 +83,7 @@ class ProductCardWidget extends StatelessWidget {
               if (cartItem != null) {
                 currentItemAmount = cartItem.count;
               }
-              return ProductItemButton(
+              return product.isAvailable! ?ProductItemButton(
                 onDecrese: () {
                   cartController.decreaseItemInCart(product);
                 },
@@ -93,6 +93,14 @@ class ProductCardWidget extends StatelessWidget {
                 currentValue: currentItemAmount,
                 width: double.infinity,
                 margin: const EdgeInsets.only(top: 5, left: 12, right: 12, bottom: 9),
+              ):SizedBox(
+              height:46,
+                child: Center(
+                  child: Text(
+                    "OUT OF STOCK",
+                    style: Get.textTheme.labelMedium?.copyWith(color: Colors.red.shade700),
+                  ),
+                ),
               );
             }),
             const SizedBox(
@@ -139,18 +147,11 @@ class _DeliveryTimeTag extends StatelessWidget {
 
   _DeliveryTimeTag();
 
-//checks for range
-  bool isValidTimeRange(TimeOfDay startTime, TimeOfDay endTime) {
-    TimeOfDay now = TimeOfDay.now();
-    return ((now.hour > startTime.hour) ||
-            (now.hour == startTime.hour && now.minute >= startTime.minute)) &&
-        ((now.hour < endTime.hour) || (now.hour == endTime.hour && now.minute <= endTime.minute));
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    var isValid =
-        isValidTimeRange(homeController.store.getRange[0], homeController.store.getRange[1]);
+    var isPossible = homeController.store.isDeliveryPossibleToday();
     return Container(
       width: 96,
       height: 38,
@@ -179,7 +180,7 @@ class _DeliveryTimeTag extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                isValid ? "Today" : "Tomorrow",
+                isPossible ? "Today" : "Tomorrow",
                 textAlign: TextAlign.center,
                 style: Get.theme.textTheme.labelSmall?.copyWith(
                   fontSize: 8,
@@ -187,7 +188,7 @@ class _DeliveryTimeTag extends StatelessWidget {
                 ),
               ),
               Text(
-                homeController.store.timeInLocal(),
+                homeController.store.getDeliveryTime(),
                 textAlign: TextAlign.center,
                 style: Get.theme.textTheme.labelSmall?.copyWith(
                   fontSize: 8,

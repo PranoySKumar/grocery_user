@@ -10,6 +10,8 @@ query getProductDetails(\$id:String!){
         type
         value
     }
+    
+    isAvailable
     description
     discount
     categories{

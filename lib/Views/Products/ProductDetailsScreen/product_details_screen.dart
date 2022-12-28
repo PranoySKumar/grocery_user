@@ -114,12 +114,24 @@ class _ProductDetailsContent extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 5,
+            height: 10,
           ),
-          Text(
-            "${product.quantity!.value!.toInt()}g",
-            textAlign: TextAlign.justify,
-            style: Get.textTheme.labelSmall?.copyWith(color: Colors.grey),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "${product.quantity!.value!.toInt()}g",
+                textAlign: TextAlign.justify,
+                style: Get.textTheme.labelSmall?.copyWith(color: Colors.grey),
+              ),
+              product.isAvailable! ? Text(
+                "IN STOCK",
+                style: Get.textTheme.labelMedium?.copyWith(color: Colors.green.shade400),
+              ):Text(
+                "OUT OF STOCK",
+                style: Get.textTheme.labelMedium?.copyWith(color: Colors.red.shade700),
+              ),
+            ],
           ),
           const SizedBox(
             height: 10,
@@ -127,7 +139,7 @@ class _ProductDetailsContent extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _AddToCart(),
+             product.isAvailable!? _AddToCart():SizedBox(),
               _DiscountedPriceTag(discount: product.discount, price: product.price!.toInt())
             ],
           ),
@@ -150,10 +162,10 @@ class _ProductDetailsContent extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          SizedBox(
+       product.isAvailable! ?   SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => _cartController.addItemToCart(productDetailsController.product),
+              onPressed: () =>  _cartController.addItemToCart(productDetailsController.product),
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(15),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -165,7 +177,7 @@ class _ProductDetailsContent extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ):SizedBox()
         ],
       ),
     );

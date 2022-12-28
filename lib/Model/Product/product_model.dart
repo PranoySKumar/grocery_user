@@ -14,10 +14,12 @@ class Product {
   Quantity? quantity;
   String? imageUrl;
   List<Category>? categories;
+  bool? isAvailable;
 
   Product(
       {this.id,
       this.name,
+      this.isAvailable,
       this.description,
       this.price,
       this.discount,

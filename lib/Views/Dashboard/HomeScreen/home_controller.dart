@@ -23,7 +23,7 @@ class HomeScreenController extends GetxController {
   final user = User().obs; // user details.
   final selectedAddress = "".obs;
 
-  late final Store _store;
+   late Store _store;
 
   //getters
   User get getUserDetails => user.value; // gets user details.
@@ -86,7 +86,7 @@ class HomeScreenController extends GetxController {
       List<dynamic> mostPopularProductsJson = resultData?["popularProducts"];
       var userJson = resultData?["user"];
       var storeJson = resultData?["store"];
-
+     
       //setting data
       categories.assignAll(categoriesJson.map((cat) => Category.fromJson(cat)));
       discountedProducts.assignAll(discountedProductsJson.map((prod) => Product.fromJson(prod)));
