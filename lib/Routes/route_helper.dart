@@ -19,7 +19,9 @@ import 'package:grocery_user/Views/Profile/profile_controller.dart';
 import 'package:grocery_user/Views/Profile/profile_screen.dart';
 import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_controller.dart';
 import 'package:grocery_user/Views/ShippingDetails/EditShippingDetailsScreen/edit_shipping_details_screen.dart';
+import 'package:grocery_user/Views/Status/no_internet_screen.dart';
 
+import '../Controllers/connection_manager_controller.dart';
 import '../Views/Login/EnterLocationScreen/enter_location_screen.dart';
 import '../Views/Login/EnterPhoneNumberScreen/verify_number_binding.dart';
 import '../Views/Login/EnterPhoneNumberScreen/verify_number_screen.dart';
@@ -52,6 +54,7 @@ class RouteHelper {
   static const orderListScreen = "/order-list";
   static const orderDetailsScreen = "/order-details";
   static const profileScreen = "/profile";
+  static const noInternetConnection = "/no-interenet-connection";
 
   static getAppRoutes() => [
         GetPage(
@@ -123,7 +126,7 @@ class RouteHelper {
         ),
         GetPage(
           name: cartScreen,
-          page: () =>  CartScreen(),
+          page: () => CartScreen(),
           transition: Transition.rightToLeftWithFade,
         ),
         GetPage(
@@ -158,6 +161,11 @@ class RouteHelper {
           binding: BindingsBuilder(
             (() => Get.lazyPut(() => OrderDetailsController())),
           ),
+          transition: Transition.rightToLeftWithFade,
+        ),
+        GetPage(
+          name: noInternetConnection,
+          page: () => const NoInternetScreen(),
           transition: Transition.rightToLeftWithFade,
         ),
       ];

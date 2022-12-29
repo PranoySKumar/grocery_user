@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:grocery_user/Controllers/connection_manager_controller.dart';
 import 'package:grocery_user/Routes/asset_routes.dart';
 
 import '../../../Routes/route_helper.dart';
@@ -11,9 +12,11 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ConnectionManager.init();
     // if (GetStorage().hasData("token")) {
     //   Get.offAllNamed(RouteHelper.homeScreen);
     // }
+
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
@@ -79,12 +82,11 @@ class LoginIntroSection extends StatelessWidget {
         ),
         FullLengthButton(
           text: "Continue as Guest",
-
           backgroundColor: Colors.white,
           textColor: Colors.black,
-          onPressed: (){
-              Get.offAllNamed(RouteHelper.dashboardScreen);
-            },
+          onPressed: () {
+            Get.offAllNamed(RouteHelper.dashboardScreen);
+          },
         )
       ],
     );

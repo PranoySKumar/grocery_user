@@ -57,7 +57,7 @@ class HomeScreenController extends GetxController {
 
   void setSeletedAddress() {
     String info = "";
-     if(_isGuest) {
+    if (_isGuest) {
       selectedAddress.value = "Guest";
       return;
     }

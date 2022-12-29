@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grocery_user/Views/Dashboard/FavouritesScreen/favourites_screen.dart';
 
+import '../../Controllers/connection_manager_controller.dart';
 import 'HomeScreen/home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final _index = 0.obs;
   final _isGuest = GetStorage().read<String>("token") != null ? false : true;
   final _screens = [const HomeScreen(), const FavouritesScreen()];
+
   DashboardScreen({super.key});
 
 //sets the index of the selected screen.
@@ -18,9 +20,9 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    ConnectionManager.init();
     if (_isGuest) {
-      return Scaffold(body: const HomeScreen());
+      return const Scaffold(body: HomeScreen());
     }
 
     return Obx(() => Scaffold(
