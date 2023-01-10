@@ -6,7 +6,6 @@ class ProductsScreenApi {
     name
     imageUrl
     quantity{
-        totalQuantity
         type
         value
     }
@@ -25,7 +24,6 @@ query getAllProducts {
     name
     imageUrl
     quantity{
-        totalQuantity
         type
         value
     }
@@ -43,7 +41,6 @@ query getAllDiscountedProducts {
     name
     imageUrl
     quantity{
-        totalQuantity
         type
         value
     }
@@ -61,7 +58,6 @@ query getAllPopularProducts {
     name
     imageUrl
     quantity{
-        totalQuantity
         type
         value
     }
@@ -78,7 +74,6 @@ query getSingleCategoryProducts(\$categoryId:String!) {
     name
     imageUrl
     quantity{
-        totalQuantity
         type
         value
     }

@@ -37,13 +37,11 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
 Quantity _$QuantityFromJson(Map<String, dynamic> json) => Quantity(
       type: $enumDecodeNullable(_$QuantityTypeEnumMap, json['type']),
       value: (json['value'] as num?)?.toDouble(),
-      totalQuantity: (json['totalQuantity'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$QuantityToJson(Quantity instance) => <String, dynamic>{
       'type': _$QuantityTypeEnumMap[instance.type],
       'value': instance.value,
-      'totalQuantity': instance.totalQuantity,
     };
 
 const _$QuantityTypeEnumMap = {

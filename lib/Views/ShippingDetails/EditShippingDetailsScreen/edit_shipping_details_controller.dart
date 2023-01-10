@@ -31,9 +31,6 @@ class EditShippingDetailsController extends GetxController {
   Rx<String> addressErrorText = "".obs;
   Rx<String> pincodeErrorText = "".obs;
 
-  @override
-  onClose() {}
-
   Future<void> onSubmit() async {
     //restoring error fields
     recipientNameErrorText.value = "";

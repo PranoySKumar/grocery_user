@@ -11,7 +11,6 @@ class DashboardScreenApi {
     name
     imageUrl
     quantity{
-        totalQuantity
         type
         value
     }
@@ -26,7 +25,6 @@ class DashboardScreenApi {
     isAvailable
     imageUrl
     quantity{
-            totalQuantity
             type
             value
          }
@@ -58,7 +56,6 @@ class DashboardScreenApi {
           name
           imageUrl
           quantity{
-              totalQuantity
               type
               value
           }
@@ -78,7 +75,7 @@ class DashboardScreenApi {
   }
 """;
 
-static const String loadDataForGuestQuery = """
+  static const String loadDataForGuestQuery = """
 query LoadDashBoardScreenData{
       store{
     
@@ -90,7 +87,6 @@ query LoadDashBoardScreenData{
     name
     imageUrl
     quantity{
-        totalQuantity
         type
         value
     }
@@ -105,7 +101,6 @@ query LoadDashBoardScreenData{
     isAvailable
     imageUrl
     quantity{
-            totalQuantity
             type
             value
          }
@@ -121,7 +116,4 @@ query LoadDashBoardScreenData{
     }
     }
 """;
-
 }
-
-

@@ -11,7 +11,7 @@ setupGraphql() async {
   final HttpLink httpLink = HttpLink(
     // set endpoint
     'https://grocery-backend.onrender.com/graphql',
-    //'http://192.168.43.39:4000/graphql',
+    // 'http://192.168.43.39:4000/graphql',
   );
 
   final defaultPolicies = Policies(fetch: FetchPolicy.networkOnly); // defines networkpolicy
@@ -44,7 +44,10 @@ class GraphqlActions {
   static Future<Map<String, dynamic>?> mutate(
       {required String api, Map<String, dynamic>? variables}) async {
     var result = await graphqlClient.mutate(
-      MutationOptions(document: gql(api), variables: variables ?? {},),
+      MutationOptions(
+        document: gql(api),
+        variables: variables ?? {},
+      ),
     );
     if (result.hasException) {
       throw result.exception!;
@@ -56,7 +59,11 @@ class GraphqlActions {
   static Future<Map<String, dynamic>?> query(
       {required api, Map<String, dynamic>? variables}) async {
     var result = await graphqlClient.query(
-      QueryOptions(document: gql(api), variables: variables ?? {} ,  pollInterval: const Duration(seconds: 10),),
+      QueryOptions(
+        document: gql(api),
+        variables: variables ?? {},
+        pollInterval: const Duration(seconds: 10),
+      ),
     );
     if (result.hasException) {
       throw result.exception!;

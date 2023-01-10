@@ -6,7 +6,6 @@ query getProductDetails(\$id:String!){
     name
     imageUrl
     quantity{
-        totalQuantity
         type
         value
     }

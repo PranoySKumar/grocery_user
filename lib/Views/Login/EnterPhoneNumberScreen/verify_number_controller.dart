@@ -11,12 +11,6 @@ class VerifyNumberController extends GetxController {
 
   final phoneNumberTextEditingController = TextEditingController();
 
-  @override
-  void onClose() {
-    phoneNumberTextEditingController.dispose();
-    super.onClose();
-  }
-
   void onSubmitHandler(String? val) {
     if (val == null || val.isEmpty) {
       print("phonenumber is empty");

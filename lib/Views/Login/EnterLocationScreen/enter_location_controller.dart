@@ -16,12 +16,6 @@ class EnterLocationController extends GetxController {
 
   final otpTextEditingController = TextEditingController();
 
-  @override
-  onClose() {
-    otpTextEditingController.dispose();
-    super.onClose();
-  }
-
   onSubmitHandler(String? val) {
     if (val == null || val.isEmpty) {
       print("Please enter a valid pincode");

@@ -14,12 +14,6 @@ class EnterUserNameController extends GetxController {
 
   String get userName => _userName;
 
-  @override
-  void onClose() {
-    userNameTextEditingController.dispose();
-    super.onClose();
-  }
-
   onSubmitHandler(String? val) {
     if (val == null || val.isEmpty) {
       print("Please enter a valid user name");

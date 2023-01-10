@@ -34,8 +34,7 @@ class Product {
 class Quantity {
   final QuantityType? type;
   final double? value;
-  final double? totalQuantity;
-  Quantity({this.type, this.value, this.totalQuantity});
+  Quantity({this.type, this.value});
   factory Quantity.fromJson(Map<String, dynamic> json) => _$QuantityFromJson(json);
   Map<String, dynamic> get toJson => _$QuantityToJson(this);
 }

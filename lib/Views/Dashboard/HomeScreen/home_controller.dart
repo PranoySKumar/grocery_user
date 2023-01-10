@@ -48,13 +48,6 @@ class HomeScreenController extends GetxController {
     super.onInit();
   }
 
-  @override
-  onClose() {
-    //clears controller from memory.
-    searchBarEditingController.dispose();
-    super.onClose();
-  }
-
   void setSeletedAddress() {
     String info = "";
     if (_isGuest) {

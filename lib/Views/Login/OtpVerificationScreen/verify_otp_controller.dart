@@ -10,12 +10,6 @@ import '../../../Utils/snackbar.dart';
 class VerifyOtpController extends GetxController {
   final textEditingController = TextEditingController();
 
-  @override
-  void onClose() {
-    textEditingController.dispose();
-    super.onClose();
-  }
-
   onSubmitHandler(String? val) async {
     if (val == null || val.isEmpty) {
       return;
